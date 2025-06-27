@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Lesser Healing Potion",
+    "level": 1,
+    "rarity": "common",
+    "category": "consumable",
+    "bulk": "L",
+    "cost": 4
+  },
+  {
+    "name": "Greater Healing Potion",
+    "level": 12,
+    "rarity": "common",
+    "category": "consumable",
+    "bulk": "L",
+    "cost": 250
+  },
+  {
+    "name": "Longsword",
+    "level": 0,
+    "rarity": "common",
+    "category": "weapon",
+    "bulk": "1",
+    "cost": 2
+  },
+  {
+    "name": "Resilient Leather Armor",
+    "level": 8,
+    "rarity": "uncommon",
+    "category": "armor",
+    "bulk": "1",
+    "cost": 340
+  },
+  {
+    "name": "Wand of Magic Missile (3rd level)",
+    "level": 7,
+    "rarity": "common",
+    "category": "wand",
+    "bulk": "L",
+    "cost": 340
+  },
+  {
+    "name": "Staff of Fire",
+    "level": 8,
+    "rarity": "rare",
+    "category": "staff",
+    "bulk": "1",
+    "cost": 1500
+  },
+  {
+    "name": "Arrow",
+    "level": 0,
+    "rarity": "common",
+    "category": "ammo",
+    "bulk": "—",
+    "cost": 0.1
+  },
+  {
+    "name": "Elixir of Life (Minor)",
+    "level": 1,
+    "rarity": "common",
+    "category": "consumable",
+    "bulk": "L",
+    "cost": 3
+  }
+]
