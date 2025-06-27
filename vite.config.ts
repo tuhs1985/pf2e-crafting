@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
+// CHANGE 'pf2e-crafting' to your repo name
 export default defineConfig({
-  base: '/', // ← this is the fix
   plugins: [react()],
+  base: '/pf2e-crafting/',  // <--- add this line
 });
