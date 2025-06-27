@@ -23,7 +23,7 @@ export interface CraftingInput {
   craftingRoll: number;
   setupDays: number;
   additionalDays: number;
-  customItemCost?: number;
+  costModifier?: number;
 }
 
 // ---- Formula Cost Table ----
@@ -130,12 +130,12 @@ export function formatCopperAsGold(cp: number): string {
 
 // Get earn income value per day in copper
 export function getEarnIncomeReduction(
-  itemLevel: number,
+  characterLevel: number,
   proficiency: Proficiency,
   resultType: ResultType
 ): number {
-  // For "Critical Success", use row for itemLevel+1 (if available)
-  // For "Success", use row for itemLevel
+  // For "Critical Success", use row for characterLevel+1 (if available)
+  // For "Success", use row for characterLevel
   // For "Failure" and "Critical Failure", reduction is 0
   if (resultType === "Failure" || resultType === "Critical Failure") return 0;
 
@@ -143,14 +143,14 @@ export function getEarnIncomeReduction(
   let col: keyof Omit<EarnIncomeRow, "level" | "dc" | "failed">;
 
   if (resultType === "Critical Success") {
-    // Special case for itemLevel 20, must use the "level 21" row
-    if (itemLevel === 20) {
+    // Special case for characterLevel 20, must use the "level 21" row
+    if (characterLevel === 20) {
       row = EARN_INCOME_TABLE.find(r => r.level === 21);
     } else {
-      row = EARN_INCOME_TABLE.find(r => r.level === itemLevel + 1);
+      row = EARN_INCOME_TABLE.find(r => r.level === characterLevel + 1);
     }
   } else {
-    row = EARN_INCOME_TABLE.find(r => r.level === itemLevel);
+    row = EARN_INCOME_TABLE.find(r => r.level === characterLevel);
   }
 
   if (!row) return 0;
@@ -232,11 +232,19 @@ export function formatSummary(
   endDate: string
 ): string {
   const activity = `Craft ${input.quantity} x ${input.itemName}`;
-  const costPer = input.customItemCost ?? input.itemCost;
+  // Use itemCost + costModifier, min 0 per item
+  const costPer = Math.max(
+    0,
+    (input.itemCost ?? 0) + (input.costModifier ?? 0)
+  );
   const baseCost = costPer * input.quantity;
 
-  // Reduction per day (using character level for earn income table!)
+  // Always pay at least 50% up front
+  const minCostCopper = Math.floor(baseCost * 100 / 2);
+
+  // Only reduce cost if there are additional downtime days and a successful result
   let reductionPerDay = 0;
+  let totalReduction = 0;
   if (
     (resultType === "Success" || resultType === "Critical Success") &&
     input.additionalDays > 0
@@ -250,16 +258,23 @@ export function formatSummary(
       input.proficiency,
       resultType
     );
+    const maxReduction = minCostCopper; // Max reduction is 50% of base cost
+    totalReduction = Math.min(
+      input.additionalDays * reductionPerDay,
+      maxReduction
+    );
   }
 
-  // Total reduction (copper), enforce max of half the base cost
-  const maxReduction = Math.floor((baseCost * 100) / 2); // in copper
-  const totalReduction = Math.min(
-    input.additionalDays * reductionPerDay,
-    maxReduction
-  );
-  const finalCostCopper = Math.max(baseCost * 100 - totalReduction, Math.floor(baseCost * 100 / 2));
-  const finalCost = finalCostCopper / 100;
+  // Final cost cannot go below 50%
+  let finalCostCopper = baseCost * 100 - totalReduction;
+  if (finalCostCopper < minCostCopper) finalCostCopper = minCostCopper;
+
+  let formulaCost = 0;
+  if (input.formulaOption === "buy") {
+    formulaCost = getFormulaCost(input.itemLevel) * 100; // formula cost in copper
+  }
+  const totalFinalCopper = finalCostCopper + formulaCost;
+  const finalCost = totalFinalCopper / 100;
 
   // Only show reduction if any
   const reductionStr =
@@ -278,6 +293,12 @@ export function formatSummary(
     daysStr += `-${endMMDD}`;
   }
 
+  // If buying formula, show as "(includes +X gp for formula)"
+  let costLine = `**Cost:** ${finalCost} gp${reductionStr}`;
+  if (formulaCost > 0) {
+    costLine = `**Cost:** ${finalCost} gp (includes +${formulaCost/100} gp for formula)${reductionStr}`;
+  }
+
   return (
     `**Character:** ${input.character}\n` +
     `**Activity:** ${activity}\n` +
@@ -285,6 +306,6 @@ export function formatSummary(
     `**Item Level:** ${input.itemLevel}\n` +
     `**DC:** ${input.craftingDC}\n` +
     `**Result:** ${resultStr}\n` +
-    `**Cost:** ${finalCost} gp${reductionStr}\n`
+    costLine + `\n`
   );
 }
