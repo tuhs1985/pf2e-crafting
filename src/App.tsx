@@ -14,6 +14,7 @@ import "./App.css";
 // Add the possible rarities for autocomplete
 const RARITIES = ["common", "uncommon", "rare", "unique"];
 
+// Updated ItemDbEntry type to include consumable field
 type ItemDbEntry = {
   name: string;
   level: number;
@@ -21,6 +22,7 @@ type ItemDbEntry = {
   category: string;
   bulk: string;
   cost: number;
+  consumable: boolean;
 };
 
 function getItemSuggestions(query: string, items: ItemDbEntry[]): ItemDbEntry[] {
@@ -116,8 +118,14 @@ export default function App() {
     setShowRaritySuggestions(false);
   }
 
-  // Determine if batch item
-  const isBatchItem = itemCategory === "consumable" || itemCategory === "ammo";
+  // Use consumable field for batch logic
+  const matchedItem = items.find(
+    (i: ItemDbEntry) => i.name.toLowerCase() === itemName.toLowerCase()
+  );
+  const isBatchItem =
+    matchedItem?.consumable ||
+    itemCategory.toLowerCase() === "consumable" ||
+    itemCategory.toLowerCase() === "ammo";
   const maxBatch = isBatchItem ? 4 : 1;
 
   // Cost per item is itemCost + costModifier (never less than 0)
