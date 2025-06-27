@@ -249,18 +249,14 @@ export function formatSummary(
     (resultType === "Success" || resultType === "Critical Success") &&
     input.additionalDays > 0
   ) {
-    const effectiveLevel =
-      resultType === "Critical Success"
-        ? input.characterLevel + 1
-        : input.characterLevel;
     reductionPerDay = getEarnIncomeReduction(
-      effectiveLevel,
+      input.characterLevel, // FIXED: do not add +1 here
       input.proficiency,
-      resultType
+      resultType as ResultType
     );
     const maxReduction = minCostCopper; // Max reduction is 50% of base cost
     totalReduction = Math.min(
-      input.additionalDays * reductionPerDay,
+      input.additionalDays * reductionPerDay, // batch reduction, NOT per item
       maxReduction
     );
   }
