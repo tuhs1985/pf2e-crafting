@@ -398,18 +398,20 @@ export default function App() {
           {/* Item Cost (per item), Cost Modifier, Qty */}
           <div className="form-row">
             <label>
-              Item Cost (per item)
+              Item Cost <br />(gp per item)
               <input
                 type="number"
                 min={0}
+				step={0.01}
                 value={itemCost}
                 onChange={e => setItemCost(Number(e.target.value))}
               />
             </label>
             <label>
-              Cost Modifier
+              Cost Modifier <br />(In gp)
               <input
                 type="number"
+			    step={0.01}
                 value={costModifier}
                 onChange={e => setCostModifier(Number(e.target.value))}
                 placeholder="0"
