@@ -21,6 +21,7 @@ body {
 h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
+  margin-top: .5rem;
   text-align: center;
 }
 
@@ -86,6 +87,11 @@ body.theme-dark, [data-theme="dark"] {
 }
 .autocomplete-suggestions li:hover {
   background: var(--dropdown-border);
+}
+
+.autocomplete-suggestions li.active {
+  background: #444 !important;
+  color: #fff !important;
 }
 
 .instructions-container {
@@ -197,6 +203,30 @@ form.form-card {
   border: 1px solid #444;
   font-size: 1rem;
   overflow-x: auto;
+}
+
+.return-btn {
+  display: inline-block;
+  background: #111;
+  color: #fff;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: bold;
+  padding: 0.4em 1em;
+  cursor: pointer;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.12);
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 0em;
+  margin-left: 0;
+  margin-top: 0.5em;
+  text-decoration: none;
+}
+.return-btn:hover,
+.return-btn:focus {
+  background: #222;
+  color: #a0e2ff;
+  text-decoration: underline;
 }
 
 footer {

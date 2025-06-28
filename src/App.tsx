@@ -70,6 +70,7 @@ export default function App() {
   const [itemSuggestions, setItemSuggestions] = useState<ItemDbEntry[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const suggestionsRef = useRef<HTMLUListElement>(null);
+  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
 
   // Rarity autocomplete state
   const [raritySuggestions, setRaritySuggestions] = useState<string[]>([]);
@@ -82,6 +83,7 @@ export default function App() {
     const matches = getItemSuggestions(val, items as ItemDbEntry[]);
     setItemSuggestions(matches);
     setShowSuggestions(!!val && matches.length > 0);
+    setActiveSuggestionIndex(-1);
 
     // If exact match, autofill; if not, clear autofill fields
     const exact = matches.find(i => i.name.toLowerCase() === val.toLowerCase());
@@ -103,6 +105,32 @@ export default function App() {
     setItemBulk(item.bulk);
     setItemCost(item.cost);
     setShowSuggestions(false);
+    setActiveSuggestionIndex(-1);
+  }
+
+  // Keyboard navigation for item suggestions
+  function handleItemNameKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (!showSuggestions || itemSuggestions.length === 0) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveSuggestionIndex(i =>
+        i < itemSuggestions.length - 1 ? i + 1 : 0
+      );
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveSuggestionIndex(i =>
+        i > 0 ? i - 1 : itemSuggestions.length - 1
+      );
+    } else if (e.key === "Enter" || e.key === "Tab") {
+      if (activeSuggestionIndex >= 0 && activeSuggestionIndex < itemSuggestions.length) {
+        e.preventDefault();
+        handleSuggestionClick(itemSuggestions[activeSuggestionIndex]);
+      }
+    } else if (e.key === "Escape") {
+      setShowSuggestions(false);
+      setActiveSuggestionIndex(-1);
+    }
   }
 
   // Rarity autocomplete handlers
@@ -126,7 +154,7 @@ export default function App() {
     matchedItem?.consumable ||
     itemCategory.toLowerCase() === "consumable" ||
     itemCategory.toLowerCase() === "ammo";
-  const maxBatch = isBatchItem ? 4 : 1;
+  const maxBatch = isBatchItem ? 24 : 1;
 
   // Cost per item is itemCost + costModifier (never less than 0)
   const costPer =
@@ -217,6 +245,12 @@ export default function App() {
   return (
     <div className="app-container">
       <div className="inner-container">
+        <a
+          href="https://tools.tuhsrpg.com/"
+          className="return-btn"
+        >
+          &larr; Return to Hub
+        </a>
         <h1>PF2e Crafting Generator</h1>
         <form
           className="form-card"
@@ -273,20 +307,23 @@ export default function App() {
                 onFocus={e => {
                   if (itemSuggestions.length > 0) setShowSuggestions(true);
                 }}
+                onKeyDown={handleItemNameKeyDown}
                 autoComplete="off"
               />
               {showSuggestions && (
-                <ul
-                  className="autocomplete-suggestions"
-                  ref={suggestionsRef}
-                >
-                  {itemSuggestions.map(item => (
+                <ul className="autocomplete-suggestions" ref={suggestionsRef}>
+                  {itemSuggestions.map((item, i) => (
                     <li
                       key={item.name}
                       onMouseDown={() => handleSuggestionClick(item)}
+                      className={activeSuggestionIndex === i ? "active" : ""}
                       style={{
                         padding: "0.25rem 0.5rem",
                         cursor: "pointer",
+                        background:
+                          activeSuggestionIndex === i ? "#444" : undefined,
+                        color:
+                          activeSuggestionIndex === i ? "#fff" : undefined,
                       }}
                     >
                       {item.name}
