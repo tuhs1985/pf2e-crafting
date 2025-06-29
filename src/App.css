@@ -30,7 +30,7 @@ h1 {
 .form-row {
   display: flex;
   gap: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.18rem;
   align-items: flex-end; /* Align inputs at the bottom of the row */
 }
 .form-row > label {
@@ -127,7 +127,7 @@ form.form-card {
   box-shadow: 0 1px 8px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: .18rem;
 }
 
 .form-card label {

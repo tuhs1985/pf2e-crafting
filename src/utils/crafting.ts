@@ -23,7 +23,7 @@ export interface CraftingInput {
   craftingRoll: number;
   setupDays: number;
   additionalDays: number;
-  costModifier?: number;
+  costModifier?: string; // Now string, not number
 }
 
 // ---- Formula Cost Table ----
@@ -226,16 +226,32 @@ export function calculateEndDate(startDate: string, setupDays: number, additiona
   return `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, "0")}-${String(start.getDate()).padStart(2, "0")}`;
 }
 
+// New: Cost modifier logic supporting -xxx% to xxx% or flat value
+export function applyCostModifier(itemCost: number, costModifierInput: string | undefined): number {
+  if (!costModifierInput || costModifierInput.trim() === "") return itemCost;
+  const percentMatch = costModifierInput.trim().match(/^(-?\d+(\.\d+)?)\s*%$/);
+  if (percentMatch) {
+    const percent = parseFloat(percentMatch[1]);
+    // -20% means 20% discount, +50% means 50% markup, 0% means no change
+    return itemCost * (1 + percent / 100);
+  }
+  // Otherwise treat as flat modifier (additive)
+  const flat = parseFloat(costModifierInput);
+  if (!isNaN(flat)) return itemCost + flat;
+  return itemCost;
+}
+
+// Format the crafting summary with percent-aware cost modifier
 export function formatSummary(
   input: CraftingInput,
   resultType: string,
   endDate: string
 ): string {
   const activity = `Craft ${input.quantity} x ${input.itemName}`;
-  // Use itemCost + costModifier, min 0 per item
+  // Use itemCost with percent/flat costModifier, min 0 per item
   const costPer = Math.max(
     0,
-    (input.itemCost ?? 0) + (input.costModifier ?? 0)
+    applyCostModifier(input.itemCost ?? 0, input.costModifier)
   );
   const baseCost = costPer * input.quantity;
 

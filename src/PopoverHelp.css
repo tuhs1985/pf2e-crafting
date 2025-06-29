@@ -1,0 +1,56 @@
+.popover-help-popover {
+  background: #222;
+  color: #fff;
+  position: absolute;
+  left: 110%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  padding: 0.75em 1em;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  min-width: 200px;
+  max-width: 300px;
+  font-size: 0.95em;
+  white-space: normal;
+}
+
+@media (max-width: 530px) {
+  .popover-help-popover {
+    left: 0 !important;
+    top: 120% !important;
+    transform: none !important;
+    min-width: 150px !important;
+	width: 45vw !important;
+    max-width: 95vw !important;
+	white-space: normal !important;
+	box-sizing: border-box !important;
+    font-size: .85em;
+  }
+}
+@media (max-width: 450px) {
+  .popover-help-popover {
+    left: 0 !important;
+    top: 120% !important;
+    transform: none !important;
+    min-width: 150px !important;
+	width: 41vw !important;
+    max-width: 95vw !important;
+	white-space: normal !important;
+	box-sizing: border-box !important;
+    font-size: .85em;
+  }
+}
+@media (max-width: 382px) {
+  .popover-help-popover {
+    left: 0 !important;
+    top: 120% !important;
+    transform: none !important;
+    min-width: 200px !important;
+	width: 58vw !important;
+    max-width: 95vw !important;
+	white-space: normal !important;
+	box-sizing: border-box !important;
+    font-size: .85em;
+  }
+}

@@ -7,8 +7,10 @@ import {
   calculateCraftingDC,
   calculateEndDate,
   formatSummary,
+  applyCostModifier,
 } from "./utils/crafting";
 import items from "./data/items.db.json";
+import PopoverHelp from "./PopoverHelp";
 import "./App.css";
 
 // Add the possible rarities for autocomplete
@@ -30,11 +32,11 @@ function useIsStandalone() {
   const [isStandalone, setIsStandalone] = useState(false);
 
   useEffect(() => {
-	const checkStandalone = () =>
-	  window.matchMedia('(display-mode: standalone)').matches ||
-	  window.matchMedia('(display-mode: fullscreen)').matches ||
-	  // @ts-ignore
-	  window.navigator.standalone === true;
+    const checkStandalone = () =>
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.matchMedia('(display-mode: fullscreen)').matches ||
+      // @ts-ignore
+      window.navigator.standalone === true;
 
     setIsStandalone(checkStandalone());
 
@@ -98,6 +100,7 @@ export default function App() {
   const [craftingRoll, setCraftingRoll] = useState<string>("");
   const [output, setOutput] = useState("");
   const [copied, setCopied] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
 
   // Autocomplete state
   const [itemSuggestions, setItemSuggestions] = useState<ItemDbEntry[]>([]);
@@ -192,17 +195,16 @@ export default function App() {
     itemCategory.toLowerCase() === "ammo";
   const maxBatch = isBatchItem ? 24 : 1;
 
-  // Cost per item is itemCost + costModifier (never less than 0)
-  const costPer =
-    Math.max(
-      0,
-      Number(itemCost) + (costModifier === "" ? 0 : Number(costModifier))
-    );
+  // Cost per item is itemCost plus costModifier (supports % or flat)
+  const costPer = Math.max(
+    0,
+    applyCostModifier(Number(itemCost), costModifier)
+  );
 
   // Auto-calculate DC if item fields change
   const autoDC =
     itemLevel !== "" && itemRarity !== ""
-      ? calculateCraftingDC(Number(itemLevel), itemRarity, dcAdjustment)
+      ? calculateCraftingDC(Number(itemLevel), itemRarity, Number(dcAdjustment) || 0)
       : "";
 
   // Setup days (auto, not user-editable)
@@ -222,7 +224,7 @@ export default function App() {
     proficiency,
     useAssurance,
     craftingDC: Number(craftingDC) || Number(autoDC),
-    dcAdjustment,
+    dcAdjustment: Number(dcAdjustment) || 0,
     craftingRoll: useAssurance
       ? 10 + getProficiencyBonus(Number(characterLevel), proficiency)
       : Number(craftingRoll),
@@ -242,16 +244,14 @@ export default function App() {
       proficiency,
       useAssurance,
       craftingDC: Number(craftingDC) || Number(autoDC),
-      dcAdjustment,
+      dcAdjustment: Number(dcAdjustment) || 0,
       craftingRoll: Number(craftingRoll),
       setupDays: 1,
-      additionalDays,
-      customItemCost: undefined, // Not used anymore
-      costModifier: costModifier === "" ? 0 : Number(costModifier),
+      additionalDays: Number(additionalDays) || 0,
+      costModifier: costModifier,
     }),
-    additionalDays,
-    customItemCost: undefined, // Not used anymore
-    costModifier: costModifier === "" ? 0 : Number(costModifier),
+    additionalDays: Number(additionalDays) || 0,
+    costModifier: costModifier,
   };
 
   // Calculate result and summary
@@ -290,7 +290,34 @@ export default function App() {
             &larr; Return to Hub
           </a>
         )}
+
         <h1>PF2e Crafting Generator</h1>
+        {/* Expandable Instructions */}
+        <div className="instructions-container" style={{marginBottom: "1em"}}>
+          <button
+            type="button"
+            className="instructions-toggle"
+            onClick={() => setShowInstructions((v) => !v)}
+            aria-expanded={showInstructions}
+            aria-controls="instructions-content"
+          >
+            {showInstructions ? "Hide Instructions" : "Show Instructions"}
+          </button>
+          {showInstructions && (
+            <div className="instructions-content" id="instructions-content" style={{marginTop: "1em"}}>
+              <h2>How to Use</h2>
+              <ol>
+                <li>Fill in all the details for your crafting project.</li>
+                <li>
+                  <strong>Cost Modifier:</strong> You can enter a flat value (e.g., <code>5</code>) to add/subtract GP per item, <br />
+                  or use a percent change (e.g., <code>-20%</code> for 20% off, <code>50%</code> for 50% markup, <code>0%</code> for no change).<br />
+                  <b>Negative percentages are discounts, positive percentages are surcharges.</b>
+                </li>
+                <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
+              </ol>
+            </div>
+          )}
+        </div>
         <form
           className="form-card"
           onSubmit={e => {
@@ -440,7 +467,11 @@ export default function App() {
           {/* Item Cost (per item), Cost Modifier, Qty */}
           <div className="form-row">
             <label>
-              Cost (gp/item)
+              Cost {" "}
+			  <PopoverHelp>
+				Use the base gold cost per item.<br />
+				<br /><em>Tap or click outside to close.</em>
+			  </PopoverHelp>
               <input
                 type="number"
                 min={0}
@@ -450,14 +481,17 @@ export default function App() {
                 placeholder="0"		
               />
             </label>
-            <label>
-              Cost Mod (gp)
+			<label>
+			  Cost Mod{" "}
+			  <PopoverHelp>
+				Use a flat value (e.g. 5) to add/subtract gold per item, or a percentage (e.g. -20% for a 20% discount, 50% for a 50% markup, 0% for no change).<br />
+				<br /><em>Tap or click outside to close.</em>
+			  </PopoverHelp>
               <input
-                type="number"
-                step={0.01}
+                type="text"
                 value={costModifier}
                 onChange={e => setCostModifier(e.target.value)}
-                placeholder="0"
+                placeholder="-20% or 5"
               />
             </label>
             <label>
