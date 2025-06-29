@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { Proficiency, CraftingInput } from "./utils/crafting";
 import {
   calculateSetupDays,
@@ -24,6 +24,39 @@ type ItemDbEntry = {
   cost: number;
   consumable: boolean;
 };
+
+// Detects if the app is running as an installed PWA (standalone)
+function useIsStandalone() {
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  useEffect(() => {
+	const checkStandalone = () =>
+	  window.matchMedia('(display-mode: standalone)').matches ||
+	  window.matchMedia('(display-mode: fullscreen)').matches ||
+	  // @ts-ignore
+	  window.navigator.standalone === true;
+
+    setIsStandalone(checkStandalone());
+
+    // Listen for changes to display-mode (in case user adds to home screen while open)
+    const mq = window.matchMedia('(display-mode: standalone)');
+    const handler = () => setIsStandalone(checkStandalone());
+    if (mq.addEventListener) {
+      mq.addEventListener('change', handler);
+    } else if (mq.addListener) {
+      mq.addListener(handler);
+    }
+    return () => {
+      if (mq.removeEventListener) {
+        mq.removeEventListener('change', handler);
+      } else if (mq.removeListener) {
+        mq.removeListener(handler);
+      }
+    };
+  }, []);
+
+  return isStandalone;
+}
 
 function getItemSuggestions(query: string, items: ItemDbEntry[]): ItemDbEntry[] {
   if (!query) return [];
@@ -76,6 +109,9 @@ export default function App() {
   const [raritySuggestions, setRaritySuggestions] = useState<string[]>([]);
   const [showRaritySuggestions, setShowRaritySuggestions] = useState(false);
   const rarityRef = useRef<HTMLUListElement>(null);
+
+  // PWA standalone detection
+  const isStandalone = useIsStandalone();
 
   // Handle input for autocomplete/search
   function handleItemNameChange(val: string) {
@@ -245,12 +281,15 @@ export default function App() {
   return (
     <div className="app-container">
       <div className="inner-container">
-        <a
-          href="https://tools.tuhsrpg.com/"
-          className="return-btn"
-        >
-          &larr; Return to Hub
-        </a>
+        {/* "Return to Hub" only shows if not in standalone PWA mode */}
+        {!isStandalone && (
+          <a
+            href="https://tools.tuhsrpg.com/"
+            className="return-btn"
+          >
+            &larr; Return to Hub
+          </a>
+        )}
         <h1>PF2e Crafting Generator</h1>
         <form
           className="form-card"
@@ -267,7 +306,7 @@ export default function App() {
               type="text"
               value={character}
               onChange={e => setCharacter(e.target.value)}
-			  placeholder="Bob the Barbarian"
+              placeholder="Bob the Barbarian"
             />
           </label>
 
@@ -280,7 +319,7 @@ export default function App() {
                 min={1}
                 value={characterLevel}
                 onChange={e => setCharacterLevel(e.target.value)}
-				placeholder="1"
+                placeholder="1"
               />
             </label>
             <label>
@@ -405,17 +444,17 @@ export default function App() {
               <input
                 type="number"
                 min={0}
-				step={0.01}
+                step={0.01}
                 value={itemCost}
                 onChange={e => setItemCost(e.target.value)}
-				placeholder="0"		
+                placeholder="0"		
               />
             </label>
             <label>
               Cost Mod (gp)
               <input
                 type="number"
-			    step={0.01}
+                step={0.01}
                 value={costModifier}
                 onChange={e => setCostModifier(e.target.value)}
                 placeholder="0"
@@ -501,7 +540,7 @@ export default function App() {
                 value={additionalDays}
                 onChange={e => setAdditionalDays(e.target.value)}
                 placeholder="0"				
-				/>
+              />
             </label>
           </div>
 

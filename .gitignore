@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 src/packs/
 CNAME
+icon-1024.png
+icon-1024.xcf
+
