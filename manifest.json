@@ -1,0 +1,21 @@
+{
+  "short_name": "PF2eCraft",
+  "name": "PF2e Crafting Generator",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#181818",
+  "theme_color": "#4747ff",
+  "description": "A generator for PF2e crafting downtime activities."
+}
