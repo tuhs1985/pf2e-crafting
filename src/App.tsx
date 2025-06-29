@@ -46,23 +46,23 @@ function getTodayDateString(): string {
 export default function App() {
   const [character, setCharacter] = useState("");
   const [itemName, setItemName] = useState("");
-  const [itemLevel, setItemLevel] = useState<number | "">("");
+  const [itemLevel, setItemLevel] = useState<string>("");
   const [itemRarity, setItemRarity] = useState("");
   const [itemCategory, setItemCategory] = useState("");
   const [itemBulk, setItemBulk] = useState("");
-  const [itemCost, setItemCost] = useState<number | "">("");
-  const [costModifier, setCostModifier] = useState<number | "">("");
+  const [itemCost, setItemCost] = useState<string>("");
+  const [costModifier, setCostModifier] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [hasFormula, setHasFormula] = useState(true);
   const [formulaOption, setFormulaOption] = useState<"buy" | "work" | "">("");
   const [startDate, setStartDate] = useState(getTodayDateString());
-  const [additionalDays, setAdditionalDays] = useState(0);
-  const [characterLevel, setCharacterLevel] = useState<number | "">("");
+  const [additionalDays, setAdditionalDays] = useState<string>("");
+  const [characterLevel, setCharacterLevel] = useState<string>("");
   const [proficiency, setProficiency] = useState<Proficiency>("trained");
   const [useAssurance, setUseAssurance] = useState(false);
-  const [craftingDC, setCraftingDC] = useState<number | "">("");
-  const [dcAdjustment, setDcAdjustment] = useState(0);
-  const [craftingRoll, setCraftingRoll] = useState<number | "">("");
+  const [craftingDC, setCraftingDC] = useState<string>("");
+  const [dcAdjustment, setDcAdjustment] = useState<string>("");
+  const [craftingRoll, setCraftingRoll] = useState<string>("");
   const [output, setOutput] = useState("");
   const [copied, setCopied] = useState(false);
 
@@ -267,6 +267,7 @@ export default function App() {
               type="text"
               value={character}
               onChange={e => setCharacter(e.target.value)}
+			  placeholder="Bob the Barbarian"
             />
           </label>
 
@@ -278,7 +279,8 @@ export default function App() {
                 type="number"
                 min={1}
                 value={characterLevel}
-                onChange={e => setCharacterLevel(Number(e.target.value))}
+                onChange={e => setCharacterLevel(e.target.value)}
+				placeholder="1"
               />
             </label>
             <label>
@@ -338,7 +340,8 @@ export default function App() {
                 type="number"
                 min={0}
                 value={itemLevel}
-                onChange={e => setItemLevel(Number(e.target.value))}
+                onChange={e => setItemLevel(e.target.value)}
+                placeholder="0"		
               />
             </label>
           </div>
@@ -398,22 +401,23 @@ export default function App() {
           {/* Item Cost (per item), Cost Modifier, Qty */}
           <div className="form-row">
             <label>
-              Item Cost <br />(gp per item)
+              Cost (gp/item)
               <input
                 type="number"
                 min={0}
 				step={0.01}
                 value={itemCost}
-                onChange={e => setItemCost(Number(e.target.value))}
+                onChange={e => setItemCost(e.target.value)}
+				placeholder="0"		
               />
             </label>
             <label>
-              Cost Modifier <br />(In gp)
+              Cost Mod (gp)
               <input
                 type="number"
 			    step={0.01}
                 value={costModifier}
-                onChange={e => setCostModifier(Number(e.target.value))}
+                onChange={e => setCostModifier(e.target.value)}
                 placeholder="0"
               />
             </label>
@@ -490,13 +494,14 @@ export default function App() {
               />
             </label>
             <label>
-              Add'l Downtime Days
+              Add'l Days
               <input
                 type="number"
                 min={0}
                 value={additionalDays}
-                onChange={e => setAdditionalDays(Number(e.target.value))}
-              />
+                onChange={e => setAdditionalDays(e.target.value)}
+                placeholder="0"				
+				/>
             </label>
           </div>
 
@@ -516,7 +521,8 @@ export default function App() {
                 type="number"
                 min={0}
                 value={craftingDC === "" ? autoDC : craftingDC}
-                onChange={e => setCraftingDC(Number(e.target.value))}
+                onChange={e => setCraftingDC(e.target.value)}
+                placeholder="0"		
               />
             </label>
             <label>
@@ -524,7 +530,8 @@ export default function App() {
               <input
                 type="number"
                 value={dcAdjustment}
-                onChange={e => setDcAdjustment(Number(e.target.value))}
+                onChange={e => setDcAdjustment(e.target.value)}
+                placeholder="0"		
               />
             </label>
             <label>
@@ -537,7 +544,8 @@ export default function App() {
                     ? 10 + getProficiencyBonus(Number(characterLevel), proficiency)
                     : craftingRoll
                 }
-                onChange={e => setCraftingRoll(Number(e.target.value))}
+                onChange={e => setCraftingRoll(e.target.value)}
+                placeholder="0"		
                 disabled={useAssurance}
               />
             </label>
