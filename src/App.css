@@ -2,8 +2,8 @@ body {
   background: #222;
   color: #eee;
   font-family: sans-serif;
-  margin: 0;
-  padding: 0;
+  margin: 1;
+  padding: 0 .5rem 0 .5rem;
 }
 
 .app-container {
@@ -13,9 +13,10 @@ body {
 }
 
 .inner-container {
+  width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0;
 }
 
 h1 {
@@ -35,7 +36,7 @@ h1 {
 .form-row > label {
   flex: 1 1 0;
 }
-@media (max-width: 400px) {
+@media (max-width: 325px) {
   .form-row {
     flex-direction: column;
     gap: 0.5rem;
