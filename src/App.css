@@ -206,28 +206,99 @@ form.form-card {
   overflow-x: auto;
 }
 
+
+.header-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-container h1 {
+  margin: 0;
+  padding-top: 1rem;
+  width: 100%;
+  text-align: center;
+  padding-left: 1rem;   /* or more/less as needed */
+  padding-right: 1rem;
+}
+
 .return-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   background: #111;
   color: #fff;
   border-radius: 0.5rem;
   border: none;
   font-size: 0.95rem;
   font-weight: bold;
-  padding: 0.4em 1em;
   cursor: pointer;
   box-shadow: 0 1px 5px rgba(0,0,0,0.12);
-  transition: background 0.2s, color 0.2s;
-  margin-bottom: 0em;
-  margin-left: 0;
-  margin-top: 0.5em;
+  margin: 0.5em 0 0 0;
   text-decoration: none;
+  overflow: hidden;
+  transition: width 0.25s cubic-bezier(.4,0,.2,1), padding 0.25s cubic-bezier(.4,0,.2,1);
+  width: .5em;           /* compact when collapsed */
+  padding: 0.2em 0.4em;
+  white-space: nowrap;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
+.return-btn .arrow,
+.return-btn .return-text {
+  opacity: 0;
+  width: 0;
+  margin: 0;
+  transition: opacity 0.2s, width 0.2s, margin 0.2s;
+  overflow: hidden;
+  display: inline-flex;
+}
+
 .return-btn:hover,
 .return-btn:focus {
-  background: #222;
-  color: #a0e2ff;
-  text-decoration: underline;
+  width: 11.5em;      /* wide enough for all content */
+  padding: 0.2em 1em;
+}
+
+.return-btn:hover .arrow,
+.return-btn:focus .arrow,
+.return-btn:hover .return-text,
+.return-btn:focus .return-text {
+  opacity: 1;
+  width: auto;
+  margin-left: 0.5em;
+}
+
+.return-btn .dots {
+  opacity: 1;
+  transition: opacity 0.2s;
+  font-size: 1.2em;
+  line-height: 1;
+  margin-right: 0.1em;
+}
+
+.return-btn:hover .dots,
+.return-btn:focus .dots {
+  opacity: 0;
+}
+.return-btn.expanded {
+  width: 11.5em;
+  padding: 0.2em 1em;
+}
+
+.return-btn.expanded .arrow,
+.return-btn.expanded .return-text {
+  opacity: 1;
+  width: auto;
+  margin-left: 0.5em;
+}
+
+.return-btn.expanded .dots {
+  opacity: 0;
 }
 
 footer {
