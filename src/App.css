@@ -260,7 +260,7 @@ form.form-card {
 
 .return-btn:hover,
 .return-btn:focus {
-  width: 11.5em;      /* wide enough for all content */
+  width: 7em;      /* wide enough for all content */
   padding: 0.2em 1em;
 }
 

@@ -47,7 +47,7 @@ export function ReturnButton() {
     >
       <span className="dots">&#8942;</span>
       <span className="arrow">&larr;</span>
-      <span className="return-text">Return to Hub</span>
+      <span className="return-text">Return</span>
     </a>
   );
 }
