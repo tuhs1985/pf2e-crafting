@@ -191,12 +191,20 @@ export function getResultType(dc: number, roll: number): ResultType {
   return "Failure";
 }
 
+const DC_BY_LEVEL: { [level: number]: number } = {
+  0: 14, 1: 15, 2: 16, 3: 18, 4: 19, 5: 20, 6: 22, 7: 23, 8: 24, 9: 26,
+  10: 27, 11: 28, 12: 30, 13: 31, 14: 32, 15: 34, 16: 35, 17: 36, 18: 38, 19: 39,
+  20: 40, 21: 42, 22: 44, 23: 46, 24: 48, 25: 50
+};
+
 export function calculateCraftingDC(itemLevel: number, itemRarity: string, dcAdjustment: number): number {
-  // Default: Common = 14 + itemLevel, Uncommon +2, Rare +5, Unique +10 (PF2e rules)
-  let base = 14 + itemLevel;
+  const safeLevel = Math.min(itemLevel, 25);
+  let base = DC_BY_LEVEL[safeLevel];
+
   if (itemRarity.toLowerCase() === "uncommon") base += 2;
   if (itemRarity.toLowerCase() === "rare") base += 5;
   if (itemRarity.toLowerCase() === "unique") base += 10;
+
   return base + dcAdjustment;
 }
 

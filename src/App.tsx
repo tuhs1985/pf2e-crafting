@@ -421,13 +421,17 @@ export default function App() {
             </label>
             <label>
               Item Level
-              <input
-                type="number"
-                min={0}
-                value={itemLevel}
-                onChange={e => setItemLevel(e.target.value)}
-                placeholder="0"		
-              />
+				<input
+				  type="number"
+				  min={0}
+				  max={25}
+				  value={itemLevel}
+				  onChange={e => {
+					const val = Math.min(Number(e.target.value), 25);
+					setItemLevel(val);
+				  }}
+				  placeholder="0"		
+				/>
             </label>
           </div>
 
