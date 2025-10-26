@@ -18,6 +18,15 @@
     "consumable": false
   },
   {
+    "name": "Abidance Blinders",
+    "level": 2,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 25,
+    "consumable": false
+  },
+  {
     "name": "Ablative Armor Plating (Greater)",
     "level": 7,
     "rarity": "uncommon",
@@ -367,6 +376,15 @@
     "bulk": "0.1",
     "cost": 58,
     "consumable": true
+  },
+  {
+    "name": "Admiral's Bicorne",
+    "level": 10,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 900,
+    "consumable": false
   },
   {
     "name": "Admirer's Bouquet",
@@ -735,6 +753,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 225,
+    "consumable": false
+  },
+  {
+    "name": "Aerekostes",
+    "level": 8,
+    "rarity": "unique",
+    "category": "sword",
+    "bulk": "1",
+    "cost": 0,
     "consumable": false
   },
   {
@@ -1233,6 +1260,15 @@
     "consumable": true
   },
   {
+    "name": "Alkenstar Phalanx",
+    "level": 14,
+    "rarity": "rare",
+    "category": "heavy",
+    "bulk": "4",
+    "cost": 4500,
+    "consumable": false
+  },
+  {
     "name": "Alloy Orb (Exquisite High-Grade)",
     "level": 18,
     "rarity": "uncommon",
@@ -1311,6 +1347,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 8000,
+    "consumable": false
+  },
+  {
+    "name": "Ally's Kerchief",
+    "level": 2,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 25,
     "consumable": false
   },
   {
@@ -1447,6 +1492,15 @@
     "bulk": "0.1",
     "cost": 15000,
     "consumable": false
+  },
+  {
+    "name": "Analysis Eye",
+    "level": 4,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 20,
+    "consumable": true
   },
   {
     "name": "Anathema Fulu",
@@ -1755,6 +1809,15 @@
     "consumable": false
   },
   {
+    "name": "Ankhrav Carapace",
+    "level": 7,
+    "rarity": "uncommon",
+    "category": "light",
+    "bulk": "1",
+    "cost": 350,
+    "consumable": false
+  },
+  {
     "name": "Ankhrav Duster",
     "level": 4,
     "rarity": "uncommon",
@@ -1856,7 +1919,7 @@
   {
     "name": "Antifungal Salve (Greater)",
     "level": 10,
-    "rarity": "common",
+    "rarity": "uncommon",
     "category": "other",
     "bulk": "0.1",
     "cost": 160,
@@ -1865,7 +1928,7 @@
   {
     "name": "Antifungal Salve (Lesser)",
     "level": 1,
-    "rarity": "common",
+    "rarity": "uncommon",
     "category": "other",
     "bulk": "0.1",
     "cost": 3,
@@ -1874,7 +1937,7 @@
   {
     "name": "Antifungal Salve (Major)",
     "level": 14,
-    "rarity": "common",
+    "rarity": "uncommon",
     "category": "other",
     "bulk": "0.1",
     "cost": 675,
@@ -1883,7 +1946,7 @@
   {
     "name": "Antifungal Salve (Moderate)",
     "level": 6,
-    "rarity": "common",
+    "rarity": "uncommon",
     "category": "other",
     "bulk": "0.1",
     "cost": 35,
@@ -2156,7 +2219,7 @@
     "rarity": "rare",
     "category": "club",
     "bulk": "1",
-    "cost": 1750,
+    "cost": 0,
     "consumable": false
   },
   {
@@ -2229,6 +2292,24 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 100,
+    "consumable": false
+  },
+  {
+    "name": "Arcane Standard",
+    "level": 10,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 960,
+    "consumable": false
+  },
+  {
+    "name": "Arcane Standard (Greater)",
+    "level": 20,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 69000,
     "consumable": false
   },
   {
@@ -2682,6 +2763,15 @@
     "consumable": false
   },
   {
+    "name": "Atlas Arcane",
+    "level": 7,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 350,
+    "consumable": false
+  },
+  {
     "name": "Atlatl",
     "level": 0,
     "rarity": "common",
@@ -2814,6 +2904,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 50,
+    "consumable": false
+  },
+  {
+    "name": "Autoload Leathers",
+    "level": 9,
+    "rarity": "common",
+    "category": "light",
+    "bulk": "1",
+    "cost": 700,
     "consumable": false
   },
   {
@@ -3114,6 +3213,15 @@
     "consumable": false
   },
   {
+    "name": "Balloon Padding",
+    "level": 8,
+    "rarity": "uncommon",
+    "category": "light",
+    "bulk": "0.1",
+    "cost": 480,
+    "consumable": false
+  },
+  {
     "name": "Bandalore",
     "level": 0,
     "rarity": "common",
@@ -3213,12 +3321,102 @@
     "consumable": false
   },
   {
-    "name": "Banner of the Restful",
+    "name": "Banner of Creeping Death (Greater)",
+    "level": 14,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 4500,
+    "consumable": false
+  },
+  {
+    "name": "Banner of Creeping Death (Lesser)",
+    "level": 4,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 120,
+    "consumable": false
+  },
+  {
+    "name": "Banner of Creeping Death (Major)",
+    "level": 19,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 36000,
+    "consumable": false
+  },
+  {
+    "name": "Banner of Creeping Death (Moderate)",
     "level": 9,
     "rarity": "uncommon",
     "category": "equipment",
-    "bulk": "1",
-    "cost": 700,
+    "bulk": "0.1",
+    "cost": 750,
+    "consumable": false
+  },
+  {
+    "name": "Banner of Piercing Shards",
+    "level": 8,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 465,
+    "consumable": false
+  },
+  {
+    "name": "Banner of Piercing Shards (Greater)",
+    "level": 13,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 2600,
+    "consumable": false
+  },
+  {
+    "name": "Banner of Piercing Shards (Major)",
+    "level": 18,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 22000,
+    "consumable": false
+  },
+  {
+    "name": "Banner of the Restful",
+    "level": 4,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 100,
+    "consumable": false
+  },
+  {
+    "name": "Banner of the Restful (Greater)",
+    "level": 12,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 2000,
+    "consumable": false
+  },
+  {
+    "name": "Banner of the Restful (Major)",
+    "level": 19,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 36000,
+    "consumable": false
+  },
+  {
+    "name": "Banner of the Rising Star",
+    "level": 20,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 60000,
     "consumable": false
   },
   {
@@ -3252,7 +3450,7 @@
     "name": "Barding Saddle",
     "level": 7,
     "rarity": "uncommon",
-    "category": "heavy-barding",
+    "category": "equipment",
     "bulk": "4",
     "cost": 330,
     "consumable": false
@@ -3261,7 +3459,7 @@
     "name": "Bargainer's Instrument",
     "level": 15,
     "rarity": "rare",
-    "category": "toolkit",
+    "category": "other",
     "bulk": "0.1",
     "cost": 1000,
     "consumable": true
@@ -3384,6 +3582,15 @@
     "consumable": false
   },
   {
+    "name": "Baton of the Fallen",
+    "level": 16,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 9000,
+    "consumable": false
+  },
+  {
     "name": "Batsbreath Cane",
     "level": 10,
     "rarity": "common",
@@ -3391,6 +3598,15 @@
     "bulk": "0.1",
     "cost": 950,
     "consumable": false
+  },
+  {
+    "name": "Battering Ammunition",
+    "level": 4,
+    "rarity": "common",
+    "category": "ammo",
+    "bulk": "0.1",
+    "cost": 15,
+    "consumable": true
   },
   {
     "name": "Battering Snare",
@@ -3416,7 +3632,7 @@
     "rarity": "uncommon",
     "category": "club",
     "bulk": "1",
-    "cost": 15,
+    "cost": 7,
     "consumable": false
   },
   {
@@ -3444,6 +3660,15 @@
     "category": "knife",
     "bulk": "0.1",
     "cost": 0.2,
+    "consumable": false
+  },
+  {
+    "name": "Beacon of the Wilds",
+    "level": 14,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 3800,
     "consumable": false
   },
   {
@@ -3537,6 +3762,15 @@
     "consumable": false
   },
   {
+    "name": "Bedroll of Deep Slumber",
+    "level": 3,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 50,
+    "consumable": false
+  },
+  {
     "name": "Beekeeper's Smoker",
     "level": 1,
     "rarity": "uncommon",
@@ -3552,6 +3786,24 @@
     "category": "equipment",
     "bulk": "2",
     "cost": 80000,
+    "consumable": false
+  },
+  {
+    "name": "Belkzen Deadsmasher",
+    "level": 13,
+    "rarity": "uncommon",
+    "category": "club",
+    "bulk": "1",
+    "cost": 2800,
+    "consumable": false
+  },
+  {
+    "name": "Belkzen Deadsmasher (Greater)",
+    "level": 18,
+    "rarity": "uncommon",
+    "category": "club",
+    "bulk": "1",
+    "cost": 22000,
     "consumable": false
   },
   {
@@ -3588,6 +3840,15 @@
     "category": "knife",
     "bulk": "0.1",
     "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Bellows Pipes",
+    "level": 5,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 140,
     "consumable": false
   },
   {
@@ -3630,7 +3891,7 @@
     "name": "Bendy-Arm Mutagen (Greater)",
     "level": 11,
     "rarity": "common",
-    "category": "elixir",
+    "category": "mutagen",
     "bulk": "0.1",
     "cost": 300,
     "consumable": true
@@ -3639,7 +3900,7 @@
     "name": "Bendy-Arm Mutagen (Lesser)",
     "level": 1,
     "rarity": "common",
-    "category": "elixir",
+    "category": "mutagen",
     "bulk": "0.1",
     "cost": 3,
     "consumable": true
@@ -3648,7 +3909,7 @@
     "name": "Bendy-Arm Mutagen (Major)",
     "level": 17,
     "rarity": "common",
-    "category": "elixir",
+    "category": "mutagen",
     "bulk": "0.1",
     "cost": 3000,
     "consumable": true
@@ -3657,10 +3918,19 @@
     "name": "Bendy-Arm Mutagen (Moderate)",
     "level": 3,
     "rarity": "common",
-    "category": "elixir",
+    "category": "mutagen",
     "bulk": "0.1",
     "cost": 12,
     "consumable": true
+  },
+  {
+    "name": "Benthic Drums",
+    "level": 17,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 14000,
+    "consumable": false
   },
   {
     "name": "Berserker's Cloak",
@@ -3906,6 +4176,15 @@
     "consumable": false
   },
   {
+    "name": "Bismuth Armor",
+    "level": 13,
+    "rarity": "uncommon",
+    "category": "heavy",
+    "bulk": "4",
+    "cost": 2800,
+    "consumable": false
+  },
+  {
     "name": "Biting Snare",
     "level": 4,
     "rarity": "common",
@@ -3931,6 +4210,15 @@
     "bulk": "0.1",
     "cost": 40,
     "consumable": true
+  },
+  {
+    "name": "Bivouac Targe",
+    "level": 2,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "0.1",
+    "cost": 35,
+    "consumable": false
   },
   {
     "name": "Black Adder Venom",
@@ -4203,6 +4491,15 @@
     "consumable": false
   },
   {
+    "name": "Blade Phantom's Guide",
+    "level": 11,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 300,
+    "consumable": true
+  },
+  {
     "name": "Bladed Diabolo",
     "level": 0,
     "rarity": "uncommon",
@@ -4236,6 +4533,24 @@
     "category": "flail",
     "bulk": "1",
     "cost": 3,
+    "consumable": false
+  },
+  {
+    "name": "Bladesweeper",
+    "level": 0,
+    "rarity": "uncommon",
+    "category": "sword",
+    "bulk": "2",
+    "cost": 4,
+    "consumable": false
+  },
+  {
+    "name": "Blakenshipper",
+    "level": 7,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "2",
+    "cost": 340,
     "consumable": false
   },
   {
@@ -4363,6 +4678,33 @@
     "bulk": "0.1",
     "cost": 7,
     "consumable": true
+  },
+  {
+    "name": "Blazing Banner",
+    "level": 4,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 100,
+    "consumable": false
+  },
+  {
+    "name": "Blazing Banner (Greater)",
+    "level": 12,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 2000,
+    "consumable": false
+  },
+  {
+    "name": "Blazing Banner (Major)",
+    "level": 19,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 36000,
+    "consumable": false
   },
   {
     "name": "Blazons of Shared Power",
@@ -4923,6 +5265,15 @@
     "consumable": true
   },
   {
+    "name": "Bloodstained Waistcoat",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 85,
+    "consumable": false
+  },
+  {
     "name": "Bloodstone",
     "level": 0,
     "rarity": "common",
@@ -5274,6 +5625,15 @@
     "consumable": false
   },
   {
+    "name": "Booming Bell",
+    "level": 6,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 230,
+    "consumable": false
+  },
+  {
     "name": "Boots of Bounding",
     "level": 7,
     "rarity": "common",
@@ -5346,12 +5706,57 @@
     "consumable": false
   },
   {
+    "name": "Boots of Quick Marching",
+    "level": 3,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 50,
+    "consumable": false
+  },
+  {
     "name": "Boots of the Blight",
     "level": 12,
     "rarity": "uncommon",
     "category": "equipment",
     "bulk": "0.1",
     "cost": 1800,
+    "consumable": false
+  },
+  {
+    "name": "Boots of the Dead",
+    "level": 2,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 35,
+    "consumable": false
+  },
+  {
+    "name": "Boots of the Secret Blade",
+    "level": 2,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 30,
+    "consumable": false
+  },
+  {
+    "name": "Boots of the Secret Blade (Greater)",
+    "level": 8,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 450,
+    "consumable": false
+  },
+  {
+    "name": "Boots of the Secret Blade (Major)",
+    "level": 15,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 5500,
     "consumable": false
   },
   {
@@ -5406,6 +5811,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 160,
+    "consumable": false
+  },
+  {
+    "name": "Bottle of Infinite Dust",
+    "level": 7,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 350,
     "consumable": false
   },
   {
@@ -6462,6 +6876,15 @@
     "consumable": false
   },
   {
+    "name": "Buoyant Buckle",
+    "level": 6,
+    "rarity": "rare",
+    "category": "light",
+    "bulk": "1",
+    "cost": 250,
+    "consumable": false
+  },
+  {
     "name": "Burglar's Rosebud",
     "level": 3,
     "rarity": "uncommon",
@@ -6523,6 +6946,24 @@
     "bulk": "0.1",
     "cost": 160,
     "consumable": false
+  },
+  {
+    "name": "Burrowing Bolt",
+    "level": 7,
+    "rarity": "common",
+    "category": "ammo",
+    "bulk": "0.1",
+    "cost": 55,
+    "consumable": true
+  },
+  {
+    "name": "Burrowing Bolt (Greater)",
+    "level": 14,
+    "rarity": "common",
+    "category": "ammo",
+    "bulk": "0.1",
+    "cost": 650,
+    "consumable": true
   },
   {
     "name": "Busine of Divine Reinforcements",
@@ -7164,6 +7605,15 @@
     "consumable": false
   },
   {
+    "name": "Cavalry Commander's Lance",
+    "level": 6,
+    "rarity": "uncommon",
+    "category": "spear",
+    "bulk": "2",
+    "cost": 225,
+    "consumable": false
+  },
+  {
     "name": "Cave Worm Venom",
     "level": 12,
     "rarity": "common",
@@ -7317,6 +7767,15 @@
     "consumable": false
   },
   {
+    "name": "Chain of Command",
+    "level": 6,
+    "rarity": "uncommon",
+    "category": "flail",
+    "bulk": "1",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "Chain of Stars",
     "level": 8,
     "rarity": "common",
@@ -7350,6 +7809,24 @@
     "category": "sword",
     "bulk": "1",
     "cost": 6,
+    "consumable": false
+  },
+  {
+    "name": "Chainbreaker",
+    "level": 5,
+    "rarity": "uncommon",
+    "category": "pick",
+    "bulk": "1",
+    "cost": 150,
+    "consumable": false
+  },
+  {
+    "name": "Chainbreaker (Greater)",
+    "level": 12,
+    "rarity": "uncommon",
+    "category": "pick",
+    "bulk": "1",
+    "cost": 1750,
     "consumable": false
   },
   {
@@ -7458,6 +7935,33 @@
     "category": "gadget",
     "bulk": "0.1",
     "cost": 320,
+    "consumable": true
+  },
+  {
+    "name": "Champion's Laurels (Amateur)",
+    "level": 2,
+    "rarity": "uncommon",
+    "category": "talisman",
+    "bulk": "0",
+    "cost": 6,
+    "consumable": true
+  },
+  {
+    "name": "Champion's Laurels (Professional)",
+    "level": 10,
+    "rarity": "uncommon",
+    "category": "talisman",
+    "bulk": "0",
+    "cost": 160,
+    "consumable": true
+  },
+  {
+    "name": "Champion's Laurels (Renowned)",
+    "level": 18,
+    "rarity": "uncommon",
+    "category": "talisman",
+    "bulk": "0",
+    "cost": 3200,
     "consumable": true
   },
   {
@@ -7659,6 +8163,15 @@
     "consumable": true
   },
   {
+    "name": "Chivalric Emblem",
+    "level": 5,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 30,
+    "consumable": true
+  },
+  {
     "name": "Choker of Elocution",
     "level": 6,
     "rarity": "common",
@@ -7702,6 +8215,15 @@
     "bulk": "0.1",
     "cost": 40000,
     "consumable": false
+  },
+  {
+    "name": "Chroma Kaleidoscope",
+    "level": 7,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 70,
+    "consumable": true
   },
   {
     "name": "Chromatic Jellyfish Oil (Greater)",
@@ -8901,6 +9423,24 @@
     "consumable": false
   },
   {
+    "name": "Command Cuirass",
+    "level": 8,
+    "rarity": "common",
+    "category": "heavy",
+    "bulk": "3",
+    "cost": 500,
+    "consumable": false
+  },
+  {
+    "name": "Commandant's Scabbard",
+    "level": 17,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 15000,
+    "consumable": false
+  },
+  {
     "name": "Communication Bangle",
     "level": 1,
     "rarity": "uncommon",
@@ -9153,6 +9693,15 @@
     "consumable": true
   },
   {
+    "name": "Constant Crosier",
+    "level": 10,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 900,
+    "consumable": false
+  },
+  {
     "name": "Constricting Meteor",
     "level": 8,
     "rarity": "uncommon",
@@ -9366,6 +9915,24 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 1750,
+    "consumable": false
+  },
+  {
+    "name": "Core Bugle",
+    "level": 12,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 1800,
+    "consumable": false
+  },
+  {
+    "name": "Cornucopia of Plenty",
+    "level": 3,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 60,
     "consumable": false
   },
   {
@@ -9591,6 +10158,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 1200,
+    "consumable": false
+  },
+  {
+    "name": "Crafting Leathers",
+    "level": 5,
+    "rarity": "uncommon",
+    "category": "light",
+    "bulk": "1",
+    "cost": 150,
     "consumable": false
   },
   {
@@ -10143,6 +10719,87 @@
     "consumable": true
   },
   {
+    "name": "Cyrusian Wand (1st-Rank Spell)",
+    "level": 4,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 100,
+    "consumable": false
+  },
+  {
+    "name": "Cyrusian Wand (2nd-Rank Spell)",
+    "level": 6,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 250,
+    "consumable": false
+  },
+  {
+    "name": "Cyrusian Wand (3rd-Rank Spell)",
+    "level": 8,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 500,
+    "consumable": false
+  },
+  {
+    "name": "Cyrusian Wand (4th-Rank Spell)",
+    "level": 10,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 1000,
+    "consumable": false
+  },
+  {
+    "name": "Cyrusian Wand (5th-Rank Spell)",
+    "level": 12,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 2000,
+    "consumable": false
+  },
+  {
+    "name": "Cyrusian Wand (6th-Rank Spell)",
+    "level": 14,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 4500,
+    "consumable": false
+  },
+  {
+    "name": "Cyrusian Wand (7th-Rank Spell)",
+    "level": 16,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 10000,
+    "consumable": false
+  },
+  {
+    "name": "Cyrusian Wand (8th-Rank Spell)",
+    "level": 18,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 24000,
+    "consumable": false
+  },
+  {
+    "name": "Cyrusian Wand (9th-Rank Spell)",
+    "level": 20,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 70000,
+    "consumable": false
+  },
+  {
     "name": "Cythbikian Staff",
     "level": 15,
     "rarity": "unique",
@@ -10368,6 +11025,24 @@
     "consumable": false
   },
   {
+    "name": "Dawnfire Beacon",
+    "level": 3,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 45,
+    "consumable": false
+  },
+  {
+    "name": "Dawnfire Beacon (Major)",
+    "level": 13,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 2600,
+    "consumable": false
+  },
+  {
     "name": "Dawnflower Beads",
     "level": 11,
     "rarity": "rare",
@@ -10476,6 +11151,15 @@
     "consumable": true
   },
   {
+    "name": "Dazzling Shortbow",
+    "level": 5,
+    "rarity": "uncommon",
+    "category": "bow",
+    "bulk": "1",
+    "cost": 160,
+    "consumable": false
+  },
+  {
     "name": "Deadlock Mint",
     "level": 3,
     "rarity": "common",
@@ -10564,6 +11248,15 @@
     "bulk": "0",
     "cost": 9000,
     "consumable": true
+  },
+  {
+    "name": "Death Tusk Helm",
+    "level": 3,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 55,
+    "consumable": false
   },
   {
     "name": "Deathcap Powder",
@@ -10680,6 +11373,24 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 75,
+    "consumable": false
+  },
+  {
+    "name": "Deep Pockets",
+    "level": 6,
+    "rarity": "uncommon",
+    "category": "light",
+    "bulk": "1",
+    "cost": 220,
+    "consumable": false
+  },
+  {
+    "name": "Deep Sea Plate",
+    "level": 8,
+    "rarity": "rare",
+    "category": "heavy",
+    "bulk": "4",
+    "cost": 500,
     "consumable": false
   },
   {
@@ -11205,6 +11916,15 @@
     "consumable": true
   },
   {
+    "name": "Dimensional Cleavestone",
+    "level": 14,
+    "rarity": "uncommon",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 900,
+    "consumable": true
+  },
+  {
     "name": "Dimensional Knot",
     "level": 7,
     "rarity": "common",
@@ -11502,6 +12222,24 @@
     "consumable": false
   },
   {
+    "name": "Doom Switch",
+    "level": 3,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 50,
+    "consumable": false
+  },
+  {
+    "name": "Doomsweeper",
+    "level": 8,
+    "rarity": "uncommon",
+    "category": "polearm",
+    "bulk": "2",
+    "cost": 475,
+    "consumable": false
+  },
+  {
     "name": "Double-Barreled Musket",
     "level": 1,
     "rarity": "uncommon",
@@ -11539,11 +12277,11 @@
   },
   {
     "name": "Dr. Ushernacht's Astonishing Ink (Major)",
-    "level": 10,
+    "level": 17,
     "rarity": "uncommon",
     "category": "other",
     "bulk": "0.1",
-    "cost": 160,
+    "cost": 2250,
     "consumable": true
   },
   {
@@ -11571,6 +12309,24 @@
     "category": "equipment",
     "bulk": "0.1",
     "cost": 40000,
+    "consumable": false
+  },
+  {
+    "name": "Draconic Verge",
+    "level": 7,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 370,
+    "consumable": false
+  },
+  {
+    "name": "Draddeth's Edge",
+    "level": 16,
+    "rarity": "unique",
+    "category": "hammer",
+    "bulk": "1",
+    "cost": 0,
     "consumable": false
   },
   {
@@ -11634,6 +12390,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 1400,
+    "consumable": false
+  },
+  {
+    "name": "Dragon Shield",
+    "level": 13,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "1",
+    "cost": 3000,
     "consumable": false
   },
   {
@@ -12591,6 +13356,15 @@
     "consumable": true
   },
   {
+    "name": "Eagle Wing",
+    "level": 10,
+    "rarity": "uncommon",
+    "category": "light",
+    "bulk": "1",
+    "cost": 950,
+    "consumable": false
+  },
+  {
     "name": "Earplugs",
     "level": 0,
     "rarity": "common",
@@ -13104,6 +13878,42 @@
     "consumable": true
   },
   {
+    "name": "Elixir of the Peaks (Greater)",
+    "level": 11,
+    "rarity": "rare",
+    "category": "elixir",
+    "bulk": "0.1",
+    "cost": 250,
+    "consumable": true
+  },
+  {
+    "name": "Elixir of the Peaks (Lesser)",
+    "level": 4,
+    "rarity": "rare",
+    "category": "elixir",
+    "bulk": "0.1",
+    "cost": 15,
+    "consumable": true
+  },
+  {
+    "name": "Elixir of the Peaks (Major)",
+    "level": 15,
+    "rarity": "rare",
+    "category": "elixir",
+    "bulk": "0.1",
+    "cost": 1200,
+    "consumable": true
+  },
+  {
+    "name": "Elixir of the Peaks (Moderate)",
+    "level": 7,
+    "rarity": "rare",
+    "category": "elixir",
+    "bulk": "0.1",
+    "cost": 60,
+    "consumable": true
+  },
+  {
     "name": "Elsie's Excellent Bottled Vim",
     "level": 1,
     "rarity": "rare",
@@ -13374,6 +14184,24 @@
     "consumable": false
   },
   {
+    "name": "Endless Quiver",
+    "level": 11,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 1200,
+    "consumable": false
+  },
+  {
+    "name": "Endless Quiver (Greater)",
+    "level": 18,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 1200,
+    "consumable": false
+  },
+  {
     "name": "Energized Cartridge",
     "level": 4,
     "rarity": "common",
@@ -13381,6 +14209,42 @@
     "bulk": "0",
     "cost": 20,
     "consumable": true
+  },
+  {
+    "name": "Energized Shield (Greater)",
+    "level": 15,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "1",
+    "cost": 6000,
+    "consumable": false
+  },
+  {
+    "name": "Energized Shield (Lesser)",
+    "level": 7,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "1",
+    "cost": 350,
+    "consumable": false
+  },
+  {
+    "name": "Energized Shield (Major)",
+    "level": 19,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "1",
+    "cost": 35000,
+    "consumable": false
+  },
+  {
+    "name": "Energized Shield (Moderate)",
+    "level": 11,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "1",
+    "cost": 1300,
+    "consumable": false
   },
   {
     "name": "Energizing",
@@ -14049,6 +14913,24 @@
     "consumable": false
   },
   {
+    "name": "Ethereal Crescent",
+    "level": 3,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 58,
+    "consumable": true
+  },
+  {
+    "name": "Ethereal Crescent (Greater)",
+    "level": 7,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 320,
+    "consumable": true
+  },
+  {
     "name": "Etheric Essence Disruptor (Greater)",
     "level": 11,
     "rarity": "uncommon",
@@ -14461,6 +15343,15 @@
     "bulk": "0",
     "cost": 3000,
     "consumable": false
+  },
+  {
+    "name": "Extinguishing Ball",
+    "level": 8,
+    "rarity": "common",
+    "category": "ammo",
+    "bulk": "0.1",
+    "cost": 75,
+    "consumable": true
   },
   {
     "name": "Extra Lung",
@@ -15030,6 +15921,15 @@
     "consumable": true
   },
   {
+    "name": "Feather of Unfounded Bravado",
+    "level": 2,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 30,
+    "consumable": false
+  },
+  {
     "name": "Feather Step Stone",
     "level": 3,
     "rarity": "common",
@@ -15153,6 +16053,15 @@
     "category": "other",
     "bulk": "0",
     "cost": 130,
+    "consumable": true
+  },
+  {
+    "name": "Featherlight Fletching",
+    "level": 4,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 20,
     "consumable": true
   },
   {
@@ -15354,6 +16263,15 @@
     "consumable": false
   },
   {
+    "name": "Fife of the Faithful",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 80,
+    "consumable": false
+  },
+  {
     "name": "Fighter's Fork",
     "level": 3,
     "rarity": "common",
@@ -15422,6 +16340,15 @@
     "rarity": "unique",
     "category": "equipment",
     "bulk": "0.1",
+    "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Final Stand",
+    "level": 17,
+    "rarity": "unique",
+    "category": "sword",
+    "bulk": "1",
     "cost": 0,
     "consumable": false
   },
@@ -15543,6 +16470,24 @@
     "consumable": true
   },
   {
+    "name": "Fireproof Gloves",
+    "level": 9,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 650,
+    "consumable": false
+  },
+  {
+    "name": "Fireproof Gloves (Greater)",
+    "level": 13,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 2500,
+    "consumable": false
+  },
+  {
     "name": "Firestarter Pellets",
     "level": 5,
     "rarity": "common",
@@ -15630,6 +16575,24 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 1750,
+    "consumable": false
+  },
+  {
+    "name": "Flag of the Stronghold",
+    "level": 10,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 1000,
+    "consumable": false
+  },
+  {
+    "name": "Flag of the Stronghold (Major)",
+    "level": 20,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 70000,
     "consumable": false
   },
   {
@@ -16047,6 +17010,15 @@
     "consumable": false
   },
   {
+    "name": "Foe-Sensing Rod",
+    "level": 10,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 200,
+    "consumable": true
+  },
+  {
     "name": "Folding Boat",
     "level": 8,
     "rarity": "uncommon",
@@ -16425,6 +17397,15 @@
     "consumable": true
   },
   {
+    "name": "Frenzied Quintessence",
+    "level": 14,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 900,
+    "consumable": true
+  },
+  {
     "name": "Frenzy Oil",
     "level": 16,
     "rarity": "uncommon",
@@ -16503,6 +17484,15 @@
     "category": "polearm",
     "bulk": "2",
     "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Frost Furs",
+    "level": 14,
+    "rarity": "uncommon",
+    "category": "medium",
+    "bulk": "2",
+    "cost": 4500,
     "consumable": false
   },
   {
@@ -16992,6 +17982,15 @@
     "consumable": true
   },
   {
+    "name": "Gas Mask of Clean Air",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 85,
+    "consumable": false
+  },
+  {
     "name": "Gasping Lament",
     "level": 12,
     "rarity": "rare",
@@ -17151,6 +18150,15 @@
     "category": "equipment",
     "bulk": "0.1",
     "cost": 10,
+    "consumable": false
+  },
+  {
+    "name": "General's Word",
+    "level": 14,
+    "rarity": "uncommon",
+    "category": "club",
+    "bulk": "1",
+    "cost": 4500,
     "consumable": false
   },
   {
@@ -17475,6 +18483,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 6000,
+    "consumable": false
+  },
+  {
+    "name": "Gift of Olives",
+    "level": 3,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 48,
     "consumable": false
   },
   {
@@ -18009,6 +19026,15 @@
     "consumable": false
   },
   {
+    "name": "Golden Greaves",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 80,
+    "consumable": false
+  },
+  {
     "name": "Golden Legion Epaulet",
     "level": 3,
     "rarity": "uncommon",
@@ -18315,6 +19341,15 @@
     "consumable": true
   },
   {
+    "name": "Gravedigger's Call",
+    "level": 12,
+    "rarity": "common",
+    "category": "polearm",
+    "bulk": "2",
+    "cost": 1700,
+    "consumable": false
+  },
+  {
     "name": "Gravemist Taper",
     "level": 5,
     "rarity": "common",
@@ -18558,6 +19593,24 @@
     "consumable": true
   },
   {
+    "name": "Grippy Gloves",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 90,
+    "consumable": false
+  },
+  {
+    "name": "Grisly Brigandine",
+    "level": 12,
+    "rarity": "rare",
+    "category": "light",
+    "bulk": "1",
+    "cost": 2000,
+    "consumable": false
+  },
+  {
     "name": "Grisly Scythe",
     "level": 9,
     "rarity": "rare",
@@ -18646,6 +19699,15 @@
     "bulk": "0",
     "cost": 900,
     "consumable": true
+  },
+  {
+    "name": "Guangu of the Steppe",
+    "level": 6,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 225,
+    "consumable": false
   },
   {
     "name": "Guardian Aluum Charm",
@@ -18961,6 +20023,15 @@
     "bulk": "0",
     "cost": 4,
     "consumable": false
+  },
+  {
+    "name": "Hand of Mercy",
+    "level": 2,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 7,
+    "consumable": true
   },
   {
     "name": "Hand of the Mage",
@@ -19566,6 +20637,15 @@
     "consumable": false
   },
   {
+    "name": "Hell's Judgment",
+    "level": 16,
+    "rarity": "uncommon",
+    "category": "polearm",
+    "bulk": "2",
+    "cost": 10000,
+    "consumable": false
+  },
+  {
     "name": "Hellfire Boots",
     "level": 13,
     "rarity": "common",
@@ -19683,6 +20763,15 @@
     "consumable": false
   },
   {
+    "name": "Hero Killer",
+    "level": 9,
+    "rarity": "rare",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 0,
+    "consumable": true
+  },
+  {
     "name": "Hero's Plate",
     "level": 10,
     "rarity": "rare",
@@ -19716,6 +20805,24 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 1200,
+    "consumable": false
+  },
+  {
+    "name": "Hexwise Banner",
+    "level": 10,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 1000,
+    "consumable": false
+  },
+  {
+    "name": "Hexwise Banner (Major)",
+    "level": 20,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 70000,
     "consumable": false
   },
   {
@@ -19878,6 +20985,15 @@
     "category": "light",
     "bulk": "1",
     "cost": 500,
+    "consumable": false
+  },
+  {
+    "name": "Hollow Robes",
+    "level": 13,
+    "rarity": "rare",
+    "category": "unarmored",
+    "bulk": "1",
+    "cost": 3000,
     "consumable": false
   },
   {
@@ -20079,6 +21195,15 @@
     "consumable": false
   },
   {
+    "name": "Horn of the Archon",
+    "level": 16,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 8500,
+    "consumable": false
+  },
+  {
     "name": "Horn of the Sun Aurochs",
     "level": 13,
     "rarity": "rare",
@@ -20133,12 +21258,30 @@
     "consumable": false
   },
   {
+    "name": "Horrific Effigy",
+    "level": 15,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 7000,
+    "consumable": false
+  },
+  {
     "name": "Horsechopper",
     "level": 0,
     "rarity": "uncommon",
     "category": "polearm",
     "bulk": "2",
     "cost": 0.9,
+    "consumable": false
+  },
+  {
+    "name": "Horselord's Longbow",
+    "level": 6,
+    "rarity": "uncommon",
+    "category": "bow",
+    "bulk": "2",
+    "cost": 250,
     "consumable": false
   },
   {
@@ -20223,6 +21366,15 @@
     "consumable": true
   },
   {
+    "name": "Hungry Lantern",
+    "level": 12,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 1900,
+    "consumable": false
+  },
+  {
     "name": "Hunter's Anthem",
     "level": 11,
     "rarity": "common",
@@ -20286,6 +21438,15 @@
     "consumable": false
   },
   {
+    "name": "Hydra Head Club",
+    "level": 6,
+    "rarity": "rare",
+    "category": "club",
+    "bulk": "1",
+    "cost": 225,
+    "consumable": false
+  },
+  {
     "name": "Hydra Mutagen",
     "level": 13,
     "rarity": "common",
@@ -20293,6 +21454,15 @@
     "bulk": "0.1",
     "cost": 600,
     "consumable": true
+  },
+  {
+    "name": "Hydra Spear",
+    "level": 8,
+    "rarity": "unique",
+    "category": "spear",
+    "bulk": "1",
+    "cost": 0.1,
+    "consumable": false
   },
   {
     "name": "Hydrocannon",
@@ -20664,6 +21834,15 @@
     "consumable": false
   },
   {
+    "name": "Incendiary Plate",
+    "level": 20,
+    "rarity": "common",
+    "category": "heavy",
+    "bulk": "4",
+    "cost": 70000,
+    "consumable": false
+  },
+  {
     "name": "Incense Bundle of Annual Blessings",
     "level": 8,
     "rarity": "common",
@@ -21003,6 +22182,15 @@
     "category": "equipment",
     "bulk": "0.1",
     "cost": 200,
+    "consumable": false
+  },
+  {
+    "name": "Instrument Harness",
+    "level": 3,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 55,
     "consumable": false
   },
   {
@@ -21492,6 +22680,24 @@
     "consumable": false
   },
   {
+    "name": "Jistkan Colossus Crusher",
+    "level": 15,
+    "rarity": "rare",
+    "category": "hammer",
+    "bulk": "2",
+    "cost": 6250,
+    "consumable": false
+  },
+  {
+    "name": "Jistkan War Crossbow",
+    "level": 18,
+    "rarity": "rare",
+    "category": "crossbow",
+    "bulk": "2",
+    "cost": 22000,
+    "consumable": false
+  },
+  {
     "name": "Jiu Huan Dao",
     "level": 0,
     "rarity": "uncommon",
@@ -21625,6 +22831,15 @@
     "bulk": "0.1",
     "cost": 12,
     "consumable": true
+  },
+  {
+    "name": "Juggernaut Plate",
+    "level": 19,
+    "rarity": "rare",
+    "category": "heavy",
+    "bulk": "4",
+    "cost": 35000,
+    "consumable": false
   },
   {
     "name": "Juggling Club",
@@ -21843,6 +23058,15 @@
     "consumable": false
   },
   {
+    "name": "Key of Unwinding",
+    "level": 18,
+    "rarity": "uncommon",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 5000,
+    "consumable": true
+  },
+  {
     "name": "Key to the Stomach",
     "level": 9,
     "rarity": "rare",
@@ -21876,6 +23100,24 @@
     "category": "sword",
     "bulk": "1",
     "cost": 2,
+    "consumable": false
+  },
+  {
+    "name": "Killer's Belt",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 95,
+    "consumable": false
+  },
+  {
+    "name": "Killer's Belt (Greater)",
+    "level": 9,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 650,
     "consumable": false
   },
   {
@@ -21960,6 +23202,15 @@
     "consumable": false
   },
   {
+    "name": "Kithrender",
+    "level": 16,
+    "rarity": "rare",
+    "category": "axe",
+    "bulk": "2",
+    "cost": 10000,
+    "consumable": false
+  },
+  {
     "name": "Kizidhar's Shield",
     "level": 11,
     "rarity": "common",
@@ -21993,6 +23244,33 @@
     "category": "backpack",
     "bulk": "0",
     "cost": 2850,
+    "consumable": false
+  },
+  {
+    "name": "Knave's Standard",
+    "level": 4,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 100,
+    "consumable": false
+  },
+  {
+    "name": "Knave's Standard (Greater)",
+    "level": 12,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 1800,
+    "consumable": false
+  },
+  {
+    "name": "Knave's Standard (Major)",
+    "level": 19,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 36000,
     "consumable": false
   },
   {
@@ -22257,6 +23535,15 @@
     "consumable": false
   },
   {
+    "name": "Lamentation of the Faithless",
+    "level": 25,
+    "rarity": "unique",
+    "category": "sword",
+    "bulk": "2",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "Lance",
     "level": 0,
     "rarity": "common",
@@ -22353,6 +23640,15 @@
     "category": "equipment",
     "bulk": "1",
     "cost": 120,
+    "consumable": false
+  },
+  {
+    "name": "Last Hope",
+    "level": 16,
+    "rarity": "uncommon",
+    "category": "sword",
+    "bulk": "1",
+    "cost": 10000,
     "consumable": false
   },
   {
@@ -22482,6 +23778,15 @@
     "consumable": false
   },
   {
+    "name": "Leeching Fangs",
+    "level": 12,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 400,
+    "consumable": true
+  },
+  {
     "name": "Legerdemain Handkerchief",
     "level": 2,
     "rarity": "common",
@@ -22543,6 +23848,15 @@
     "bulk": "2",
     "cost": 90,
     "consumable": false
+  },
+  {
+    "name": "Liar's Demise",
+    "level": 14,
+    "rarity": "uncommon",
+    "category": "poison",
+    "bulk": "0.1",
+    "cost": 650,
+    "consumable": true
   },
   {
     "name": "Liar's Gun",
@@ -22632,6 +23946,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 1600,
+    "consumable": false
+  },
+  {
+    "name": "Lieutenant's Sash",
+    "level": 6,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 240,
     "consumable": false
   },
   {
@@ -22788,6 +24111,15 @@
     "consumable": false
   },
   {
+    "name": "Lifting Leather",
+    "level": 8,
+    "rarity": "common",
+    "category": "light",
+    "bulk": "1",
+    "cost": 450,
+    "consumable": false
+  },
+  {
     "name": "Light Barding",
     "level": 0,
     "rarity": "common",
@@ -22887,6 +24219,15 @@
     "consumable": false
   },
   {
+    "name": "Limning Gem",
+    "level": 4,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 20,
+    "consumable": true
+  },
+  {
     "name": "Linguist's Dictionary",
     "level": 9,
     "rarity": "common",
@@ -22973,7 +24314,7 @@
     "rarity": "uncommon",
     "category": "sword",
     "bulk": "0.1",
-    "cost": 90,
+    "cost": 900,
     "consumable": false
   },
   {
@@ -23148,12 +24489,30 @@
     "consumable": false
   },
   {
+    "name": "Locket of Love Left Behind",
+    "level": 11,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 1200,
+    "consumable": false
+  },
+  {
     "name": "Locket of Sealed Nightmares",
     "level": 19,
     "rarity": "rare",
     "category": "equipment",
     "bulk": "0",
     "cost": 36000,
+    "consumable": false
+  },
+  {
+    "name": "Locust Leather",
+    "level": 8,
+    "rarity": "common",
+    "category": "light",
+    "bulk": "1",
+    "cost": 500,
     "consumable": false
   },
   {
@@ -23580,6 +24939,15 @@
     "consumable": false
   },
   {
+    "name": "Mageslayer",
+    "level": 8,
+    "rarity": "uncommon",
+    "category": "sword",
+    "bulk": "1",
+    "cost": 500,
+    "consumable": false
+  },
+  {
     "name": "Magic Wand (1st-Rank Spell)",
     "level": 3,
     "rarity": "common",
@@ -23677,6 +25045,51 @@
     "bulk": "0",
     "cost": 15,
     "consumable": true
+  },
+  {
+    "name": "Magical Medal (Gorilla's Might)",
+    "level": 3,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 25,
+    "consumable": false
+  },
+  {
+    "name": "Magical Medal (Griffon's Heart)",
+    "level": 4,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 80,
+    "consumable": false
+  },
+  {
+    "name": "Magical Medal (Phoenix's Fire)",
+    "level": 16,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 9000,
+    "consumable": false
+  },
+  {
+    "name": "Magical Medal (Unicorn's Purity)",
+    "level": 12,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 1700,
+    "consumable": false
+  },
+  {
+    "name": "Magical Medal (Wolf Pack)",
+    "level": 7,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 350,
+    "consumable": false
   },
   {
     "name": "Magical Prosthetic Eye",
@@ -24156,6 +25569,15 @@
     "consumable": true
   },
   {
+    "name": "Marshal's Baton",
+    "level": 3,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 60,
+    "consumable": false
+  },
+  {
     "name": "Martyr's Shield",
     "level": 7,
     "rarity": "rare",
@@ -24288,6 +25710,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 100,
+    "consumable": false
+  },
+  {
+    "name": "Mask of Shifting Monstrosity",
+    "level": 7,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 360,
     "consumable": false
   },
   {
@@ -24462,6 +25893,15 @@
     "consumable": false
   },
   {
+    "name": "Maul-spade",
+    "level": 0,
+    "rarity": "uncommon",
+    "category": "club",
+    "bulk": "2",
+    "cost": 6,
+    "consumable": false
+  },
+  {
     "name": "Maw of Hungry Shadows",
     "level": 18,
     "rarity": "common",
@@ -24477,6 +25917,33 @@
     "category": "equipment",
     "bulk": "0.1",
     "cost": 10,
+    "consumable": false
+  },
+  {
+    "name": "Medic's Armband",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 80,
+    "consumable": false
+  },
+  {
+    "name": "Medic's Armband (Greater)",
+    "level": 10,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 900,
+    "consumable": false
+  },
+  {
+    "name": "Medic's Shield",
+    "level": 14,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "1",
+    "cost": 4000,
     "consumable": false
   },
   {
@@ -24678,6 +26145,15 @@
     "consumable": true
   },
   {
+    "name": "Message Mail",
+    "level": 8,
+    "rarity": "common",
+    "category": "medium",
+    "bulk": "2",
+    "cost": 430,
+    "consumable": false
+  },
+  {
     "name": "Messenger Missive",
     "level": 4,
     "rarity": "common",
@@ -24864,6 +26340,15 @@
     "category": "drug",
     "bulk": "0.1",
     "cost": 400,
+    "consumable": true
+  },
+  {
+    "name": "Mighty Counterweight",
+    "level": 4,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 20,
     "consumable": true
   },
   {
@@ -25137,6 +26622,33 @@
     "consumable": false
   },
   {
+    "name": "Mitigation Mail",
+    "level": 9,
+    "rarity": "uncommon",
+    "category": "medium",
+    "bulk": "2",
+    "cost": 700,
+    "consumable": false
+  },
+  {
+    "name": "Mitigation Mail (Greater)",
+    "level": 13,
+    "rarity": "uncommon",
+    "category": "medium",
+    "bulk": "2",
+    "cost": 3000,
+    "consumable": false
+  },
+  {
+    "name": "Mitigation Mail (Major)",
+    "level": 17,
+    "rarity": "uncommon",
+    "category": "medium",
+    "bulk": "2",
+    "cost": 14000,
+    "consumable": false
+  },
+  {
     "name": "Mnemonic Acid",
     "level": 8,
     "rarity": "uncommon",
@@ -25380,6 +26892,15 @@
     "consumable": false
   },
   {
+    "name": "Morph Jewel",
+    "level": 3,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 12,
+    "consumable": true
+  },
+  {
     "name": "Morphing Weapon",
     "level": 7,
     "rarity": "common",
@@ -25422,6 +26943,15 @@
     "category": "backpack",
     "bulk": "0",
     "cost": 6000,
+    "consumable": false
+  },
+  {
+    "name": "Motion-Seeking Lenses",
+    "level": 3,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 55,
     "consumable": false
   },
   {
@@ -25695,6 +27225,15 @@
     "consumable": false
   },
   {
+    "name": "Mythotoxin",
+    "level": 8,
+    "rarity": "rare",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 100,
+    "consumable": true
+  },
+  {
     "name": "Naginata",
     "level": 0,
     "rarity": "uncommon",
@@ -25738,6 +27277,15 @@
     "bulk": "0.1",
     "cost": 16,
     "consumable": true
+  },
+  {
+    "name": "Name Pendant",
+    "level": 2,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 25,
+    "consumable": false
   },
   {
     "name": "Nap Gas Dispenser",
@@ -25986,7 +27534,7 @@
     "name": "Neophyte's Fipple",
     "level": 3,
     "rarity": "common",
-    "category": "toolkit",
+    "category": "other",
     "bulk": "0.1",
     "cost": 8,
     "consumable": true
@@ -27405,6 +28953,15 @@
     "consumable": false
   },
   {
+    "name": "Parachute Mail",
+    "level": 5,
+    "rarity": "common",
+    "category": "medium",
+    "bulk": "2",
+    "cost": 150,
+    "consumable": false
+  },
+  {
     "name": "Parade Armor",
     "level": 2,
     "rarity": "uncommon",
@@ -27420,6 +28977,15 @@
     "category": "treasure",
     "bulk": "0",
     "cost": 25,
+    "consumable": false
+  },
+  {
+    "name": "Paradigm Cube",
+    "level": 14,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 4500,
     "consumable": false
   },
   {
@@ -27636,6 +29202,15 @@
     "category": "ammo",
     "bulk": "0",
     "cost": 400,
+    "consumable": true
+  },
+  {
+    "name": "Penultimate Heartbeat",
+    "level": 16,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 2000,
     "consumable": true
   },
   {
@@ -27918,6 +29493,15 @@
     "consumable": false
   },
   {
+    "name": "Phasing Trine",
+    "level": 16,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 1900,
+    "consumable": true
+  },
+  {
     "name": "Pheromone Flare (Greater)",
     "level": 17,
     "rarity": "common",
@@ -28141,6 +29725,15 @@
     "bulk": "1",
     "cost": 80,
     "consumable": false
+  },
+  {
+    "name": "Pinpoint Arrowhead",
+    "level": 6,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 44,
+    "consumable": true
   },
   {
     "name": "Pinwheel",
@@ -28401,6 +29994,15 @@
     "category": "equipment",
     "bulk": "0.1",
     "cost": 25,
+    "consumable": false
+  },
+  {
+    "name": "Pocket Watch of Stethelos",
+    "level": 8,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 500,
     "consumable": false
   },
   {
@@ -29439,6 +31041,15 @@
     "consumable": false
   },
   {
+    "name": "Preordained Spear",
+    "level": 9,
+    "rarity": "rare",
+    "category": "spear",
+    "bulk": "1",
+    "cost": 700,
+    "consumable": false
+  },
+  {
     "name": "Presentable",
     "level": 3,
     "rarity": "uncommon",
@@ -29482,6 +31093,15 @@
     "bulk": "0",
     "cost": 450,
     "consumable": false
+  },
+  {
+    "name": "Preserving Shot",
+    "level": 1,
+    "rarity": "common",
+    "category": "ammo",
+    "bulk": "0.1",
+    "cost": 3,
+    "consumable": true
   },
   {
     "name": "Pressure Bomb (Greater)",
@@ -29646,6 +31266,15 @@
     "consumable": false
   },
   {
+    "name": "Pristine Epaulets",
+    "level": 5,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 125,
+    "consumable": false
+  },
+  {
     "name": "Privacy Ward Fulu (Chamber)",
     "level": 9,
     "rarity": "rare",
@@ -29724,6 +31353,24 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 0.5,
+    "consumable": false
+  },
+  {
+    "name": "Protective Netting",
+    "level": 3,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 50,
+    "consumable": false
+  },
+  {
+    "name": "Protector's Final Gift",
+    "level": 5,
+    "rarity": "rare",
+    "category": "sword",
+    "bulk": "1",
+    "cost": 150,
     "consumable": false
   },
   {
@@ -29970,6 +31617,24 @@
     "consumable": false
   },
   {
+    "name": "Pyrefeather Cloak",
+    "level": 3,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 50,
+    "consumable": false
+  },
+  {
+    "name": "Pyrefeather Token",
+    "level": 3,
+    "rarity": "uncommon",
+    "category": "other",
+    "bulk": "0",
+    "cost": 5,
+    "consumable": true
+  },
+  {
     "name": "Pyrite",
     "level": 0,
     "rarity": "common",
@@ -30186,6 +31851,15 @@
     "consumable": false
   },
   {
+    "name": "Quickened Standard",
+    "level": 18,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 24000,
+    "consumable": false
+  },
+  {
     "name": "Quickmelt Slick (Greater)",
     "level": 12,
     "rarity": "uncommon",
@@ -30327,6 +32001,15 @@
     "category": "equipment",
     "bulk": "0.1",
     "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Radiant Victory",
+    "level": 6,
+    "rarity": "uncommon",
+    "category": "sword",
+    "bulk": "0.1",
+    "cost": 240,
     "consumable": false
   },
   {
@@ -30546,6 +32229,42 @@
     "consumable": false
   },
   {
+    "name": "Reactive Flash",
+    "level": 5,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 27,
+    "consumable": true
+  },
+  {
+    "name": "Reactive Mail",
+    "level": 5,
+    "rarity": "common",
+    "category": "medium",
+    "bulk": "2",
+    "cost": 160,
+    "consumable": false
+  },
+  {
+    "name": "Reactive Mail (Greater)",
+    "level": 11,
+    "rarity": "common",
+    "category": "medium",
+    "bulk": "2",
+    "cost": 1400,
+    "consumable": false
+  },
+  {
+    "name": "Reactive Mail (Major)",
+    "level": 17,
+    "rarity": "common",
+    "category": "medium",
+    "bulk": "2",
+    "cost": 14000,
+    "consumable": false
+  },
+  {
     "name": "Reading Glyphs",
     "level": 4,
     "rarity": "common",
@@ -30634,6 +32353,15 @@
     "bulk": "0.1",
     "cost": 600,
     "consumable": true
+  },
+  {
+    "name": "Reaper's Toll",
+    "level": 15,
+    "rarity": "uncommon",
+    "category": "polearm",
+    "bulk": "2",
+    "cost": 6500,
+    "consumable": false
   },
   {
     "name": "Rebirth Potion",
@@ -31104,6 +32832,15 @@
     "consumable": false
   },
   {
+    "name": "Repeater Bandolier",
+    "level": 0,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 1,
+    "consumable": false
+  },
+  {
     "name": "Repeating Crossbow",
     "level": 1,
     "rarity": "uncommon",
@@ -31368,7 +33105,7 @@
     "name": "Retrieval Belt",
     "level": 7,
     "rarity": "uncommon",
-    "category": "equipment",
+    "category": "backpack",
     "bulk": "0",
     "cost": 340,
     "consumable": false
@@ -31377,7 +33114,7 @@
     "name": "Retrieval Belt (Greater)",
     "level": 9,
     "rarity": "uncommon",
-    "category": "equipment",
+    "category": "backpack",
     "bulk": "0",
     "cost": 600,
     "consumable": false
@@ -31386,7 +33123,7 @@
     "name": "Retrieval Belt (Major)",
     "level": 13,
     "rarity": "uncommon",
-    "category": "equipment",
+    "category": "backpack",
     "bulk": "0",
     "cost": 2500,
     "consumable": false
@@ -31444,6 +33181,15 @@
     "bulk": "0.1",
     "cost": 9,
     "consumable": true
+  },
+  {
+    "name": "Revenant Blade",
+    "level": 10,
+    "rarity": "rare",
+    "category": "knife",
+    "bulk": "0.1",
+    "cost": 900,
+    "consumable": false
   },
   {
     "name": "Reverberating Stone",
@@ -31560,6 +33306,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Righteous Fury",
+    "level": 15,
+    "rarity": "uncommon",
+    "category": "sword",
+    "bulk": "1",
+    "cost": 6000,
     "consumable": false
   },
   {
@@ -32724,6 +34479,15 @@
     "consumable": false
   },
   {
+    "name": "Sack of Hydra's Teeth",
+    "level": 12,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 1800,
+    "consumable": false
+  },
+  {
     "name": "Sack of Rotten Fruit",
     "level": 1,
     "rarity": "uncommon",
@@ -32775,6 +34539,24 @@
     "category": "knife",
     "bulk": "0.1",
     "cost": 0.6,
+    "consumable": false
+  },
+  {
+    "name": "Sailor's Collar",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Sailor's Collar (Greater)",
+    "level": 10,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 850,
     "consumable": false
   },
   {
@@ -33165,6 +34947,15 @@
     "consumable": false
   },
   {
+    "name": "Satchel of Numberless Seeds",
+    "level": 8,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 480,
+    "consumable": false
+  },
+  {
     "name": "Saurian Spike",
     "level": 9,
     "rarity": "common",
@@ -33415,6 +35206,15 @@
     "bulk": "1",
     "cost": 0.1,
     "consumable": false
+  },
+  {
+    "name": "Scouting Arrow",
+    "level": 8,
+    "rarity": "common",
+    "category": "ammo",
+    "bulk": "0.1",
+    "cost": 85,
+    "consumable": true
   },
   {
     "name": "Screaming Pinion",
@@ -33804,6 +35604,15 @@
     "consumable": true
   },
   {
+    "name": "Semaphore of Slanders",
+    "level": 11,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 1250,
+    "consumable": false
+  },
+  {
     "name": "Sense-Dulling Hood (Greater)",
     "level": 12,
     "rarity": "common",
@@ -34119,6 +35928,15 @@
     "consumable": false
   },
   {
+    "name": "Shadow Shroud",
+    "level": 10,
+    "rarity": "common",
+    "category": "light",
+    "bulk": "1",
+    "cost": 1000,
+    "consumable": false
+  },
+  {
     "name": "Shadow Signet",
     "level": 10,
     "rarity": "common",
@@ -34353,6 +36171,15 @@
     "consumable": false
   },
   {
+    "name": "Shield of Snakes",
+    "level": 10,
+    "rarity": "unique",
+    "category": "shield",
+    "bulk": "0.1",
+    "cost": 1000,
+    "consumable": false
+  },
+  {
     "name": "Shield of the Unified Legion",
     "level": 20,
     "rarity": "uncommon",
@@ -34441,6 +36268,15 @@
     "bulk": "0",
     "cost": 3,
     "consumable": true
+  },
+  {
+    "name": "Shining Hackle",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 0,
+    "consumable": false
   },
   {
     "name": "Shining Shield",
@@ -34722,6 +36558,15 @@
     "consumable": false
   },
   {
+    "name": "Siege Shield",
+    "level": 3,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "4",
+    "cost": 60,
+    "consumable": false
+  },
+  {
     "name": "Sifting Pan",
     "level": 0,
     "rarity": "common",
@@ -34776,12 +36621,66 @@
     "consumable": true
   },
   {
+    "name": "Signifer's Mask",
+    "level": 0,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "Signifier's Mask",
     "level": 0,
     "rarity": "uncommon",
     "category": "equipment",
     "bulk": "0",
     "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Sihedron Medallion",
+    "level": 5,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 160,
+    "consumable": false
+  },
+  {
+    "name": "Sihedron Medallion (Greater)",
+    "level": 9,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 700,
+    "consumable": false
+  },
+  {
+    "name": "Sihedron Medallion (Major)",
+    "level": 15,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 6500,
+    "consumable": false
+  },
+  {
+    "name": "Sihedron Ring",
+    "level": 6,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 250,
+    "consumable": false
+  },
+  {
+    "name": "Sihedron Ring (Greater)",
+    "level": 12,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 2000,
     "consumable": false
   },
   {
@@ -35244,6 +37143,15 @@
     "consumable": false
   },
   {
+    "name": "Sinuous Recorder",
+    "level": 5,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 140,
+    "consumable": false
+  },
+  {
     "name": "Sisterstone Chunk",
     "level": 3,
     "rarity": "rare",
@@ -35575,6 +37483,15 @@
     "bulk": "0.1",
     "cost": 2450,
     "consumable": false
+  },
+  {
+    "name": "Slayer's Stone",
+    "level": 6,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 40,
+    "consumable": true
   },
   {
     "name": "Sleeves of Storage",
@@ -35964,6 +37881,15 @@
     "consumable": false
   },
   {
+    "name": "Snare of Speed",
+    "level": 15,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 7000,
+    "consumable": false
+  },
+  {
     "name": "Snarling Badger (Greater)",
     "level": 18,
     "rarity": "common",
@@ -36142,6 +38068,51 @@
     "bulk": "1",
     "cost": 160,
     "consumable": false
+  },
+  {
+    "name": "Soldier's Syrup (Greater)",
+    "level": 12,
+    "rarity": "uncommon",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 400,
+    "consumable": true
+  },
+  {
+    "name": "Soldier's Syrup (Lesser)",
+    "level": 3,
+    "rarity": "uncommon",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 12,
+    "consumable": true
+  },
+  {
+    "name": "Soldier's Syrup (Major)",
+    "level": 18,
+    "rarity": "uncommon",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 5000,
+    "consumable": true
+  },
+  {
+    "name": "Soldier's Syrup (Minor)",
+    "level": 1,
+    "rarity": "uncommon",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 4,
+    "consumable": true
+  },
+  {
+    "name": "Soldier's Syrup (Moderate)",
+    "level": 6,
+    "rarity": "uncommon",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 50,
+    "consumable": true
   },
   {
     "name": "Solidified Moment of Time",
@@ -36421,6 +38392,15 @@
     "bulk": "0.1",
     "cost": 70,
     "consumable": false
+  },
+  {
+    "name": "Sparking Pepper String",
+    "level": 3,
+    "rarity": "uncommon",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 10,
+    "consumable": true
   },
   {
     "name": "Sparking Spellgun (Greater)",
@@ -36780,6 +38760,15 @@
     "category": "simple",
     "bulk": "0.1",
     "cost": 4500,
+    "consumable": true
+  },
+  {
+    "name": "Spellslasher",
+    "level": 15,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 1200,
     "consumable": true
   },
   {
@@ -37530,6 +39519,15 @@
     "consumable": true
   },
   {
+    "name": "Spotless Spats",
+    "level": 2,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "Spray Pellets",
     "level": 0,
     "rarity": "common",
@@ -37734,6 +39732,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 160,
+    "consumable": false
+  },
+  {
+    "name": "Squire's Tabard",
+    "level": 2,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 25,
     "consumable": false
   },
   {
@@ -38367,6 +40374,15 @@
     "consumable": false
   },
   {
+    "name": "Staff of the Ruling Beast",
+    "level": 9,
+    "rarity": "unique",
+    "category": "club",
+    "bulk": "1",
+    "cost": 700,
+    "consumable": false
+  },
+  {
     "name": "Staff of the Tempest",
     "level": 6,
     "rarity": "common",
@@ -38556,6 +40572,33 @@
     "consumable": true
   },
   {
+    "name": "Stalwart's Banner",
+    "level": 7,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 360,
+    "consumable": false
+  },
+  {
+    "name": "Stalwart's Banner (Greater)",
+    "level": 12,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 2000,
+    "consumable": false
+  },
+  {
+    "name": "Stalwart's Banner (Major)",
+    "level": 17,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 15000,
+    "consumable": false
+  },
+  {
     "name": "Stalwart's Ring",
     "level": 5,
     "rarity": "uncommon",
@@ -38652,6 +40695,24 @@
     "category": "equipment",
     "bulk": "1",
     "cost": 900,
+    "consumable": false
+  },
+  {
+    "name": "Standard of the Sure-Footed",
+    "level": 11,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 1200,
+    "consumable": false
+  },
+  {
+    "name": "Standard of the True Ally",
+    "level": 10,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 1000,
     "consumable": false
   },
   {
@@ -39267,6 +41328,15 @@
     "consumable": false
   },
   {
+    "name": "Strand of the Seven Births",
+    "level": 7,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 300,
+    "consumable": false
+  },
+  {
     "name": "Striking",
     "level": 4,
     "rarity": "common",
@@ -39337,6 +41407,15 @@
     "bulk": "0.1",
     "cost": 16,
     "consumable": true
+  },
+  {
+    "name": "Sturdy Neck Stock",
+    "level": 11,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 1300,
+    "consumable": false
   },
   {
     "name": "Sturdy Satchel",
@@ -39435,6 +41514,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 5,
+    "consumable": false
+  },
+  {
+    "name": "Successor Doll",
+    "level": 5,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 150,
     "consumable": false
   },
   {
@@ -39570,6 +41658,15 @@
     "category": "equipment",
     "bulk": "0",
     "cost": 850,
+    "consumable": false
+  },
+  {
+    "name": "Sun Slayer",
+    "level": 10,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "1",
+    "cost": 1000,
     "consumable": false
   },
   {
@@ -39717,6 +41814,15 @@
     "consumable": false
   },
   {
+    "name": "Swagger Stick",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 75,
+    "consumable": false
+  },
+  {
     "name": "Swallow-Spike",
     "level": 6,
     "rarity": "common",
@@ -39805,6 +41911,33 @@
     "bulk": "0",
     "cost": 70,
     "consumable": true
+  },
+  {
+    "name": "Swift Standard",
+    "level": 12,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 2000,
+    "consumable": false
+  },
+  {
+    "name": "Swift Standard (Greater)",
+    "level": 15,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 6500,
+    "consumable": false
+  },
+  {
+    "name": "Swift Standard (Major)",
+    "level": 18,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 24000,
+    "consumable": false
   },
   {
     "name": "Swiftmount Saddle",
@@ -40149,6 +42282,24 @@
     "consumable": false
   },
   {
+    "name": "Talonstrike Blade",
+    "level": 12,
+    "rarity": "uncommon",
+    "category": "sword",
+    "bulk": "1",
+    "cost": 2000,
+    "consumable": false
+  },
+  {
+    "name": "Talonstrike Blade (Greater)",
+    "level": 14,
+    "rarity": "uncommon",
+    "category": "sword",
+    "bulk": "1",
+    "cost": 4500,
+    "consumable": false
+  },
+  {
     "name": "Talwar",
     "level": 0,
     "rarity": "common",
@@ -40255,6 +42406,15 @@
     "bulk": "0.1",
     "cost": 45,
     "consumable": true
+  },
+  {
+    "name": "Tasset of Flexibility",
+    "level": 4,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 100,
+    "consumable": false
   },
   {
     "name": "Taster's Folly",
@@ -40554,6 +42714,24 @@
     "consumable": true
   },
   {
+    "name": "Testudo Shield",
+    "level": 5,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "4",
+    "cost": 150,
+    "consumable": false
+  },
+  {
+    "name": "Testudo Shield (Greater)",
+    "level": 13,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "4",
+    "cost": 2800,
+    "consumable": false
+  },
+  {
     "name": "Tetsubo",
     "level": 0,
     "rarity": "uncommon",
@@ -40680,7 +42858,7 @@
     "consumable": false
   },
   {
-    "name": "The Dancers’ Song",
+    "name": "The Dancers' Song",
     "level": 7,
     "rarity": "rare",
     "category": "poison",
@@ -41472,6 +43650,15 @@
     "consumable": false
   },
   {
+    "name": "Thunder Mail",
+    "level": 15,
+    "rarity": "common",
+    "category": "medium",
+    "bulk": "2",
+    "cost": 6500,
+    "consumable": false
+  },
+  {
     "name": "Thunder Sling",
     "level": 0,
     "rarity": "uncommon",
@@ -41661,6 +43848,15 @@
     "consumable": true
   },
   {
+    "name": "Tiger Shield",
+    "level": 5,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "1",
+    "cost": 145,
+    "consumable": false
+  },
+  {
     "name": "Tiger's Claw",
     "level": 11,
     "rarity": "rare",
@@ -41715,6 +43911,33 @@
     "consumable": false
   },
   {
+    "name": "Timepiece Standard",
+    "level": 10,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 1000,
+    "consumable": false
+  },
+  {
+    "name": "Timepiece Standard (Major)",
+    "level": 20,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 70000,
+    "consumable": false
+  },
+  {
+    "name": "Timpani of Panic",
+    "level": 9,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 650,
+    "consumable": false
+  },
+  {
     "name": "Tin Cobra",
     "level": 5,
     "rarity": "uncommon",
@@ -41736,6 +43959,15 @@
     "name": "Titan's Grasp",
     "level": 18,
     "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 24000,
+    "consumable": false
+  },
+  {
+    "name": "Titan's Standard",
+    "level": 18,
+    "rarity": "uncommon",
     "category": "equipment",
     "bulk": "0.1",
     "cost": 24000,
@@ -41919,6 +44151,24 @@
     "category": "catalyst",
     "bulk": "0.1",
     "cost": 9,
+    "consumable": true
+  },
+  {
+    "name": "Toothy Knife",
+    "level": 5,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 25,
+    "consumable": true
+  },
+  {
+    "name": "Toothy Knife (Greater)",
+    "level": 15,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 1100,
     "consumable": true
   },
   {
@@ -42181,6 +44431,33 @@
     "bulk": "0",
     "cost": 15,
     "consumable": false
+  },
+  {
+    "name": "Transmuting Ingot (Adamantine)",
+    "level": 10,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 154,
+    "consumable": true
+  },
+  {
+    "name": "Transmuting Ingot (Cold Iron)",
+    "level": 1,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 4,
+    "consumable": true
+  },
+  {
+    "name": "Transmuting Ingot (Silver)",
+    "level": 1,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 3,
+    "consumable": true
   },
   {
     "name": "Transposition Ammunition",
@@ -42561,6 +44838,15 @@
     "consumable": true
   },
   {
+    "name": "Trusty Helmet",
+    "level": 2,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 30,
+    "consumable": false
+  },
+  {
     "name": "Truth Potion",
     "level": 6,
     "rarity": "uncommon",
@@ -42795,12 +45081,30 @@
     "consumable": false
   },
   {
+    "name": "Ulfen Shieldbreaker",
+    "level": 6,
+    "rarity": "uncommon",
+    "category": "axe",
+    "bulk": "1",
+    "cost": 250,
+    "consumable": false
+  },
+  {
     "name": "Umbraex Eye",
     "level": 19,
     "rarity": "rare",
     "category": "equipment",
     "bulk": "1",
     "cost": 34000,
+    "consumable": false
+  },
+  {
+    "name": "Umbral Armor",
+    "level": 10,
+    "rarity": "uncommon",
+    "category": "light",
+    "bulk": "1",
+    "cost": 1000,
     "consumable": false
   },
   {
@@ -42851,10 +45155,19 @@
   {
     "name": "Undead Scourge",
     "level": 7,
-    "rarity": "common",
+    "rarity": "uncommon",
     "category": "knife",
     "bulk": "0.1",
     "cost": 350,
+    "consumable": false
+  },
+  {
+    "name": "Underbrush Cloak",
+    "level": 5,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 90,
     "consumable": false
   },
   {
@@ -43173,6 +45486,24 @@
     "consumable": true
   },
   {
+    "name": "Valorous Coin",
+    "level": 8,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 90,
+    "consumable": true
+  },
+  {
+    "name": "Vambrace of Gorum",
+    "level": 20,
+    "rarity": "unique",
+    "category": "shield",
+    "bulk": "1",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "Vampire-Fang Morningstar",
     "level": 8,
     "rarity": "common",
@@ -43187,6 +45518,24 @@
     "rarity": "uncommon",
     "category": "polearm",
     "bulk": "2",
+    "cost": 3000,
+    "consumable": false
+  },
+  {
+    "name": "Vandal's Banner",
+    "level": 4,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 100,
+    "consumable": false
+  },
+  {
+    "name": "Vanguard's Shield",
+    "level": 13,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "4",
     "cost": 3000,
     "consumable": false
   },
@@ -43587,6 +45936,15 @@
     "consumable": true
   },
   {
+    "name": "Vine Baton",
+    "level": 5,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "Vine of Roses",
     "level": 9,
     "rarity": "uncommon",
@@ -43830,6 +46188,15 @@
     "consumable": false
   },
   {
+    "name": "Vortex Pouch",
+    "level": 6,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 240,
+    "consumable": false
+  },
+  {
     "name": "Voyager's Pack",
     "level": 17,
     "rarity": "uncommon",
@@ -43938,76 +46305,76 @@
     "consumable": true
   },
   {
-    "name": "Wand of Choking Mist (2nd Rank)",
+    "name": "Wand of Choking Mist (2nd-Rank)",
     "level": 6,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 250,
-    "consumable": false
+    "consumable": true
   },
   {
-    "name": "Wand of Choking Mist (4th Rank)",
+    "name": "Wand of Choking Mist (4th-Rank)",
     "level": 10,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Chromatic Burst (4th-rank)",
     "level": 10,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Chromatic Burst (7th-rank)",
     "level": 16,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 10000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Clinging Rime (7th-rank)",
     "level": 16,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 10000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Clinging Rime (8th-rank)",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Clinging Rime (9th-rank)",
     "level": 20,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 70000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Contagious Frailty",
     "level": 5,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 160,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Continuation (1st-Rank Spell)",
@@ -44085,172 +46452,172 @@
     "name": "Wand of Crackling Lightning (3rd-Rank Spell)",
     "level": 8,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Crackling Lightning (4th-Rank Spell)",
     "level": 10,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Crackling Lightning (6th-Rank Spell)",
     "level": 14,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 4500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Crackling Lightning (8th-Rank Spell)",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Crushing Leaps",
     "level": 4,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 80,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dazzling Rays (3rd-rank)",
     "level": 8,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dazzling Rays (4th-rank)",
     "level": 10,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dazzling Rays (5th-rank)",
     "level": 12,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 2000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dazzling Rays (6th-rank)",
     "level": 14,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 4500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dazzling Rays (7th-rank)",
     "level": 16,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 10000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dazzling Rays (8th-rank)",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dazzling Rays (9th-rank)",
     "level": 20,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 70000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dumbfounding Doom (3rd-rank)",
     "level": 8,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dumbfounding Doom (4th-rank)",
     "level": 10,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dumbfounding Doom (5th-rank)",
     "level": 12,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 2000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dumbfounding Doom (6th-rank)",
     "level": 14,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 4500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dumbfounding Doom (7th-rank)",
     "level": 16,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 10000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dumbfounding Doom (8th-rank)",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Dumbfounding Doom (9th-rank)",
     "level": 20,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 70000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Fey Flames",
@@ -44265,55 +46632,55 @@
     "name": "Wand of Hawthorn (2nd-rank)",
     "level": 6,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 250,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Hawthorn (4th-rank)",
     "level": 10,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Hawthorn (6th-rank)",
     "level": 14,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 4500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Hawthorn (8th-rank)",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Hopeless Night (2nd-Rank Spell)",
     "level": 6,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 250,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Hopeless Night (4th-Rank Spell)",
     "level": 10,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Hybrid Form (2nd-rank)",
@@ -44472,82 +46839,82 @@
     "name": "Wand of Mental Purification (1st-rank)",
     "level": 4,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 110,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Mental Purification (2nd-rank)",
     "level": 6,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 250,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Mental Purification (3rd-rank)",
     "level": 8,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Mental Purification (4th-rank)",
     "level": 10,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1400,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Mental Purification (5th-rank)",
     "level": 12,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 3000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Mental Purification (6th-rank)",
     "level": 14,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 4500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Mental Purification (7th-rank)",
     "level": 16,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 10000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Mental Purification (8th-rank)",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Mental Purification (9th-rank)",
     "level": 20,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 70000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Mercy (1st-rank)",
@@ -44634,127 +47001,127 @@
     "name": "Wand of Noisome Acid (2nd-Rank)",
     "level": 6,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 250,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Noisome Acid (4nd-Rank)",
     "level": 10,
-    "rarity": "uncommon",
-    "category": "equipment",
+    "rarity": "common",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Noisome Acid (6th-Rank)",
     "level": 14,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 4500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Noisome Acid (8th-Rank)",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Overflowing Life (3rd-Rank Spell)",
     "level": 9,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 700,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Overflowing Life (4th-Rank Spell)",
     "level": 11,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1400,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Overflowing Life (5th-Rank Spell)",
     "level": 13,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 3000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Overflowing Life (6th-Rank Spell)",
     "level": 15,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 6500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Overflowing Life (7th-Rank Spell)",
-    "level": 17,
+    "level": 15,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 15000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Overflowing Life (8th-Rank Spell)",
     "level": 19,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 40000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Paralytic Shock (3rd-Rank)",
     "level": 8,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Paralytic Shock (7th-Rank)",
     "level": 16,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 10000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Pernicious Poison (1st-Rank)",
     "level": 4,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 100,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Pernicious Poison (6th-Rank)",
     "level": 14,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 4500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Purification (2nd-Rank Spell)",
@@ -44913,127 +47280,127 @@
     "name": "Wand of Refracting Rays (4th-Rank)",
     "level": 11,
     "rarity": "uncommon",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1400,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Refracting Rays (7th-Rank)",
     "level": 15,
     "rarity": "uncommon",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 6500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Rolling Flames (2nd-Rank)",
     "level": 6,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 250,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Rolling Flames (3rd-Rank)",
     "level": 8,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Rolling Flames (4th-Rank)",
     "level": 10,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Rolling Flames (5th-Rank)",
     "level": 12,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 2000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Rolling Flames (6th-Rank)",
     "level": 14,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 4500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Rolling Flames (7th-Rank)",
     "level": 16,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 10000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Rolling Flames (8th-Rank)",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Rolling Flames (9th-Rank)",
     "level": 20,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 70000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Shardstorm (1st-Rank Spell)",
     "level": 5,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 160,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Shardstorm (3rd-Rank Spell)",
     "level": 9,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 700,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Shardstorm (5th-Rank Spell)",
     "level": 13,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 3000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Shardstorm (7th-Rank Spell)",
     "level": 17,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 15000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Shattering Images",
@@ -45048,82 +47415,82 @@
     "name": "Wand of Shocking Haze",
     "level": 6,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 250,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Shrouded Step",
     "level": 4,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 80,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Slaughter (7th-Rank Spell)",
     "level": 16,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 10000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Slaughter (8th-Rank Spell)",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Slaughter (9th-Rank Spell)",
     "level": 20,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 70000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Smoldering Fireballs (3rd-Rank Spell)",
     "level": 8,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Smoldering Fireballs (5th-Rank Spell)",
     "level": 12,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 2000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Smoldering Fireballs (7th-Rank Spell)",
     "level": 16,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 10000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Smoldering Fireballs (9th-Rank Spell)",
     "level": 20,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 70000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Spiritual Warfare (2nd-Rank Spell)",
@@ -45207,6 +47574,15 @@
     "consumable": false
   },
   {
+    "name": "Wand of Teeming Ghosts (2nd-Rank)",
+    "level": 6,
+    "rarity": "uncommon",
+    "category": "wand",
+    "bulk": "0.1",
+    "cost": 250,
+    "consumable": true
+  },
+  {
     "name": "Wand of Teeming Ghosts (3rd-Rank Spell)",
     "level": 8,
     "rarity": "uncommon",
@@ -45214,6 +47590,15 @@
     "bulk": "0.1",
     "cost": 500,
     "consumable": false
+  },
+  {
+    "name": "Wand of Teeming Ghosts (3rd-Rank)",
+    "level": 8,
+    "rarity": "uncommon",
+    "category": "wand",
+    "bulk": "0.1",
+    "cost": 500,
+    "consumable": true
   },
   {
     "name": "Wand of Teeming Ghosts (4th-Rank Spell)",
@@ -45225,6 +47610,15 @@
     "consumable": false
   },
   {
+    "name": "Wand of Teeming Ghosts (4th-Rank)",
+    "level": 10,
+    "rarity": "uncommon",
+    "category": "wand",
+    "bulk": "0.1",
+    "cost": 1000,
+    "consumable": true
+  },
+  {
     "name": "Wand of Teeming Ghosts (5th-Rank Spell)",
     "level": 12,
     "rarity": "uncommon",
@@ -45232,6 +47626,15 @@
     "bulk": "0.1",
     "cost": 2000,
     "consumable": false
+  },
+  {
+    "name": "Wand of Teeming Ghosts (5th-Rank)",
+    "level": 12,
+    "rarity": "uncommon",
+    "category": "wand",
+    "bulk": "0.1",
+    "cost": 2000,
+    "consumable": true
   },
   {
     "name": "Wand of Teeming Ghosts (6th-Rank Spell)",
@@ -45243,6 +47646,15 @@
     "consumable": false
   },
   {
+    "name": "Wand of Teeming Ghosts (6th-Rank)",
+    "level": 14,
+    "rarity": "uncommon",
+    "category": "wand",
+    "bulk": "0.1",
+    "cost": 4500,
+    "consumable": true
+  },
+  {
     "name": "Wand of Teeming Ghosts (7th-Rank Spell)",
     "level": 16,
     "rarity": "uncommon",
@@ -45250,6 +47662,15 @@
     "bulk": "0.1",
     "cost": 10000,
     "consumable": false
+  },
+  {
+    "name": "Wand of Teeming Ghosts (7th-Rank)",
+    "level": 16,
+    "rarity": "uncommon",
+    "category": "wand",
+    "bulk": "0.1",
+    "cost": 10000,
+    "consumable": true
   },
   {
     "name": "Wand of Teeming Ghosts (8th-Rank Spell)",
@@ -45261,6 +47682,15 @@
     "consumable": false
   },
   {
+    "name": "Wand of Teeming Ghosts (8th-Rank)",
+    "level": 18,
+    "rarity": "uncommon",
+    "category": "wand",
+    "bulk": "0.1",
+    "cost": 24000,
+    "consumable": true
+  },
+  {
     "name": "Wand of Teeming Ghosts (9th-Rank Spell)",
     "level": 20,
     "rarity": "uncommon",
@@ -45270,58 +47700,67 @@
     "consumable": false
   },
   {
+    "name": "Wand of Teeming Ghosts (9th-Rank)",
+    "level": 20,
+    "rarity": "uncommon",
+    "category": "wand",
+    "bulk": "0.1",
+    "cost": 70000,
+    "consumable": true
+  },
+  {
     "name": "Wand of the Ash Puppet",
     "level": 14,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 4500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of the Pampered Pet",
     "level": 4,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 75,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of the Snowfields (5th-Rank Spell)",
     "level": 14,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 4500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of the Snowfields (7th-Rank Spell)",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of the Spider (2nd-Rank Spell)",
     "level": 7,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 360,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of the Spider (4th-Rank Spell)",
     "level": 11,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1400,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Thundering Echoes (3rd-Rank Spell)",
@@ -45381,55 +47820,55 @@
     "name": "Wand of Tormented Slumber",
     "level": 10,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 1000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Toxic Blades (6th-Rank)",
     "level": 15,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 6000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Toxic Blades (7th-Rank)",
     "level": 17,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 14000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Toxic Blades (8th-Rank)",
     "level": 19,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 37500,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Traitorous Thoughts",
     "level": 12,
     "rarity": "uncommon",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 2000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Wearying Dance",
     "level": 18,
     "rarity": "common",
-    "category": "equipment",
+    "category": "wand",
     "bulk": "0.1",
     "cost": 24000,
-    "consumable": false
+    "consumable": true
   },
   {
     "name": "Wand of Widening (1st-Rank Spell)",
@@ -45591,6 +48030,15 @@
     "category": "spear",
     "bulk": "2",
     "cost": 4,
+    "consumable": false
+  },
+  {
+    "name": "War Mage's Buckler",
+    "level": 8,
+    "rarity": "uncommon",
+    "category": "shield",
+    "bulk": "0.1",
+    "cost": 450,
     "consumable": false
   },
   {
@@ -45819,6 +48267,15 @@
     "consumable": false
   },
   {
+    "name": "Warming Parka",
+    "level": 3,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 50,
+    "consumable": false
+  },
+  {
     "name": "Warning Snare",
     "level": 4,
     "rarity": "common",
@@ -45826,6 +48283,15 @@
     "bulk": "0",
     "cost": 15,
     "consumable": true
+  },
+  {
+    "name": "Warpipes",
+    "level": 5,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 145,
+    "consumable": false
   },
   {
     "name": "Warpwobble Poison",
@@ -45862,6 +48328,15 @@
     "bulk": "0.1",
     "cost": 6,
     "consumable": true
+  },
+  {
+    "name": "Watcher's Armband",
+    "level": 8,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 500,
+    "consumable": false
   },
   {
     "name": "Watchful Portrait",
@@ -46314,6 +48789,15 @@
     "consumable": false
   },
   {
+    "name": "Wilderness Weave",
+    "level": 5,
+    "rarity": "common",
+    "category": "light",
+    "bulk": "0.1",
+    "cost": 160,
+    "consumable": false
+  },
+  {
     "name": "Wildwood Ink",
     "level": 4,
     "rarity": "common",
@@ -46429,6 +48913,15 @@
     "bulk": "0.1",
     "cost": 200,
     "consumable": false
+  },
+  {
+    "name": "Windstep Sheath",
+    "level": 9,
+    "rarity": "common",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 101,
+    "consumable": true
   },
   {
     "name": "Wine of the Blood",
@@ -46908,6 +49401,15 @@
     "consumable": false
   },
   {
+    "name": "Worldscale Shield",
+    "level": 8,
+    "rarity": "rare",
+    "category": "shield",
+    "bulk": "0.1",
+    "cost": 500,
+    "consumable": false
+  },
+  {
     "name": "Worm Vial",
     "level": 13,
     "rarity": "uncommon",
@@ -47201,7 +49703,7 @@
     "rarity": "common",
     "category": "equipment",
     "bulk": "0",
-    "cost": 700,
+    "cost": 2800,
     "consumable": false
   },
   {
@@ -47210,7 +49712,16 @@
     "rarity": "common",
     "category": "equipment",
     "bulk": "0",
-    "cost": 700,
+    "cost": 13500,
+    "consumable": false
+  },
+  {
+    "name": "Wyvern Nafir",
+    "level": 10,
+    "rarity": "common",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 950,
     "consumable": false
   },
   {
@@ -47256,6 +49767,15 @@
     "category": "club",
     "bulk": "1",
     "cost": 13000,
+    "consumable": false
+  },
+  {
+    "name": "Zealous Banner",
+    "level": 18,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 24000,
     "consumable": false
   },
   {
