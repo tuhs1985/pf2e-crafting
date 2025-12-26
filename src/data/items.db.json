@@ -894,7 +894,7 @@
     "name": "Agate",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -957,7 +957,7 @@
     "name": "Alabaster",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -966,7 +966,7 @@
     "name": "Alabaster and obsidian game set",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -975,7 +975,7 @@
     "name": "Alabaster idol",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -1389,7 +1389,7 @@
     "name": "Amber",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 5,
     "consumable": false
@@ -1407,7 +1407,7 @@
     "name": "Amethyst",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 5,
     "consumable": false
@@ -1452,7 +1452,7 @@
     "name": "Amphora with lavish scenes",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -1578,7 +1578,7 @@
     "name": "Ancient dragon skull etched with mystic sigils",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -1872,6 +1872,24 @@
     "consumable": true
   },
   {
+    "name": "Anti-Dragon Barding",
+    "level": 6,
+    "rarity": "common",
+    "category": "light-barding",
+    "bulk": "0.1",
+    "cost": 200,
+    "consumable": false
+  },
+  {
+    "name": "Anti-Dragon Barding (Greater)",
+    "level": 12,
+    "rarity": "common",
+    "category": "light-barding",
+    "bulk": "0.1",
+    "cost": 1700,
+    "consumable": false
+  },
+  {
     "name": "Anticorrosion Oil",
     "level": 2,
     "rarity": "common",
@@ -2061,6 +2079,15 @@
     "consumable": false
   },
   {
+    "name": "Apocalypse Seed",
+    "level": 20,
+    "rarity": "unique",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "Apotheosis Knife",
     "level": 20,
     "rarity": "rare",
@@ -2136,7 +2163,7 @@
     "name": "Aquamarine",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 50,
     "consumable": false
@@ -3027,7 +3054,7 @@
     "name": "Azurite",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -3069,7 +3096,7 @@
     "consumable": false
   },
   {
-    "name": "Backpack Ballista Bolt",
+    "name": "Backpack Ballista Bolts",
     "level": 0,
     "rarity": "uncommon",
     "category": "ammo",
@@ -3087,7 +3114,7 @@
     "consumable": false
   },
   {
-    "name": "Backpack Catapult Stone",
+    "name": "Backpack Catapult Stones",
     "level": 0,
     "rarity": "uncommon",
     "category": "ammo",
@@ -3789,6 +3816,15 @@
     "consumable": false
   },
   {
+    "name": "Belimarius's Invidious Halberd",
+    "level": 17,
+    "rarity": "unique",
+    "category": "polearm",
+    "bulk": "2",
+    "cost": 2,
+    "consumable": false
+  },
+  {
     "name": "Belkzen Deadsmasher",
     "level": 13,
     "rarity": "uncommon",
@@ -3849,6 +3885,15 @@
     "category": "equipment",
     "bulk": "1",
     "cost": 140,
+    "consumable": false
+  },
+  {
+    "name": "Beloved's Bracelets",
+    "level": 16,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 10000,
     "consumable": false
   },
   {
@@ -5277,7 +5322,7 @@
     "name": "Bloodstone",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -6249,7 +6294,7 @@
     "name": "Brass anklet",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -6294,7 +6339,7 @@
     "name": "Brass scepter with amethyst head",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -6303,7 +6348,7 @@
     "name": "Brass statuette of a bull",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -6726,7 +6771,7 @@
     "name": "Bronze bowl with wave imagery",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -6735,7 +6780,7 @@
     "name": "Bronze brazier with Asmodean artwork",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -6753,7 +6798,7 @@
     "name": "Bronze chalice with bloodstones",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -7419,7 +7464,7 @@
     "name": "Carnelian",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -7446,7 +7491,7 @@
     "name": "Carved wooden game set",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -7725,7 +7770,7 @@
     "name": "Ceremonial dagger with onyx hilt",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -7734,7 +7779,7 @@
     "name": "Ceremonial shortsword with spinels",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -7772,7 +7817,7 @@
     "rarity": "uncommon",
     "category": "flail",
     "bulk": "1",
-    "cost": 0,
+    "cost": 240,
     "consumable": false
   },
   {
@@ -7968,7 +8013,7 @@
     "name": "Chandelier crafted from dreams",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -8253,6 +8298,24 @@
     "consumable": true
   },
   {
+    "name": "Chromatic Robe",
+    "level": 16,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 9500,
+    "consumable": false
+  },
+  {
+    "name": "Chromatic Robe (Greater)",
+    "level": 20,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 65000,
+    "consumable": false
+  },
+  {
     "name": "Chronicler Wayfinder",
     "level": 6,
     "rarity": "uncommon",
@@ -8274,7 +8337,7 @@
     "name": "Chrysoberyl",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 5,
     "consumable": false
@@ -8283,7 +8346,7 @@
     "name": "Chrysoberyl symbol of an evil eye",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -8292,7 +8355,7 @@
     "name": "Chrysoprase",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -8355,7 +8418,7 @@
     "name": "Citrine",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -9372,7 +9435,7 @@
     "name": "Colorful pastoral tapestry",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -9381,7 +9444,7 @@
     "name": "Colorful velvet half mask",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -9840,7 +9903,7 @@
     "name": "Copper and spinel puzzle box",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -9858,7 +9921,7 @@
     "name": "Copper Pieces",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "coin",
     "bulk": "1",
     "cost": 0.01,
     "consumable": false
@@ -9867,7 +9930,7 @@
     "name": "Copper statuette of a salamander",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -9876,7 +9939,7 @@
     "name": "Coral",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 5,
     "consumable": false
@@ -9894,7 +9957,7 @@
     "name": "Coral idol of an elemental lord",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -10542,7 +10605,7 @@
     "name": "Crystal dinner set, fine silverware",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -10578,7 +10641,7 @@
     "name": "Crystallized dragon heart",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -11829,7 +11892,7 @@
     "name": "Diamond ring with platinum band",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -11838,7 +11901,7 @@
     "name": "Diamond, large",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 500,
     "consumable": false
@@ -11847,7 +11910,7 @@
     "name": "Diamond, small",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 100,
     "consumable": false
@@ -12099,7 +12162,7 @@
     "name": "Divine art piece created by Shelyn",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -12231,6 +12294,15 @@
     "consumable": false
   },
   {
+    "name": "Doomsday Door",
+    "level": 20,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "48",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "Doomsweeper",
     "level": 8,
     "rarity": "uncommon",
@@ -12357,6 +12429,15 @@
     "consumable": true
   },
   {
+    "name": "Dragon Eye",
+    "level": 5,
+    "rarity": "uncommon",
+    "category": "catalyst",
+    "bulk": "0.1",
+    "cost": 30,
+    "consumable": true
+  },
+  {
     "name": "Dragon Handwraps",
     "level": 20,
     "rarity": "common",
@@ -12384,6 +12465,15 @@
     "consumable": true
   },
   {
+    "name": "Dragon Pearl (Draconic Codex)",
+    "level": 16,
+    "rarity": "uncommon",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 9000,
+    "consumable": false
+  },
+  {
     "name": "Dragon Rune Bracelet",
     "level": 11,
     "rarity": "common",
@@ -12391,6 +12481,33 @@
     "bulk": "0",
     "cost": 1400,
     "consumable": false
+  },
+  {
+    "name": "Dragon Scute (Greater)",
+    "level": 20,
+    "rarity": "common",
+    "category": "catalyst",
+    "bulk": "0.1",
+    "cost": 14000,
+    "consumable": true
+  },
+  {
+    "name": "Dragon Scute (Lesser)",
+    "level": 12,
+    "rarity": "common",
+    "category": "catalyst",
+    "bulk": "0.1",
+    "cost": 400,
+    "consumable": true
+  },
+  {
+    "name": "Dragon Scute (Moderate)",
+    "level": 16,
+    "rarity": "common",
+    "category": "catalyst",
+    "bulk": "0.1",
+    "cost": 2000,
+    "consumable": true
   },
   {
     "name": "Dragon Shield",
@@ -12597,6 +12714,42 @@
     "category": "equipment",
     "bulk": "0.1",
     "cost": 360,
+    "consumable": false
+  },
+  {
+    "name": "Dragon's Tongue",
+    "level": 11,
+    "rarity": "uncommon",
+    "category": "spear",
+    "bulk": "0.1",
+    "cost": 1350,
+    "consumable": false
+  },
+  {
+    "name": "Dragon's Tongue (Greater)",
+    "level": 13,
+    "rarity": "uncommon",
+    "category": "spear",
+    "bulk": "0.1",
+    "cost": 2750,
+    "consumable": false
+  },
+  {
+    "name": "Dragon's Tongue (Major)",
+    "level": 20,
+    "rarity": "uncommon",
+    "category": "spear",
+    "bulk": "0.1",
+    "cost": 55000,
+    "consumable": false
+  },
+  {
+    "name": "Dragonaut's Wingsuit",
+    "level": 9,
+    "rarity": "uncommon",
+    "category": "light",
+    "bulk": "0.1",
+    "cost": 625,
     "consumable": false
   },
   {
@@ -12933,6 +13086,15 @@
     "consumable": false
   },
   {
+    "name": "Dream Hunter's Lodge",
+    "level": 17,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 13500,
+    "consumable": false
+  },
+  {
     "name": "Dream Lens",
     "level": 20,
     "rarity": "rare",
@@ -13248,6 +13410,15 @@
     "consumable": true
   },
   {
+    "name": "Duty of the Oathsworn",
+    "level": 9,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "Dwarven Daisy (Lesser)",
     "level": 1,
     "rarity": "uncommon",
@@ -13491,6 +13662,15 @@
     "consumable": true
   },
   {
+    "name": "Effortless Garden",
+    "level": 14,
+    "rarity": "rare",
+    "category": "other",
+    "bulk": "0",
+    "cost": 900,
+    "consumable": true
+  },
+  {
     "name": "Egg Cream Fizz",
     "level": 5,
     "rarity": "common",
@@ -13575,7 +13755,7 @@
     "name": "Elegant cloth doll",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -14007,7 +14187,7 @@
     "name": "Emerald",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 100,
     "consumable": false
@@ -14043,7 +14223,7 @@
     "name": "Emerald, brilliant green",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 500,
     "consumable": false
@@ -14574,7 +14754,7 @@
     "name": "Engraved copper ring",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -14634,10 +14814,19 @@
     "consumable": true
   },
   {
+    "name": "Enkindled Quintessence",
+    "level": 14,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "Enormous chryselephantine sculpture by a legend",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -14646,7 +14835,7 @@
     "name": "Enormous tapestry of a major battle",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -14826,7 +15015,7 @@
     "name": "Etched copper ewer",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -15699,7 +15888,7 @@
     "name": "Famous portrait by a master",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -15811,6 +16000,15 @@
     "bulk": "0",
     "cost": 50,
     "consumable": true
+  },
+  {
+    "name": "Fate Tempter's Ring",
+    "level": 18,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 22000,
+    "consumable": false
   },
   {
     "name": "Fauchard",
@@ -16356,7 +16554,7 @@
     "name": "Fine gold spyglass",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -16763,6 +16961,15 @@
     "rarity": "unique",
     "category": "equipment",
     "bulk": "1",
+    "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Flawless Celestial Shawl",
+    "level": 9,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0.1",
     "cost": 0,
     "consumable": false
   },
@@ -17958,7 +18165,7 @@
     "name": "Garnet",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 5,
     "consumable": false
@@ -18195,7 +18402,7 @@
     "category": "ammo",
     "bulk": "0",
     "cost": 900,
-    "consumable": true
+    "consumable": false
   },
   {
     "name": "Ghost Ampoule",
@@ -18507,7 +18714,7 @@
     "name": "Gilded ceremonial armor",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -18516,7 +18723,7 @@
     "name": "Gilded scepter with sapphire",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -18867,7 +19074,7 @@
     "name": "Gold and aquamarine diadem",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -18876,7 +19083,7 @@
     "name": "Gold and garnet ring",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -18885,7 +19092,7 @@
     "name": "Gold and opal bracelet",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -18894,7 +19101,7 @@
     "name": "Gold chalice with black pearls",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -18903,7 +19110,7 @@
     "name": "Gold dragon statuette",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -18912,7 +19119,7 @@
     "name": "Gold mask of a high priest",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -18921,7 +19128,7 @@
     "name": "Gold necklace with peridots",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -18930,7 +19137,7 @@
     "name": "Gold Pieces",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "coin",
     "bulk": "1",
     "cost": 1,
     "consumable": false
@@ -18939,7 +19146,7 @@
     "name": "Gold rapier with amethysts",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -18948,7 +19155,7 @@
     "name": "Gold urn with scenes of judgment",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -19266,7 +19473,7 @@
     "category": "ammo",
     "bulk": "0.1",
     "cost": 0.2,
-    "consumable": true
+    "consumable": false
   },
   {
     "name": "Grappling Bolt",
@@ -19275,7 +19482,7 @@
     "category": "ammo",
     "bulk": "0.1",
     "cost": 0.2,
-    "consumable": true
+    "consumable": false
   },
   {
     "name": "Grappling Gun",
@@ -20019,7 +20226,7 @@
     "name": "Hand mirror with decorated frame",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -20730,7 +20937,7 @@
     "name": "Hematite",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -21460,8 +21667,8 @@
     "level": 8,
     "rarity": "unique",
     "category": "spear",
-    "bulk": "1",
-    "cost": 0.1,
+    "bulk": "2",
+    "cost": 465,
     "consumable": false
   },
   {
@@ -21558,7 +21765,7 @@
     "name": "Illuminated manuscript",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -21585,7 +21792,7 @@
     "name": "Illustrated book",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -22008,7 +22215,7 @@
     "name": "Inscribed crocodile skull",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -22197,7 +22404,7 @@
     "name": "Intricate silver and gold music box",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -22296,7 +22503,7 @@
     "name": "Iron and rock crystal brazier",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -22305,7 +22512,7 @@
     "name": "Iron cauldron with gargoyle faces",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -22422,7 +22629,7 @@
     "name": "Ivory",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -22485,7 +22692,7 @@
     "name": "Jade",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 5,
     "consumable": false
@@ -22539,7 +22746,7 @@
     "name": "Jasper",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -22602,7 +22809,7 @@
     "name": "Jet",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 5,
     "consumable": false
@@ -22611,7 +22818,7 @@
     "name": "Jet and white gold game set",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -22620,7 +22827,7 @@
     "name": "Jewel‑encrusted gold altar",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -22638,7 +22845,7 @@
     "name": "Jeweled gold puzzle box",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -22647,7 +22854,7 @@
     "name": "Jeweled orrery of the planes",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -23619,7 +23826,7 @@
     "name": "Lapis lazuli",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -23628,7 +23835,7 @@
     "name": "Lapis lazuli pendant",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -23763,7 +23970,7 @@
     "name": "Leather flagon with Caydenite symbol",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -24078,7 +24285,7 @@
     "name": "Life‑size sculpture by an expert",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -24411,7 +24618,7 @@
     "name": "Living flame shaped into a phoenix",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -24885,15 +25092,6 @@
     "consumable": false
   },
   {
-    "name": "Magazine with 5 Bolts",
-    "level": 0,
-    "rarity": "uncommon",
-    "category": "ammo",
-    "bulk": "0",
-    "cost": 0.9,
-    "consumable": true
-  },
-  {
     "name": "Magazine with 6 Pellets",
     "level": 0,
     "rarity": "common",
@@ -25275,7 +25473,7 @@
     "name": "Major Painting by a Legend",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -25302,7 +25500,7 @@
     "name": "Malachite",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -25518,7 +25716,7 @@
     "name": "Marble altar",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -26832,7 +27030,7 @@
     "name": "Moonstone",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -26841,7 +27039,7 @@
     "name": "Moonstone and onyx game set",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -27993,7 +28191,7 @@
     "name": "Obsidian",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -28431,6 +28629,15 @@
     "consumable": true
   },
   {
+    "name": "One Day's Breath",
+    "level": 7,
+    "rarity": "rare",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 60,
+    "consumable": true
+  },
+  {
     "name": "One Hundred Victories",
     "level": 3,
     "rarity": "common",
@@ -28461,7 +28668,7 @@
     "name": "Onyx",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -28542,7 +28749,7 @@
     "name": "Opal",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 50,
     "consumable": false
@@ -28668,7 +28875,7 @@
     "name": "Original manuscript from a world‑famous author",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -28775,6 +28982,24 @@
   {
     "name": "Pact of Blood-Taking",
     "level": 5,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Pact of the Agonized Destroyer",
+    "level": 18,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Pact of the Herald and Host",
+    "level": 6,
     "rarity": "rare",
     "category": "equipment",
     "bulk": "0",
@@ -28974,7 +29199,7 @@
     "name": "Parade armor with flourishes",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -29136,7 +29361,7 @@
     "name": "Pearl, black",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 50,
     "consumable": false
@@ -29145,7 +29370,7 @@
     "name": "Pearl, irregular freshwater",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -29154,7 +29379,7 @@
     "name": "Pearl, saltwater",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 5,
     "consumable": false
@@ -29280,7 +29505,7 @@
     "name": "Peridot",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -29487,7 +29712,7 @@
     "name": "Phasing ether silk tapestry",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -29838,7 +30063,7 @@
     "name": "Plain brass censer",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -29928,7 +30153,7 @@
     "name": "Platinum dragon statuette",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -29937,7 +30162,7 @@
     "name": "Platinum image of a fey noble with a bit of orichalcum",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -29946,7 +30171,7 @@
     "name": "Platinum Pieces",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "coin",
     "bulk": "1",
     "cost": 10,
     "consumable": false
@@ -29955,7 +30180,7 @@
     "name": "Platinum‑framed monocle",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -30252,7 +30477,7 @@
     "name": "Porcelain doll with amber eyes",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -30261,7 +30486,7 @@
     "name": "Porcelain vase inlaid with gold",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -31143,7 +31368,7 @@
     "name": "Previously lost volume from a legendary author",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -31638,7 +31863,7 @@
     "name": "Pyrite",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -31674,7 +31899,7 @@
     "name": "Quality painting by an unknown",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -31683,7 +31908,7 @@
     "name": "Quality sculpture by an unknown",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -31728,7 +31953,7 @@
     "name": "Quartz, milky, rose, or smoky",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -31737,7 +31962,7 @@
     "name": "Quartz, rock crystal",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -33249,7 +33474,7 @@
     "name": "Rhodochrosite",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -33741,6 +33966,15 @@
     "consumable": false
   },
   {
+    "name": "Robes of Xin-Edasseril",
+    "level": 19,
+    "rarity": "unique",
+    "category": "unarmored",
+    "bulk": "0.1",
+    "cost": 40000,
+    "consumable": false
+  },
+  {
     "name": "Roc-Shaft Arrow (Greater)",
     "level": 15,
     "rarity": "uncommon",
@@ -34008,7 +34242,7 @@
     "category": "ammo",
     "bulk": "0.1",
     "cost": 0.1,
-    "consumable": true
+    "consumable": false
   },
   {
     "name": "Rounds (Double-Barreled Musket)",
@@ -34191,12 +34425,39 @@
     "consumable": true
   },
   {
+    "name": "Rounds (Shield Pistol)",
+    "level": 0,
+    "rarity": "uncommon",
+    "category": "ammo",
+    "bulk": "0",
+    "cost": 0.1,
+    "consumable": true
+  },
+  {
+    "name": "Rounds (Shobhad Longrifle)",
+    "level": 0,
+    "rarity": "common",
+    "category": "ammo",
+    "bulk": "0.1",
+    "cost": 0.1,
+    "consumable": true
+  },
+  {
     "name": "Rounds (Slide Pistol)",
     "level": 0,
     "rarity": "common",
     "category": "ammo",
     "bulk": "0.1",
     "cost": 0.1,
+    "consumable": true
+  },
+  {
+    "name": "Rounds (Spike Launcher)",
+    "level": 0,
+    "rarity": "common",
+    "category": "ammo",
+    "bulk": "0.1",
+    "cost": 0,
     "consumable": true
   },
   {
@@ -34284,7 +34545,7 @@
     "name": "Ruby, large",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 500,
     "consumable": false
@@ -34293,7 +34554,7 @@
     "name": "Ruby, small",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 100,
     "consumable": false
@@ -34396,6 +34657,24 @@
     "bulk": "0.1",
     "cost": 3,
     "consumable": true
+  },
+  {
+    "name": "Runewell of Lust",
+    "level": 23,
+    "rarity": "unique",
+    "category": "equipment",
+    "bulk": "0.1",
+    "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Runic Skullcap",
+    "level": 15,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 6000,
+    "consumable": false
   },
   {
     "name": "Rust Scrub",
@@ -34547,7 +34826,7 @@
     "rarity": "common",
     "category": "equipment",
     "bulk": "0.1",
-    "cost": 0,
+    "cost": 80,
     "consumable": false
   },
   {
@@ -34563,7 +34842,7 @@
     "name": "Saint's bone with lost scriptures",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -34878,7 +35157,7 @@
     "name": "Sapphire",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 100,
     "consumable": false
@@ -34887,7 +35166,7 @@
     "name": "Sard",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -34896,7 +35175,7 @@
     "name": "Sardonyx",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -35256,7 +35535,7 @@
     "name": "Scrimshaw whale bone",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -35787,7 +36066,7 @@
     "name": "Set of decorated ceramic plates",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -35796,7 +36075,7 @@
     "name": "Set of decorated porcelain plates",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -35805,7 +36084,7 @@
     "name": "Set of six ivory dice",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -36120,7 +36399,7 @@
     "name": "Shell",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -36198,15 +36477,6 @@
     "consumable": false
   },
   {
-    "name": "Shield Pistol Rounds",
-    "level": 0,
-    "rarity": "uncommon",
-    "category": "ammo",
-    "bulk": "0",
-    "cost": 0.1,
-    "consumable": true
-  },
-  {
     "name": "Shield Sconce",
     "level": 0,
     "rarity": "uncommon",
@@ -36275,7 +36545,7 @@
     "rarity": "common",
     "category": "equipment",
     "bulk": "0.1",
-    "cost": 0,
+    "cost": 80,
     "consumable": false
   },
   {
@@ -36630,15 +36900,6 @@
     "consumable": false
   },
   {
-    "name": "Signifier's Mask",
-    "level": 0,
-    "rarity": "uncommon",
-    "category": "equipment",
-    "bulk": "0",
-    "cost": 0,
-    "consumable": false
-  },
-  {
     "name": "Sihedron Medallion",
     "level": 5,
     "rarity": "rare",
@@ -36741,7 +37002,7 @@
     "name": "Silk ceremonial armor",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -36750,7 +37011,7 @@
     "name": "Silk fan decorated with turquoise",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -36759,7 +37020,7 @@
     "name": "Silk mask decorated with citrines",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -36786,7 +37047,7 @@
     "name": "Silver and jade censer",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -36804,7 +37065,7 @@
     "name": "Silver coronet with peridots",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -36867,7 +37128,7 @@
     "name": "Silver flagon inscribed with fields",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -36885,7 +37146,7 @@
     "name": "Silver mirror with gilded frame",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -36921,7 +37182,7 @@
     "name": "Silver Pieces",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "coin",
     "bulk": "1",
     "cost": 0.1,
     "consumable": false
@@ -36948,7 +37209,7 @@
     "name": "Silver statuette of a raven",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -37038,7 +37299,7 @@
     "name": "Simple painting",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -37047,7 +37308,7 @@
     "name": "Simple sculpture",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 4,
     "consumable": false
@@ -37056,7 +37317,7 @@
     "name": "Simple silver circlet",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 10,
     "consumable": false
@@ -37659,7 +37920,7 @@
     "name": "Small cold iron cauldron with onyx",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -37861,24 +38122,6 @@
     "bulk": "0",
     "cost": 9,
     "consumable": true
-  },
-  {
-    "name": "Snare Kit",
-    "level": 0,
-    "rarity": "common",
-    "category": "equipment",
-    "bulk": "2",
-    "cost": 5,
-    "consumable": false
-  },
-  {
-    "name": "Snare Kit (Specialist)",
-    "level": 3,
-    "rarity": "common",
-    "category": "equipment",
-    "bulk": "2",
-    "cost": 55,
-    "consumable": false
   },
   {
     "name": "Snare of Speed",
@@ -38118,7 +38361,7 @@
     "name": "Solidified Moment of Time",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -38221,6 +38464,24 @@
     "bulk": "0.1",
     "cost": 28,
     "consumable": true
+  },
+  {
+    "name": "Sorshen's Scintillating Garment",
+    "level": 20,
+    "rarity": "unique",
+    "category": "unarmored",
+    "bulk": "0.1",
+    "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "Sorshen's Sinuous Guisarme",
+    "level": 23,
+    "rarity": "unique",
+    "category": "polearm",
+    "bulk": "2",
+    "cost": 0,
+    "consumable": false
   },
   {
     "name": "Soul Cage",
@@ -39078,13 +39339,13 @@
     "consumable": false
   },
   {
-    "name": "Spikes",
-    "level": 0,
-    "rarity": "common",
-    "category": "ammo",
-    "bulk": "0.1",
-    "cost": 0,
-    "consumable": true
+    "name": "Spindle Key",
+    "level": 17,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 14000,
+    "consumable": false
   },
   {
     "name": "Spined Shield",
@@ -39099,7 +39360,7 @@
     "name": "Spinel, deep blue",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 5,
     "consumable": false
@@ -39108,7 +39369,7 @@
     "name": "Spinel, red or green",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
@@ -39378,7 +39639,7 @@
     "name": "Splendid lyre of world‑famous lyrist",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -39524,7 +39785,7 @@
     "rarity": "common",
     "category": "equipment",
     "bulk": "0",
-    "cost": 0,
+    "cost": 30,
     "consumable": false
   },
   {
@@ -40773,7 +41034,7 @@
     "name": "Star sapphire",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 500,
     "consumable": false
@@ -40782,7 +41043,7 @@
     "name": "Star sapphire necklace",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -41649,7 +41910,7 @@
     "category": "ammo",
     "bulk": "0.1",
     "cost": 0.1,
-    "consumable": true
+    "consumable": false
   },
   {
     "name": "Sun Sight",
@@ -42375,7 +42636,7 @@
     "name": "Tankard owned by Cayden Cailean",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -42550,6 +42811,15 @@
     "bulk": "1",
     "cost": 2,
     "consumable": false
+  },
+  {
+    "name": "Ten Day's Breath",
+    "level": 15,
+    "rarity": "rare",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 1000,
+    "consumable": true
   },
   {
     "name": "Ten-Foot Pole",
@@ -42984,6 +43254,15 @@
     "consumable": false
   },
   {
+    "name": "The Kardosian Fragments",
+    "level": 16,
+    "rarity": "rare",
+    "category": "equipment",
+    "bulk": "1",
+    "cost": 0,
+    "consumable": false
+  },
+  {
     "name": "The Keep",
     "level": 20,
     "rarity": "unique",
@@ -43176,6 +43455,15 @@
     "name": "The Theater",
     "level": 20,
     "rarity": "unique",
+    "category": "equipment",
+    "bulk": "0",
+    "cost": 0,
+    "consumable": false
+  },
+  {
+    "name": "The Timeless Bond",
+    "level": 12,
+    "rarity": "rare",
     "category": "equipment",
     "bulk": "0",
     "cost": 0,
@@ -43446,7 +43734,7 @@
     "name": "Thought Lens of Astral Essence",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 1000,
     "consumable": false
@@ -43549,6 +43837,15 @@
     "bulk": "1",
     "cost": 620,
     "consumable": false
+  },
+  {
+    "name": "Three Day's Breath",
+    "level": 11,
+    "rarity": "rare",
+    "category": "other",
+    "bulk": "0.1",
+    "cost": 250,
+    "consumable": true
   },
   {
     "name": "Three-peaked Tree",
@@ -43869,7 +44166,7 @@
     "name": "Tiger's‑eye",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -43882,6 +44179,15 @@
     "bulk": "0.1",
     "cost": 600,
     "consumable": true
+  },
+  {
+    "name": "Timeflaying Blade",
+    "level": 20,
+    "rarity": "rare",
+    "category": "sword",
+    "bulk": "1",
+    "cost": 68000,
+    "consumable": false
   },
   {
     "name": "Timeless Salts",
@@ -44175,7 +44481,7 @@
     "name": "Topaz",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 50,
     "consumable": false
@@ -44283,7 +44589,7 @@
     "name": "Tourmaline",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 5,
     "consumable": false
@@ -44301,7 +44607,7 @@
     "name": "Towering sculpture by a master",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 250,
     "consumable": false
@@ -44895,7 +45201,7 @@
     "name": "Turquoise",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 0.5,
     "consumable": false
@@ -45941,7 +46247,7 @@
     "rarity": "common",
     "category": "equipment",
     "bulk": "0.1",
-    "cost": 0,
+    "cost": 160,
     "consumable": false
   },
   {
@@ -47071,7 +47377,7 @@
   },
   {
     "name": "Wand of Overflowing Life (7th-Rank Spell)",
-    "level": 15,
+    "level": 17,
     "rarity": "common",
     "category": "wand",
     "bulk": "0.1",
@@ -47565,15 +47871,6 @@
     "consumable": true
   },
   {
-    "name": "Wand of Teeming Ghosts (2nd-Rank Spell)",
-    "level": 6,
-    "rarity": "uncommon",
-    "category": "equipment",
-    "bulk": "0.1",
-    "cost": 250,
-    "consumable": false
-  },
-  {
     "name": "Wand of Teeming Ghosts (2nd-Rank)",
     "level": 6,
     "rarity": "uncommon",
@@ -47581,15 +47878,6 @@
     "bulk": "0.1",
     "cost": 250,
     "consumable": true
-  },
-  {
-    "name": "Wand of Teeming Ghosts (3rd-Rank Spell)",
-    "level": 8,
-    "rarity": "uncommon",
-    "category": "equipment",
-    "bulk": "0.1",
-    "cost": 500,
-    "consumable": false
   },
   {
     "name": "Wand of Teeming Ghosts (3rd-Rank)",
@@ -47601,15 +47889,6 @@
     "consumable": true
   },
   {
-    "name": "Wand of Teeming Ghosts (4th-Rank Spell)",
-    "level": 10,
-    "rarity": "uncommon",
-    "category": "equipment",
-    "bulk": "0.1",
-    "cost": 1000,
-    "consumable": false
-  },
-  {
     "name": "Wand of Teeming Ghosts (4th-Rank)",
     "level": 10,
     "rarity": "uncommon",
@@ -47617,15 +47896,6 @@
     "bulk": "0.1",
     "cost": 1000,
     "consumable": true
-  },
-  {
-    "name": "Wand of Teeming Ghosts (5th-Rank Spell)",
-    "level": 12,
-    "rarity": "uncommon",
-    "category": "equipment",
-    "bulk": "0.1",
-    "cost": 2000,
-    "consumable": false
   },
   {
     "name": "Wand of Teeming Ghosts (5th-Rank)",
@@ -47637,15 +47907,6 @@
     "consumable": true
   },
   {
-    "name": "Wand of Teeming Ghosts (6th-Rank Spell)",
-    "level": 14,
-    "rarity": "uncommon",
-    "category": "equipment",
-    "bulk": "0.1",
-    "cost": 4500,
-    "consumable": false
-  },
-  {
     "name": "Wand of Teeming Ghosts (6th-Rank)",
     "level": 14,
     "rarity": "uncommon",
@@ -47653,15 +47914,6 @@
     "bulk": "0.1",
     "cost": 4500,
     "consumable": true
-  },
-  {
-    "name": "Wand of Teeming Ghosts (7th-Rank Spell)",
-    "level": 16,
-    "rarity": "uncommon",
-    "category": "equipment",
-    "bulk": "0.1",
-    "cost": 10000,
-    "consumable": false
   },
   {
     "name": "Wand of Teeming Ghosts (7th-Rank)",
@@ -47673,15 +47925,6 @@
     "consumable": true
   },
   {
-    "name": "Wand of Teeming Ghosts (8th-Rank Spell)",
-    "level": 18,
-    "rarity": "uncommon",
-    "category": "equipment",
-    "bulk": "0.1",
-    "cost": 24000,
-    "consumable": false
-  },
-  {
     "name": "Wand of Teeming Ghosts (8th-Rank)",
     "level": 18,
     "rarity": "uncommon",
@@ -47689,15 +47932,6 @@
     "bulk": "0.1",
     "cost": 24000,
     "consumable": true
-  },
-  {
-    "name": "Wand of Teeming Ghosts (9th-Rank Spell)",
-    "level": 20,
-    "rarity": "uncommon",
-    "category": "equipment",
-    "bulk": "0.1",
-    "cost": 70000,
-    "consumable": false
   },
   {
     "name": "Wand of Teeming Ghosts (9th-Rank)",
@@ -48774,7 +49008,7 @@
     "name": "Wide landscape by an expert",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "art-object",
     "bulk": "0",
     "cost": 25,
     "consumable": false
@@ -49809,7 +50043,7 @@
     "name": "Zircon",
     "level": 0,
     "rarity": "common",
-    "category": "treasure",
+    "category": "gem",
     "bulk": "0",
     "cost": 2.5,
     "consumable": false
