@@ -304,11 +304,34 @@ form.form-card {
 footer {
   margin-top: 2rem;
   text-align: center;
-  font-size: 1rem;
-  color: #888;
+  font-size: 0.875rem;
+  padding-top: 1rem;
 }
 
 footer a {
   color: #888;
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+footer a:hover {
+  color: #646cff;
   text-decoration: underline;
+}
+.paizo-notice {
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: #666;
+  line-height: 1.6;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.paizo-notice a {
+  color: #666;
+}
+
+.paizo-notice a:hover {
+  color: #888;
 }

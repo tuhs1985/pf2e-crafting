@@ -659,7 +659,7 @@ export default function App() {
           <pre className="output-pre">{output}</pre>
         )}
 
-        <footer>
+          <footer className="footer">
           <a
             href="https://github.com/tuhs1985/pf2e-crafting"
             target="_blank"
@@ -667,7 +667,20 @@ export default function App() {
           >
             View on GitHub / Report Issues
           </a>
-        </footer>
+			          
+          <p className="paizo-notice">
+            This website uses trademarks and/or copyrights owned by Paizo Inc., used under Paizo's Community Use Policy (paizo.com/licenses/communityuse). 
+            We are expressly prohibited from charging you to use or access this content. This website is not published, endorsed, or specifically approved by Paizo. 
+            For more information about Paizo Inc. and Paizo products, visit{' '}
+            <a 
+              href="https://paizo.com/" 
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              paizo.com
+            </a>.
+          </p>
+          </footer>
       </div>
     </div>
   );
