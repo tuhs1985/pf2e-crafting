@@ -138,7 +138,6 @@ This project uses trademarks and/or copyrights owned by Paizo Inc., used under [
 - **Paizo** for Pathfinder 2e and the Crafting rules
 - **Foundry VTT** PF2e system for equipment data
 - **GitHub Copilot** for AI-assisted development support
-- The TUHSRPG community for testing and feedback
 
 ## Links
 
