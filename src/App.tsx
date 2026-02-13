@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import type { Proficiency, CraftingInput } from "./utils/crafting";
 import {
-  calculateSetupDays,
   getProficiencyBonus,
   getResultType,
   calculateCraftingDC,
@@ -100,7 +99,10 @@ function getRaritySuggestions(query: string): string[] {
 
 function getTodayDateString(): string {
   const today = new Date();
-  return today.toISOString().split("T")[0];
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 export default function App() {
@@ -232,6 +234,9 @@ export default function App() {
       ? calculateCraftingDC(Number(itemLevel), itemRarity, Number(dcAdjustment) || 0)
       : "";
 
+  // Calculate setup days inline: 1 day default, +1 if no formula and working extra day
+  const setupDays = hasFormula || formulaOption !== "work" ? 1 : 2;
+
   // Setup days (auto, not user-editable)
   const craftingInput: CraftingInput = {
     character,
@@ -253,28 +258,7 @@ export default function App() {
     craftingRoll: useAssurance
       ? 10 + getProficiencyBonus(Number(characterLevel), proficiency)
       : Number(craftingRoll),
-    setupDays: calculateSetupDays({
-      character,
-      itemName,
-      itemLevel: Number(itemLevel),
-      itemRarity,
-      itemCategory,
-      itemBulk,
-      itemCost: Number(itemCost),
-      quantity,
-      hasFormula,
-      formulaOption,
-      startDate,
-      characterLevel: Number(characterLevel),
-      proficiency,
-      useAssurance,
-      craftingDC: Number(craftingDC) || Number(autoDC),
-      dcAdjustment: Number(dcAdjustment) || 0,
-      craftingRoll: Number(craftingRoll),
-      setupDays: 1,
-      additionalDays: Number(additionalDays) || 0,
-      costModifier: costModifier,
-    }),
+    setupDays,
     additionalDays: Number(additionalDays) || 0,
     costModifier: costModifier,
   };
