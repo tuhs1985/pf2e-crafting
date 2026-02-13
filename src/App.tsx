@@ -8,14 +8,21 @@ import {
   formatSummary,
   applyCostModifier,
 } from "./utils/crafting";
-import items from "./data/items.db.json";
+import itemsDbRaw from "./data/items.db.json";
 import PopoverHelp from "./PopoverHelp";
 import "./App.css";
 
-// Add the possible rarities for autocomplete
-const RARITIES = ["common", "uncommon", "rare", "unique"];
+// Compressed database format
+type CompressedDb = {
+  r: string[];      // rarities lookup
+  c: string[];      // categories lookup
+  b: string[];      // bulks lookup
+  p: number[];      // costs/prices lookup
+  n: string[];      // item names
+  i: number[][];    // item data: [rarityIdx, categoryIdx, bulkIdx, costIdx, consumable, level]
+};
 
-// Updated ItemDbEntry type to include consumable field
+// Decompressed item type
 type ItemDbEntry = {
   name: string;
   level: number;
@@ -25,6 +32,21 @@ type ItemDbEntry = {
   cost: number;
   consumable: boolean;
 };
+
+// Decompress the database once on module load
+const db = itemsDbRaw as CompressedDb;
+const items: ItemDbEntry[] = db.i.map((item, idx) => ({
+  name: db.n[idx],
+  level: item[5],
+  rarity: db.r[item[0]],
+  category: db.c[item[1]],
+  bulk: db.b[item[2]],
+  cost: db.p[item[3]],
+  consumable: item[4] === 1,
+}));
+
+// Add the possible rarities for autocomplete
+const RARITIES = ["common", "uncommon", "rare", "unique"];
 
 export function ReturnButton() {
   const [expanded, setExpanded] = useState(false);
