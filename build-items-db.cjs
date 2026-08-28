@@ -21,8 +21,22 @@ function parseBulk(bulk) {
 const EQUIP_DIR = path.join(__dirname, 'src', 'packs', 'equipment');
 const OUT_FILE = path.join(__dirname, 'src', 'data', 'items.db.json');
 
+function getJsonFiles(dir) {
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+    const fullPath = path.join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      return getJsonFiles(fullPath);
+    }
+
+    return entry.isFile() && entry.name.endsWith('.json')
+      ? [fullPath]
+      : [];
+  });
+}
+
 function buildDb() {
-  const files = fs.readdirSync(EQUIP_DIR).filter(f => f.endsWith('.json'));
+  const files = getJsonFiles(EQUIP_DIR);
   const items = [];
 
   // Collect all unique values for deduplication
@@ -33,7 +47,7 @@ function buildDb() {
 
   // First pass: gather items and unique values
   for (const file of files) {
-    const filePath = path.join(EQUIP_DIR, file);
+	const filePath = file;
     let item;
     try {
       item = JSON.parse(fs.readFileSync(filePath, 'utf-8'));

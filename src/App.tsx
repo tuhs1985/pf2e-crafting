@@ -176,22 +176,22 @@ export default function App() {
     // If exact match, autofill; if not, clear autofill fields
     const exact = matches.find(i => i.name.toLowerCase() === val.toLowerCase());
     if (exact) {
-      setItemLevel(exact.level);
+      setItemLevel(String(exact.level));
       setItemRarity(exact.rarity);
       setItemCategory(exact.category);
       setItemBulk(exact.bulk);
-      setItemCost(exact.cost);
+      setItemCost(String(exact.cost));
     }
     // If not exact, don't autofill (let user edit fields)
   }
 
   function handleSuggestionClick(item: ItemDbEntry) {
     setItemName(item.name);
-    setItemLevel(item.level);
+    setItemLevel(String(item.level));
     setItemRarity(item.rarity);
     setItemCategory(item.category);
     setItemBulk(item.bulk);
-    setItemCost(item.cost);
+    setItemCost(String(item.cost));
     setShowSuggestions(false);
     setActiveSuggestionIndex(-1);
   }
@@ -425,20 +425,32 @@ export default function App() {
                 </ul>
               )}
             </label>
-            <label>
-              Item Level
-				<input
-				  type="number"
-				  min={0}
-				  max={25}
-				  value={itemLevel}
-				  onChange={e => {
-					const val = Math.min(Number(e.target.value), 25);
-					setItemLevel(val);
-				  }}
-				  placeholder="0"		
-				/>
-            </label>
+			<label>
+			  Item Level
+			<input
+			  type="number"
+			  min={0}
+			  max={25}
+			  value={itemLevel}
+			  onChange={e => {
+				const inputValue = e.target.value;
+				// Allow empty/clearing, clamp between 0-25 otherwise
+				if (inputValue === '') {
+				  setItemLevel('');
+				} else {
+				  const val = Math.max(0, Math.min(Number(inputValue), 25));
+				  setItemLevel(String(val));
+				}
+			  }}
+			  onBlur={() => {
+				// On blur, ensure we have a valid number >= 0
+				if (itemLevel === '' || Number(itemLevel) < 0) {
+				  setItemLevel('0');
+				}
+			  }}
+			  placeholder="0"		
+			/>
+			</label>
           </div>
 
           {/* Item Rarity, Category, and Bulk, same line */}
