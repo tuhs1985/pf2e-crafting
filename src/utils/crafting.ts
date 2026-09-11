@@ -255,6 +255,7 @@ export function formatSummary(
   resultType: string,
   endDate: string
 ): string {
+  const failed = resultType === "Failure" || resultType === "Critical Failure";
   const activity = `Craft ${input.quantity} x ${input.itemName}`;
   // Use itemCost with percent/flat costModifier, min 0 per item
   const costPer = Math.max(
@@ -308,7 +309,9 @@ export function formatSummary(
 
   // Format days as MM/dd-MM/dd (show single date if same day)
   let daysStr = formatMMDD(input.startDate);
-  const endMMDD = formatMMDD(endDate);
+  const endMMDD = formatMMDD(failed
+    ? calculateEndDate(input.startDate, input.setupDays, 0)
+    : endDate);
   if (endMMDD && endMMDD !== daysStr) {
     daysStr += `-${endMMDD}`;
   }
@@ -317,6 +320,20 @@ export function formatSummary(
   let costLine = `**Cost:** ${finalCost} gp${reductionStr}`;
   if (formulaCost > 0) {
     costLine = `**Cost:** ${finalCost} gp (includes +${formulaCost/100} gp for formula)${reductionStr}`;
+  }
+
+  if (failed) {
+    // Assume the standard upfront materials: half the adjusted batch price.
+    // Failed attempts never spend the remaining price or additional work days.
+    const suppliedCopper = baseCost * 100 / 2;
+    const lostCopper = resultType === "Critical Failure" ? suppliedCopper / 10 : 0;
+    const recoverableCopper = suppliedCopper - lostCopper;
+    const gold = (copper: number) => Number((copper / 100).toFixed(8));
+    costLine = `**Cost:** ${gold(lostCopper + formulaCost)} gp`;
+    if (formulaCost > 0) {
+      costLine += ` (includes +${gold(formulaCost)} gp for formula; formula retained)`;
+    }
+    costLine += `\n**Materials:** ${gold(lostCopper)} gp lost; ${gold(recoverableCopper)} gp recoverable`;
   }
 
   return (
