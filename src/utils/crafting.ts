@@ -167,11 +167,9 @@ export function getEarnIncomeReduction(
   return parseCoinString(valueStr);
 }
 
-export function calculateSetupDays(input: CraftingInput): number {
-  // Default 1, +1 for extra day of setup with no formula
-  let days = 1;
-  if (!input.hasFormula && input.formulaOption === "work") days += 1;
-  return days;
+export function calculateSetupDays(input: Pick<CraftingInput, "hasFormula" | "formulaOption">): number {
+  // Ownership or a purchase provides a formula; otherwise allow two setup days.
+  return input.hasFormula || input.formulaOption === "buy" ? 1 : 2;
 }
 
 export function getProficiencyBonus(level: number, proficiency: Proficiency): number {
@@ -291,7 +289,7 @@ export function formatSummary(
   if (finalCostCopper < minCostCopper) finalCostCopper = minCostCopper;
 
   let formulaCost = 0;
-  if (input.formulaOption === "buy") {
+  if (!input.hasFormula && input.formulaOption === "buy") {
     formulaCost = getFormulaCost(input.itemLevel) * 100; // formula cost in copper
   }
   const totalFinalCopper = finalCostCopper + formulaCost;

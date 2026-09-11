@@ -12,7 +12,7 @@ const compiled = ts.transpileModule(source, {
 }).outputText;
 const context = { exports: {} };
 vm.runInNewContext(compiled, context);
-const { formatSummary, calculateEndDate, getResultType } = context.exports;
+const { formatSummary, calculateEndDate, calculateSetupDays, getResultType } = context.exports;
 
 const base = {
   character: 'Test', itemName: 'Example', itemLevel: 1,
@@ -28,6 +28,21 @@ function summary(overrides = {}) {
   return formatSummary(input, getResultType(input.craftingDC, input.craftingRoll),
     calculateEndDate(input.startDate, input.setupDays, input.additionalDays));
 }
+
+test('formula choices determine setup time and ownership ignores stale choices', () => {
+  for (const formulaOption of ['', 'work', 'buy']) {
+    assert.equal(calculateSetupDays({ hasFormula: true, formulaOption }), 1);
+    assert.equal(calculateSetupDays({ hasFormula: false, formulaOption }),
+      formulaOption === 'buy' ? 1 : 2);
+  }
+});
+
+test('owned formula never adds a purchase charge, even with a stale buy choice', () => {
+  for (const craftingRoll of [5, 10, 15, 25]) {
+    assert.equal(summary({ craftingRoll, formulaOption: 'buy', hasFormula: true }),
+      summary({ craftingRoll }));
+  }
+});
 
 test('failure recovers all supplied materials and spends only setup days', () => {
   const output = summary();

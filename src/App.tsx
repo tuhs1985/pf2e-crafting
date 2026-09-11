@@ -5,6 +5,7 @@ import {
   getResultType,
   calculateCraftingDC,
   calculateEndDate,
+  calculateSetupDays,
   formatSummary,
   applyCostModifier,
 } from "./utils/crafting";
@@ -257,7 +258,7 @@ export default function App() {
       : "";
 
   // Calculate setup days inline: 1 day default, +1 if no formula and working extra day
-  const setupDays = hasFormula || formulaOption !== "work" ? 1 : 2;
+  const setupDays = calculateSetupDays({ hasFormula, formulaOption });
 
   // Setup days (auto, not user-editable)
   const craftingInput: CraftingInput = {
@@ -557,9 +558,7 @@ export default function App() {
               checked={hasFormula}
               onChange={e => {
                 setHasFormula(e.target.checked);
-                if (e.target.checked) {
-                  setFormulaOption(""); // CLEAR formulaOption when regaining ownership!
-                }
+                setFormulaOption(e.target.checked ? "" : "work");
               }}
             />
             I own the formula
