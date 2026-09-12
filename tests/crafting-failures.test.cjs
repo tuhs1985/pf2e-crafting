@@ -14,6 +14,24 @@ const context = { exports: {} };
 vm.runInNewContext(compiled, context);
 const { formatSummary, calculateEndDate, calculateSetupDays, getResultType, applyCostModifier } = context.exports;
 
+test('arithmetic adjusts the existing price with precedence and parentheses', () => {
+  for (const [expression, expected] of [
+    ['(50-25+10)', 135], ['-25+10', 85], ['2+3*4', 114],
+    ['(2+3)*4', 120], ['10/2', 105], ['-(25-10)', 85],
+    [' .5 + .25 ', 100.75], ['0.3-0.1', 100.2], ['5--2', 107],
+  ]) assert.equal(applyCostModifier(100, expression), expected, expression);
+});
+
+test('invalid arithmetic and mixed percentages are rejected instead of partially parsed', () => {
+  for (const expression of ['(50-25+10)-50%', '50%+10', '2+', '(2+3', '2 3',
+    '2(3)', '10/0', '1/(2-2)', 'NaN', 'Infinity', 'Math.random()', '5gp', '2**3']) {
+    assert.throws(() => applyCostModifier(100, expression), undefined, expression);
+    assert.notEqual(context.exports.getCostModifierError(expression), '', expression);
+  }
+  assert.equal(context.exports.getCostModifierError('-25+10'), '');
+  assert.equal(context.exports.getCostModifierError(''), '');
+});
+
 test('explicit positive percentages are markups, including decimals and whitespace', () => {
   for (const [modifier, expected] of [
     ['+50%', 1500], ['50%', 1500], [' +12.5% ', 1125],

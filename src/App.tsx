@@ -7,7 +7,7 @@ import {
   calculateEndDate,
   calculateSetupDays,
   formatSummary,
-  applyCostModifier,
+  getCostModifierError,
 } from "./utils/crafting";
 import itemsDbRaw from "./data/items.db.json";
 import PopoverHelp from "./PopoverHelp";
@@ -150,6 +150,11 @@ export default function App() {
   const [craftingRoll, setCraftingRoll] = useState<string>("");
   const [output, setOutput] = useState("");
   const [copied, setCopied] = useState(false);
+  const [modifierNotice, setModifierNotice] = useState("");
+  const modifierNoticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => {
+    if (modifierNoticeTimer.current !== null) clearTimeout(modifierNoticeTimer.current);
+  }, []);
   const [showInstructions, setShowInstructions] = useState(false);
 
   // Autocomplete state
@@ -245,11 +250,6 @@ export default function App() {
     itemCategory.toLowerCase() === "ammo";
   const maxBatch = isBatchItem ? 24 : 1;
 
-  // Cost per item is itemCost plus costModifier (supports % or flat)
-  const costPer = Math.max(
-    0,
-    applyCostModifier(Number(itemCost), costModifier)
-  );
 
   // Auto-calculate DC if item fields change
   const autoDC =
@@ -288,6 +288,15 @@ export default function App() {
 
   // Calculate result and summary
   const handleGenerate = () => {
+    if (modifierNoticeTimer.current !== null) clearTimeout(modifierNoticeTimer.current);
+    const costModifierError = getCostModifierError(costModifier);
+    if (costModifierError) {
+      setCopied(false);
+      setModifierNotice(costModifierError);
+      modifierNoticeTimer.current = setTimeout(() => setModifierNotice(""), 5000);
+      return;
+    }
+    setModifierNotice("");
     const resultType = getResultType(
       craftingInput.craftingDC,
       craftingInput.craftingRoll
@@ -335,9 +344,11 @@ export default function App() {
               <ol>
                 <li>Fill in all the details for your crafting project.</li>
                 <li>
-                  <strong>Cost Modifier:</strong> You can enter a flat value (e.g., <code>5</code>) to add/subtract GP per item, <br />
-                  or use a percent change (e.g., <code>-20%</code> for 20% off, <code>50%</code> for 50% markup, <code>0%</code> for no change).<br />
-                  <b>Negative percentages are discounts, positive percentages are surcharges.</b>
+                  <strong>Cost Modifier:</strong> Enter a GP adjustment per item: <code>5</code> adds 5 gp;
+                  <code> -25+10</code> subtracts 15 gp; <code>(50-25+10)</code> adds 35 gp.
+                  Arithmetic supports +, -, *, /, decimals, and parentheses. Multiplication and division happen before addition and subtraction.<br />
+                  Or enter one percentage: <code>-20%</code> discounts 20%; <code>50%</code> or <code>+50%</code> adds 50%.
+                  Do not mix percentages with arithmetic. The adjustment applies to each item before quantity and downtime reductions.
                 </li>
                 <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
               </ol>
@@ -526,14 +537,17 @@ export default function App() {
 			<label>
 			  Cost Mod{" "}
 			  <PopoverHelp>
-				Use a flat value (e.g. 5) to add/subtract gold per item, or a percentage (e.g. -20% for a 20% discount, 50% for a 50% markup, 0% for no change).<br />
+                Add/subtract GP per item using a number or arithmetic: -25+10 subtracts 15 gp; (50-25+10) adds 35 gp.
+                Use +, -, *, /, decimals, and parentheses. This adjusts the existing price, not the final price.<br />
+                Alternatively, use one percentage: -20% discounts 20%; +50% or 50% adds 50%. Do not mix % with arithmetic.
+                Applies before quantity and downtime reductions.<br />
 				<br /><em>Tap or click outside to close.</em>
 			  </PopoverHelp>
               <input
                 type="text"
                 value={costModifier}
                 onChange={e => setCostModifier(e.target.value)}
-                placeholder="-20% or 5"
+                placeholder="-20% or -25+10"
               />
             </label>
             <label>
@@ -666,7 +680,12 @@ export default function App() {
           <button type="submit">Generate Summary</button>
         </form>
 
-        {copied && (
+        {modifierNotice && (
+          <div className="copied-toast" role="alert" style={{ width: "min(24rem, 80vw)", boxSizing: "border-box", overflowWrap: "anywhere" }}>
+            {modifierNotice}
+          </div>
+        )}
+        {copied && !modifierNotice && (
           <div className="copied-toast">
             Summary copied to clipboard!
           </div>

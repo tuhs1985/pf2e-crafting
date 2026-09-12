@@ -237,19 +237,83 @@ function normalizeMoney(value: number): number {
   return Number(value.toFixed(8));
 }
 
-// New: Cost modifier logic supporting -xxx% to xxx% or flat value
+// Parse only numbers and arithmetic; never execute user input as JavaScript.
+function evaluateAdjustment(expression: string): number {
+  const invalid = () => new Error("Enter valid arithmetic using numbers, +, -, *, /, and parentheses.");
+  if (expression.length > 200) throw new Error("Keep the adjustment to 200 characters or fewer.");
+  let position = 0;
+  const skipSpaces = () => {
+    while (/\s/.test(expression[position] ?? "") && position < expression.length) position++;
+  };
+  function factor(): number {
+    skipSpaces();
+    const char = expression[position];
+    if (char === "+" || char === "-") {
+      position++;
+      return (char === "-" ? -1 : 1) * factor();
+    }
+    if (char === "(") {
+      position++;
+      const value = sum();
+      skipSpaces();
+      if (expression[position++] !== ")") throw invalid();
+      return value;
+    }
+    const match = expression.slice(position).match(/^(?:\d+(?:\.\d*)?|\.\d+)/);
+    if (!match) throw invalid();
+    position += match[0].length;
+    return Number(match[0]);
+  }
+  function product(): number {
+    let value = factor();
+    skipSpaces();
+    while (expression[position] === "*" || expression[position] === "/") {
+      const operator = expression[position++];
+      const right = factor();
+      if (operator === "/" && right === 0) throw new Error("Cannot divide by zero.");
+      value = operator === "*" ? value * right : value / right;
+      skipSpaces();
+    }
+    return value;
+  }
+  function sum(): number {
+    let value = product();
+    skipSpaces();
+    while (expression[position] === "+" || expression[position] === "-") {
+      const operator = expression[position++];
+      const right = product();
+      value = operator === "+" ? value + right : value - right;
+      skipSpaces();
+    }
+    return value;
+  }
+  const value = sum();
+  if (position !== expression.length || !Number.isFinite(value)) throw invalid();
+  return value;
+}
+
+export function getCostModifierError(value: string): string {
+  try {
+    applyCostModifier(0, value);
+    return "";
+  } catch (error) {
+    return error instanceof Error ? error.message : "Invalid cost adjustment.";
+  }
+}
+
+// A standalone percentage changes the price; arithmetic adds a GP adjustment.
 export function applyCostModifier(itemCost: number, costModifierInput: string | undefined): number {
   if (!costModifierInput || costModifierInput.trim() === "") return itemCost;
-  const percentMatch = costModifierInput.trim().match(/^([+-]?\d+(\.\d+)?)\s*%$/);
+  const percentMatch = costModifierInput.trim().match(/^([+-]?(?:\d+(?:\.\d*)?|\.\d+))\s*%$/);
   if (percentMatch) {
     const percent = parseFloat(percentMatch[1]);
     // -20% means 20% discount, +50% means 50% markup, 0% means no change
     return normalizeMoney(itemCost * (1 + percent / 100));
   }
-  // Otherwise treat as flat modifier (additive)
-  const flat = parseFloat(costModifierInput);
-  if (!isNaN(flat)) return normalizeMoney(itemCost + flat);
-  return itemCost;
+  if (costModifierInput.includes("%")) {
+    throw new Error("Use one percentage (such as -20%) or arithmetic without %. Do not mix them.");
+  }
+  return normalizeMoney(itemCost + evaluateAdjustment(costModifierInput.trim()));
 }
 
 // Format the crafting summary with percent-aware cost modifier
