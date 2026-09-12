@@ -10,6 +10,7 @@ A web-based tool for calculating crafting costs, time, and results for Pathfinde
 - ✅ **Automatic Calculations** - DC, setup days, end dates, and cost reductions
 - ✅ **Batch Crafting** - Craft up to 24 consumables/ammo at once
 - ✅ **Cost Modifiers** - Support for percentage discounts/markups or flat adjustments
+- ✅ **Precious Materials** - Material and grade selectors for weapons and armor, with automatic price, level, rarity, and minimum material value
 - ✅ **Formula Options** - Buy formulas or work an extra day if you don't own one
 - ✅ **Assurance Support** - Calculate with Assurance or manual roll values
 - ✅ **Earn Income Integration** - Automatic cost reduction based on character level and proficiency
@@ -57,6 +58,23 @@ npm run dev
 - `npm run lint` - Run ESLint on source files
 - `npm run deploy` - Deploy to GitHub Pages
 - `node build-items-db.cjs` - Regenerate compressed item database
+- `node build-materials-db.cjs` - Regenerate weapon/armor material data from the bundled source snapshot
+- `node --test tests/*.test.cjs` - Run calculation and importer checks
+
+See [database regeneration instructions](data/README.md) for source refresh and format details.
+
+### Precious Materials
+
+Select a weapon or armor and enable **Precious material**, then choose material
+and grade. The calculated price replaces the ordinary item price; unchecking
+restores the original fields. For custom items, use `weapon` or `armor` as the
+Item Category. Shields and ammunition are not supported yet.
+
+The summary shows the precious material included in the cost, for example:
+`Cost: 44 gp (includes at least 2.2 gp of silver)`. Cost Mod and additional
+downtime change the total price but do not reduce that published minimum.
+Quantity scales both amounts. Material options do not enforce proficiency,
+character level, or build legality.
 
 ## Architecture
 

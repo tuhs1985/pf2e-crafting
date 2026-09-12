@@ -12,9 +12,13 @@ import {
 import itemsDbRaw from "./data/items.db.json";
 import PopoverHelp from "./PopoverHelp";
 import "./App.css";
+import { materialRows, materialKind, materialLabel, gradeLabels, findMaterial,
+  parseCarriedBulk, applyMaterial } from "./utils/materials";
 
 // Compressed database format
 type CompressedDb = {
+  v?: number;
+  m?: [string, number, string | null, string | null, number, string | null][];
   r: string[];      // rarities lookup
   c: string[];      // categories lookup
   b: string[];      // bulks lookup
@@ -32,6 +36,12 @@ type ItemDbEntry = {
   bulk: string;
   cost: number;
   consumable: boolean;
+  itemType: string;
+  carriedBulk: number | null;
+  materialType: string | null;
+  materialGrade: string | null;
+  pricePer: number;
+  baseItem: string | null;
 };
 
 // Decompress the database once on module load
@@ -44,6 +54,12 @@ const items: ItemDbEntry[] = db.i.map((item, idx) => ({
   bulk: db.b[item[2]],
   cost: db.p[item[3]],
   consumable: item[4] === 1,
+  itemType: db.m?.[idx]?.[0] ?? "",
+  carriedBulk: db.m?.[idx]?.[1] ?? null,
+  materialType: db.m?.[idx]?.[2] ?? null,
+  materialGrade: db.m?.[idx]?.[3] ?? null,
+  pricePer: db.m?.[idx]?.[4] ?? 1,
+  baseItem: db.m?.[idx]?.[5] ?? null,
 }));
 
 // Add the possible rarities for autocomplete
@@ -137,6 +153,9 @@ export default function App() {
   const [itemBulk, setItemBulk] = useState("");
   const [itemCost, setItemCost] = useState<string>("");
   const [costModifier, setCostModifier] = useState<string>("");
+  const [useMaterial, setUseMaterial] = useState(false);
+  const [selectedMaterial, setSelectedMaterial] = useState("silver");
+  const [selectedGrade, setSelectedGrade] = useState("low");
   const [quantity, setQuantity] = useState(1);
   const [hasFormula, setHasFormula] = useState(true);
   const [formulaOption, setFormulaOption] = useState<"buy" | "work" | "">("");
@@ -173,6 +192,7 @@ export default function App() {
 
   // Handle input for autocomplete/search
   function handleItemNameChange(val: string) {
+    if (val !== itemName) setUseMaterial(false);
     setItemName(val);
     const matches = getItemSuggestions(val, items as ItemDbEntry[]);
     setItemSuggestions(matches);
@@ -192,6 +212,7 @@ export default function App() {
   }
 
   function handleSuggestionClick(item: ItemDbEntry) {
+    setUseMaterial(false);
     setItemName(item.name);
     setItemLevel(String(item.level));
     setItemRarity(item.rarity);
@@ -250,11 +271,32 @@ export default function App() {
     itemCategory.toLowerCase() === "ammo";
   const maxBatch = isBatchItem ? 24 : 1;
 
+  const kind = materialKind(matchedItem?.itemType ?? itemCategory.trim().toLowerCase());
+  const materialEnabled = useMaterial && kind !== null;
+  const availableMaterials = [...new Set(materialRows.filter(row => row.kind === kind).map(row => row.material))];
+  const availableGrades = materialRows.filter(row => row.kind === kind && row.material === selectedMaterial);
+  const materialRow = kind ? findMaterial(kind, selectedMaterial, selectedGrade) : undefined;
+  const carriedBulk = kind
+    ? matchedItem && itemBulk === matchedItem.bulk && matchedItem.carriedBulk !== null
+      ? matchedItem.carriedBulk : parseCarriedBulk(itemBulk, kind)
+    : null;
+  const materialError = materialEnabled
+    ? !materialRow ? "Choose a material and grade with pricing data."
+      : carriedBulk === null ? "Enter Bulk as a number, L, or a dash for material pricing." : ""
+    : "";
+  const materialResult = materialEnabled && materialRow && carriedBulk !== null
+    ? applyMaterial(materialRow, { carriedBulk, price: Number(itemCost), level: Number(itemLevel),
+      rarity: itemRarity, existingMaterial: matchedItem?.materialType, existingGrade: matchedItem?.materialGrade })
+    : null;
+  const effectiveLevel = materialResult?.level ?? itemLevel;
+  const effectiveRarity = materialResult?.rarity ?? itemRarity;
+  const effectiveCost = materialResult?.price ?? itemCost;
+
 
   // Auto-calculate DC if item fields change
   const autoDC =
-    itemLevel !== "" && itemRarity !== ""
-      ? calculateCraftingDC(Number(itemLevel), itemRarity, Number(dcAdjustment) || 0)
+    effectiveLevel !== "" && effectiveRarity !== ""
+      ? calculateCraftingDC(Number(effectiveLevel), effectiveRarity, Number(dcAdjustment) || 0)
       : "";
 
   // Calculate setup days inline: 1 day default, +1 if no formula and working extra day
@@ -264,11 +306,11 @@ export default function App() {
   const craftingInput: CraftingInput = {
     character,
     itemName,
-    itemLevel: Number(itemLevel),
-    itemRarity,
+    itemLevel: Number(effectiveLevel),
+    itemRarity: effectiveRarity,
     itemCategory,
     itemBulk,
-    itemCost: Number(itemCost),
+    itemCost: Number(effectiveCost),
     quantity,
     hasFormula,
     formulaOption,
@@ -276,7 +318,7 @@ export default function App() {
     characterLevel: Number(characterLevel),
     proficiency,
     useAssurance,
-    craftingDC: Number(craftingDC) || Number(autoDC),
+    craftingDC: craftingDC === "" ? Number(autoDC) : Number(craftingDC),
     dcAdjustment: Number(dcAdjustment) || 0,
     craftingRoll: useAssurance
       ? 10 + getProficiencyBonus(Number(characterLevel), proficiency)
@@ -284,12 +326,14 @@ export default function App() {
     setupDays,
     additionalDays: Number(additionalDays) || 0,
     costModifier: costModifier,
+    preciousMaterial: materialResult ? { name: materialLabel(selectedMaterial),
+      grade: gradeLabels[selectedGrade], minimumGpPerItem: materialResult.minimum } : undefined,
   };
 
   // Calculate result and summary
   const handleGenerate = () => {
     if (modifierNoticeTimer.current !== null) clearTimeout(modifierNoticeTimer.current);
-    const costModifierError = getCostModifierError(costModifier);
+    const costModifierError = materialError || getCostModifierError(costModifier);
     if (costModifierError) {
       setCopied(false);
       setModifierNotice(costModifierError);
@@ -351,6 +395,14 @@ export default function App() {
                   Do not mix percentages with arithmetic. The adjustment applies to each item before quantity and downtime reductions.
                 </li>
                 <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
+                <li>
+                  <strong>Precious material:</strong> Select a weapon or armor, then check the box and choose a material and grade.
+                  Cost, level, rarity, and automatic DC update. Uncheck to restore the original item.
+                  For a custom item, enter <code>weapon</code> or <code>armor</code> in Item Category.
+                  Bulk is the normal item Bulk; armor pricing includes its extra carried Bulk.
+                  The parenthetical amount is the minimum precious material included in the total, not an extra charge.
+                  Cost Mod and downtime change the total but not that minimum. There are no proficiency or build-legality checks.
+                </li>
               </ol>
             </div>
           )}
@@ -443,7 +495,8 @@ export default function App() {
 			  type="number"
 			  min={0}
 			  max={25}
-			  value={itemLevel}
+			  value={effectiveLevel}
+              readOnly={materialEnabled}
 			  onChange={e => {
 				const inputValue = e.target.value;
 				// Allow empty/clearing, clamp between 0-25 otherwise
@@ -465,15 +518,55 @@ export default function App() {
 			</label>
           </div>
 
+          <label>
+            <input type="checkbox" checked={materialEnabled} disabled={!kind}
+              onChange={e => {
+                setUseMaterial(e.target.checked);
+                if (e.target.checked && kind) {
+                  const initial = findMaterial(kind, matchedItem?.materialType ?? "silver", matchedItem?.materialGrade ?? "low")
+                    ?? materialRows.find(row => row.kind === kind)!;
+                  setSelectedMaterial(initial.material);
+                  setSelectedGrade(initial.grade);
+                }
+              }} />
+            Precious material{" "}
+            <PopoverHelp>
+              Available for weapons and armor. Choose the material and grade to calculate its price, level, rarity, and DC.
+              The material price replaces the ordinary item price. Cost Mod still adjusts it.
+              The minimum precious material is included in the total and stays fixed through discounts and downtime.
+              Uncheck to restore your original values. Shields and ammunition are not included yet.
+            </PopoverHelp>
+          </label>
+          {materialEnabled && (
+            <div className="form-row">
+              <label>Material
+                <select value={selectedMaterial} onChange={e => {
+                  setSelectedMaterial(e.target.value);
+                  const grades = materialRows.filter(row => row.kind === kind && row.material === e.target.value);
+                  setSelectedGrade(grades.some(row => row.grade === selectedGrade) ? selectedGrade : grades[0].grade);
+                }}>
+                  {availableMaterials.map(material => <option key={material} value={material}>{materialLabel(material)}</option>)}
+                </select>
+              </label>
+              <label>Grade
+                <select value={selectedGrade} onChange={e => setSelectedGrade(e.target.value)}>
+                  {availableGrades.map(row => <option key={row.grade} value={row.grade}>{gradeLabels[row.grade]}</option>)}
+                </select>
+              </label>
+            </div>
+          )}
+
           {/* Item Rarity, Category, and Bulk, same line */}
           <div className="form-row">
             <label style={{ position: "relative" }}>
               Item Rarity
               <input
                 type="text"
-                value={itemRarity}
+                value={effectiveRarity}
+                readOnly={materialEnabled}
                 onChange={e => handleRarityChange(e.target.value)}
                 onFocus={e => {
+                  if (materialEnabled) return;
                   const suggestions = getRaritySuggestions(e.target.value);
                   setRaritySuggestions(suggestions);
                   setShowRaritySuggestions(true);
@@ -504,7 +597,10 @@ export default function App() {
               <input
                 type="text"
                 value={itemCategory}
-                onChange={e => setItemCategory(e.target.value)}
+                onChange={e => {
+                  setItemCategory(e.target.value);
+                  if (!matchedItem) setUseMaterial(false);
+                }}
               />
             </label>
             <label>
@@ -529,7 +625,8 @@ export default function App() {
                 type="number"
                 min={0}
                 step={0.01}
-                value={itemCost}
+                value={effectiveCost}
+                readOnly={materialEnabled}
                 onChange={e => setItemCost(e.target.value)}
                 placeholder="0"		
               />

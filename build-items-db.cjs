@@ -21,6 +21,20 @@ function parseBulk(bulk) {
 const EQUIP_DIR = path.join(__dirname, 'src', 'packs', 'equipment');
 const OUT_FILE = path.join(__dirname, 'src', 'data', 'items.db.json');
 
+function materialMetadata(item) {
+  const sys = item.system || item.data || {};
+  const bulk = Number(sys.bulk?.value ?? 0);
+  const carriedBulk = sys.bulk?.heldOrStowed != null
+    ? Number(sys.bulk.heldOrStowed)
+    : item.type === 'armor' ? bulk + 1 : bulk;
+  const pricePer = Number(sys.price?.per ?? 1);
+  if (!Number.isFinite(carriedBulk) || carriedBulk < 0 || !Number.isInteger(pricePer) || pricePer < 1) {
+    throw new Error(`Invalid Bulk or price quantity: ${item.name}`);
+  }
+  return [item.type ?? '', carriedBulk, sys.material?.type ?? null,
+    sys.material?.grade ?? null, pricePer, sys.baseItem ?? null];
+}
+
 function getJsonFiles(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
     const fullPath = path.join(dir, entry.name);
@@ -35,8 +49,8 @@ function getJsonFiles(dir) {
   });
 }
 
-function buildDb() {
-  const files = getJsonFiles(EQUIP_DIR);
+function buildDb(inputDir = EQUIP_DIR, outputFile = OUT_FILE) {
+  const files = getJsonFiles(inputDir);
   const items = [];
 
   // Collect all unique values for deduplication
@@ -52,8 +66,7 @@ function buildDb() {
     try {
       item = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     } catch (e) {
-      console.warn(`Skipping ${file} (parse error)`);
-      continue;
+      throw new Error(`Invalid equipment JSON: ${file}`, { cause: e });
     }
     if (!item || !item.name || typeof item.name !== 'string' || !item.name.trim()) {
       continue;
@@ -65,6 +78,10 @@ function buildDb() {
                    : sys.category ?? item.type ?? "";
     const bulk = parseBulk(sys.bulk);
     const cost = parseCostObj(sys.price?.value);
+    const level = sys.level?.value ?? 0;
+    if (!Number.isFinite(cost) || cost < 0 || !Number.isInteger(level) || level < 0) {
+      throw new Error(`Invalid price or level: ${item.name}`);
+    }
     const consumable = (Array.isArray(sys.traits?.value) && sys.traits.value.includes("consumable")) || (item.type === "consumable");
 
     raritySet.add(rarity);
@@ -74,16 +91,21 @@ function buildDb() {
 
     items.push({
       name: item.name,
-      level: sys.level?.value ?? 0,
+      level,
       rarity,
       category,
       bulk,
       cost,
       consumable,
+      metadata: materialMetadata(item),
     });
   }
 
   items.sort((a, b) => a.name.localeCompare(b.name));
+  if (!items.length) throw new Error('No equipment found; existing database left unchanged.');
+  if (new Set(items.map(item => item.name)).size !== items.length) {
+    throw new Error('Duplicate item names; existing database left unchanged.');
+  }
 
   // Create lookup arrays (sorted for consistency)
   const rarities = Array.from(raritySet).sort();
@@ -105,21 +127,25 @@ function buildDb() {
 
   // Ultra-compact output with single-letter keys
   const output = {
+    v: 2,
     r: rarities,      // rarity lookup
     c: categories,    // category lookup
     b: bulks,         // bulk lookup
     p: costs,         // price/cost lookup
     n: namePool,      // item names
     i: compressed,    // item data arrays
+    // Parallel metadata: [itemType, carriedBulk, material, grade, pricePer, baseItem]
+    m: items.map(item => item.metadata),
   };
 
-  fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });
-  fs.writeFileSync(OUT_FILE, JSON.stringify(output)); // No whitespace for max compression
+  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+  fs.writeFileSync(outputFile, JSON.stringify(output)); // No whitespace for max compression
 
-  const sizeKB = (fs.statSync(OUT_FILE).size / 1024).toFixed(2);
-  console.log(`✅ Wrote ${items.length} items to ${OUT_FILE}`);
+  const sizeKB = (fs.statSync(outputFile).size / 1024).toFixed(2);
+  console.log(`✅ Wrote ${items.length} items to ${outputFile}`);
   console.log(`📦 File size: ${sizeKB} KB`);
   console.log(`📊 Lookups: ${rarities.length} rarities, ${categories.length} categories, ${bulks.length} bulks, ${costs.length} costs`);
 }
 
-buildDb();
+if (require.main === module) buildDb();
+module.exports = { buildDb, materialMetadata };

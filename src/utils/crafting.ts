@@ -24,6 +24,7 @@ export interface CraftingInput {
   setupDays: number;
   additionalDays: number;
   costModifier?: string; // Now string, not number
+  preciousMaterial?: { name: string; grade: string; minimumGpPerItem: number };
 }
 
 // ---- Formula Cost Table ----
@@ -323,7 +324,9 @@ export function formatSummary(
   endDate: string
 ): string {
   const failed = resultType === "Failure" || resultType === "Critical Failure";
-  const activity = `Craft ${input.quantity} x ${input.itemName}`;
+  const material = input.preciousMaterial;
+  const activity = `Craft ${input.quantity} x ${input.itemName}` +
+    (material ? ` (${material.name}, ${material.grade})` : "");
   // Use itemCost with percent/flat costModifier, min 0 per item
   const costPer = Math.max(
     0,
@@ -402,6 +405,14 @@ export function formatSummary(
       costLine += ` (includes +${gold(formulaCost)} gp for formula; formula retained)`;
     }
     costLine += `\n**Materials:** ${gold(lostCopper)} gp lost; ${gold(recoverableCopper)} gp recoverable`;
+  }
+
+  if (material) {
+    const minimum = normalizeMoney(material.minimumGpPerItem * input.quantity);
+    const amount = `${minimum} gp of ${material.name.toLowerCase()}`;
+    costLine += failed
+      ? ` (initial supply required at least ${amount})`
+      : ` (includes at least ${amount})`;
   }
 
   return (
