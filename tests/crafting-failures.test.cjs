@@ -46,6 +46,29 @@ test('signed and unsigned percentage markups produce identical summaries', () =>
   }
 });
 
+test('decimal discounts and flat adjustments do not expose floating point noise', () => {
+  assert.equal(applyCostModifier(10, '-90%'), 1);
+  assert.equal(applyCostModifier(0.3, '-0.1'), 0.2);
+  assert.match(summary({ itemCost: 10, costModifier: '-90%', craftingRoll: 15,
+    additionalDays: 0 }), /\*\*Cost:\*\* 1 gp\n/);
+});
+
+test('discounted price reaches the correct half-price reduction limit', () => {
+  assert.match(summary({ itemCost: 10, costModifier: '-90%', craftingRoll: 15,
+    additionalDays: 100 }), /\*\*Cost:\*\* 0\.5 gp \(reduced by 0\.5 gp\)/);
+});
+
+test('batch multiplication is normalized before flooring the reduction limit', () => {
+  assert.match(summary({ itemCost: 0.29, quantity: 2, craftingRoll: 15,
+    additionalDays: 100 }), /\*\*Cost:\*\* 0\.29 gp \(reduced by 0\.29 gp\)/);
+});
+
+test('legitimate fractional copper prices are preserved', () => {
+  assert.equal(applyCostModifier(0.01, '-50%'), 0.005);
+  assert.match(summary({ itemCost: 0.01, costModifier: '-50%', craftingRoll: 15,
+    additionalDays: 0 }), /\*\*Cost:\*\* 0\.005 gp\n/);
+});
+
 test('formula choices determine setup time and ownership ignores stale choices', () => {
   for (const formulaOption of ['', 'work', 'buy']) {
     assert.equal(calculateSetupDays({ hasFormula: true, formulaOption }), 1);

@@ -232,6 +232,11 @@ export function calculateEndDate(startDate: string, setupDays: number, additiona
   return `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, "0")}-${String(start.getDate()).padStart(2, "0")}`;
 }
 
+// Remove floating-point noise while retaining fractional copper amounts.
+function normalizeMoney(value: number): number {
+  return Number(value.toFixed(8));
+}
+
 // New: Cost modifier logic supporting -xxx% to xxx% or flat value
 export function applyCostModifier(itemCost: number, costModifierInput: string | undefined): number {
   if (!costModifierInput || costModifierInput.trim() === "") return itemCost;
@@ -239,11 +244,11 @@ export function applyCostModifier(itemCost: number, costModifierInput: string | 
   if (percentMatch) {
     const percent = parseFloat(percentMatch[1]);
     // -20% means 20% discount, +50% means 50% markup, 0% means no change
-    return itemCost * (1 + percent / 100);
+    return normalizeMoney(itemCost * (1 + percent / 100));
   }
   // Otherwise treat as flat modifier (additive)
   const flat = parseFloat(costModifierInput);
-  if (!isNaN(flat)) return itemCost + flat;
+  if (!isNaN(flat)) return normalizeMoney(itemCost + flat);
   return itemCost;
 }
 
@@ -260,10 +265,11 @@ export function formatSummary(
     0,
     applyCostModifier(input.itemCost ?? 0, input.costModifier)
   );
-  const baseCost = costPer * input.quantity;
+  const baseCost = normalizeMoney(costPer * input.quantity);
+  const baseCostCopper = normalizeMoney(baseCost * 100);
 
   // Always pay at least 50% up front
-  const minCostCopper = Math.floor(baseCost * 100 / 2);
+  const minCostCopper = Math.floor(normalizeMoney(baseCostCopper / 2));
 
   // Only reduce cost if there are additional downtime days and a successful result
   let reductionPerDay = 0;
@@ -285,7 +291,7 @@ export function formatSummary(
   }
 
   // Final cost cannot go below 50%
-  let finalCostCopper = baseCost * 100 - totalReduction;
+  let finalCostCopper = normalizeMoney(baseCostCopper - totalReduction);
   if (finalCostCopper < minCostCopper) finalCostCopper = minCostCopper;
 
   let formulaCost = 0;
@@ -293,12 +299,12 @@ export function formatSummary(
     formulaCost = getFormulaCost(input.itemLevel) * 100; // formula cost in copper
   }
   const totalFinalCopper = finalCostCopper + formulaCost;
-  const finalCost = totalFinalCopper / 100;
+  const finalCost = normalizeMoney(totalFinalCopper / 100);
 
   // Only show reduction if any
   const reductionStr =
     totalReduction > 0
-      ? ` (reduced by ${totalReduction / 100} gp)`
+      ? ` (reduced by ${normalizeMoney(totalReduction / 100)} gp)`
       : "";
 
   let resultStr = resultType;
@@ -323,10 +329,10 @@ export function formatSummary(
   if (failed) {
     // Assume the standard upfront materials: half the adjusted batch price.
     // Failed attempts never spend the remaining price or additional work days.
-    const suppliedCopper = baseCost * 100 / 2;
+    const suppliedCopper = baseCostCopper / 2;
     const lostCopper = resultType === "Critical Failure" ? suppliedCopper / 10 : 0;
     const recoverableCopper = suppliedCopper - lostCopper;
-    const gold = (copper: number) => Number((copper / 100).toFixed(8));
+    const gold = (copper: number) => normalizeMoney(copper / 100);
     costLine = `**Cost:** ${gold(lostCopper + formulaCost)} gp`;
     if (formulaCost > 0) {
       costLine += ` (includes +${gold(formulaCost)} gp for formula; formula retained)`;
