@@ -271,7 +271,9 @@ export default function App() {
     itemCategory.toLowerCase() === "ammo";
   const maxBatch = isBatchItem ? 24 : 1;
 
-  const kind = materialKind(matchedItem?.itemType ?? itemCategory.trim().toLowerCase());
+  const itemType = matchedItem?.itemType ?? itemCategory.trim().toLowerCase();
+  const showMaterialOption = ["weapon", "armor", "shield"].includes(itemType);
+  const kind = materialKind(itemType);
   const materialEnabled = useMaterial && kind !== null;
   const availableMaterials = [...new Set(materialRows.filter(row => row.kind === kind).map(row => row.material))];
   const availableGrades = materialRows.filter(row => row.kind === kind && row.material === selectedMaterial);
@@ -518,7 +520,7 @@ export default function App() {
 			</label>
           </div>
 
-          <label>
+          {showMaterialOption && <label>
             <input type="checkbox" checked={materialEnabled} disabled={!kind}
               onChange={e => {
                 setUseMaterial(e.target.checked);
@@ -536,7 +538,7 @@ export default function App() {
               The minimum precious material is included in the total and stays fixed through discounts and downtime.
               Uncheck to restore your original values. Shields and ammunition are not included yet.
             </PopoverHelp>
-          </label>
+          </label>}
           {materialEnabled && (
             <div className="form-row">
               <label>Material
