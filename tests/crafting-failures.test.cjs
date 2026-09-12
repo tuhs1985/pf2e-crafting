@@ -12,7 +12,17 @@ const compiled = ts.transpileModule(source, {
 }).outputText;
 const context = { exports: {} };
 vm.runInNewContext(compiled, context);
-const { formatSummary, calculateEndDate, calculateSetupDays, getResultType } = context.exports;
+const { formatSummary, calculateEndDate, calculateSetupDays, getResultType, applyCostModifier } = context.exports;
+
+test('explicit positive percentages are markups, including decimals and whitespace', () => {
+  for (const [modifier, expected] of [
+    ['+50%', 1500], ['50%', 1500], [' +12.5% ', 1125],
+    ['+50 %', 1500], ['-50%', 500], ['-12.5%', 875],
+    ['+0%', 1000], ['+50', 1050], ['-50', 950], ['', 1000],
+  ]) {
+    assert.equal(applyCostModifier(1000, modifier), expected, modifier);
+  }
+});
 
 const base = {
   character: 'Test', itemName: 'Example', itemLevel: 1,
@@ -28,6 +38,13 @@ function summary(overrides = {}) {
   return formatSummary(input, getResultType(input.craftingDC, input.craftingRoll),
     calculateEndDate(input.startDate, input.setupDays, input.additionalDays));
 }
+
+test('signed and unsigned percentage markups produce identical summaries', () => {
+  for (const craftingRoll of [5, 10, 15, 25]) {
+    assert.equal(summary({ craftingRoll, costModifier: '+50%' }),
+      summary({ craftingRoll, costModifier: '50%' }));
+  }
+});
 
 test('formula choices determine setup time and ownership ignores stale choices', () => {
   for (const formulaOption of ['', 'work', 'buy']) {

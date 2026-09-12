@@ -235,7 +235,7 @@ export function calculateEndDate(startDate: string, setupDays: number, additiona
 // New: Cost modifier logic supporting -xxx% to xxx% or flat value
 export function applyCostModifier(itemCost: number, costModifierInput: string | undefined): number {
   if (!costModifierInput || costModifierInput.trim() === "") return itemCost;
-  const percentMatch = costModifierInput.trim().match(/^(-?\d+(\.\d+)?)\s*%$/);
+  const percentMatch = costModifierInput.trim().match(/^([+-]?\d+(\.\d+)?)\s*%$/);
   if (percentMatch) {
     const percent = parseFloat(percentMatch[1]);
     // -20% means 20% discount, +50% means 50% markup, 0% means no change
