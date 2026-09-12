@@ -40,3 +40,17 @@ Sources inspected (master as of this research; not a pinned implementation):
 Next work: review uncommitted importer diff, retain unchanged old item pricing,
 then implement requested material controls/calculations. Confirm whether the user
 wants shields in that version before expanding beyond weapons and armor.
+
+## Implementation update
+
+## User override to implement next
+
+The user explicitly rejects restricting tower/fortress shields to duskwood.
+This app is a flexible builder, not a rules validator. Allow other materials,
+including adamantine, for GM-approved tower/fortress shield builds. This overrides
+the previous decision to offer only entries present in Foundry's tower table.
+No code change made for this override yet. Next session: agree on or explain a
+pricing fallback for missing tower/material combinations rather than claiming
+those prices are published in Foundry, then broaden the material options. Do not
+re-ask whether these combinations should be allowed; the user has authorized them.
+Shield import and controls are now implemented locally, not committed or deployed. All five tables are extracted at the existing pinned revision; classification getters were verified at that revision too. 129 total material-grade rows, 32 passing tests, production build passed. Browser acceptance remains for the user. The tower table contains duskwood only. This supersedes the earlier weapons/armor-only checkpoint above.

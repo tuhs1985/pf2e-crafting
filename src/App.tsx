@@ -273,12 +273,12 @@ export default function App() {
 
   const itemType = matchedItem?.itemType ?? itemCategory.trim().toLowerCase();
   const showMaterialOption = ["weapon", "armor", "shield"].includes(itemType);
-  const kind = materialKind(itemType);
+  const kind = materialKind(itemType, matchedItem?.baseItem);
   const materialEnabled = useMaterial && kind !== null;
   const availableMaterials = [...new Set(materialRows.filter(row => row.kind === kind).map(row => row.material))];
   const availableGrades = materialRows.filter(row => row.kind === kind && row.material === selectedMaterial);
   const materialRow = kind ? findMaterial(kind, selectedMaterial, selectedGrade) : undefined;
-  const carriedBulk = kind
+  const carriedBulk = itemType === "shield" ? 0 : kind
     ? matchedItem && itemBulk === matchedItem.bulk && matchedItem.carriedBulk !== null
       ? matchedItem.carriedBulk : parseCarriedBulk(itemBulk, kind)
     : null;
@@ -398,10 +398,11 @@ export default function App() {
                 </li>
                 <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
                 <li>
-                  <strong>Precious material:</strong> Select a weapon or armor, then check the box and choose a material and grade.
+                  <strong>Precious material:</strong> Select a weapon, armor, or shield, then check the box and choose a material and grade.
                   Cost, level, rarity, and automatic DC update. Uncheck to restore the original item.
-                  For a custom item, enter <code>weapon</code> or <code>armor</code> in Item Category.
+                  For a custom item, enter <code>weapon</code>, <code>armor</code>, or <code>shield</code> in Item Category.
                   Bulk is the normal item Bulk; armor pricing includes its extra carried Bulk.
+                  Shield prices do not depend on Bulk. Known shields use their Foundry pricing group; custom shields use the ordinary shield table.
                   The parenthetical amount is the minimum precious material included in the total, not an extra charge.
                   Cost Mod and downtime change the total but not that minimum. There are no proficiency or build-legality checks.
                 </li>
@@ -533,10 +534,11 @@ export default function App() {
               }} />
             Precious material{" "}
             <PopoverHelp>
-              Available for weapons and armor. Choose the material and grade to calculate its price, level, rarity, and DC.
+              Available for weapons, armor, and shields. Choose the material and grade to calculate its price, level, rarity, and DC.
               The material price replaces the ordinary item price. Cost Mod still adjusts it.
               The minimum precious material is included in the total and stays fixed through discounts and downtime.
-              Uncheck to restore your original values. Shields and ammunition are not included yet.
+              Shield pricing uses its buckler, ordinary shield, or tower group without a Bulk surcharge.
+              Only materials and grades with listed prices appear. Uncheck to restore your original values. Ammunition is not included yet.
             </PopoverHelp>
           </label>}
           {materialEnabled && (

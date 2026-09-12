@@ -1,6 +1,6 @@
 import database from "../data/materials.db.json";
 
-export type MaterialKind = "weapon" | "armor";
+export type MaterialKind = "weapon" | "armor" | "buckler" | "shield" | "tower";
 export type MaterialGrade = "low" | "standard" | "high";
 export interface MaterialRow {
   kind: string;
@@ -22,7 +22,14 @@ export function materialLabel(slug: string): string {
   return slug.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 }
 
-export function materialKind(itemType: string): MaterialKind | null {
+// Foundry shield/document.ts, pinned to the material snapshot's revision:
+// aaff60d1625ba92c8d06f41f21b61d4748484dc9
+export function materialKind(itemType: string, baseItem: string | null = null): MaterialKind | null {
+  if (itemType === "shield") {
+    if (["buckler", "casters-targe", "dart-shield", "gauntlet-buckler", "heavy-rondache", "klar"].includes(baseItem ?? "")) return "buckler";
+    if (["fortress-shield", "tower-shield"].includes(baseItem ?? "")) return "tower";
+    return "shield";
+  }
   return itemType === "weapon" || itemType === "armor" ? itemType : null;
 }
 
@@ -33,8 +40,9 @@ export function findMaterial(kind: MaterialKind, material: string, grade: string
 // Bulk here is the original item's carried Bulk, before material weight changes.
 // Foundry prices normal Bulk (ignoring the light remainder), with a minimum of 1.
 export function materialAmounts(row: MaterialRow, carriedBulk: number) {
-  if (!Number.isFinite(carriedBulk) || carriedBulk < 0) throw new Error("Enter a valid Bulk for material pricing.");
-  const bulk = Math.max(1, Math.floor(carriedBulk));
+  const usesBulk = row.kind === "weapon" || row.kind === "armor";
+  if (usesBulk && (!Number.isFinite(carriedBulk) || carriedBulk < 0)) throw new Error("Enter a valid Bulk for material pricing.");
+  const bulk = usesBulk ? Math.max(1, Math.floor(carriedBulk)) : 0;
   return {
     price: Number((row.basePriceGp + row.pricePerBulkGp * bulk).toFixed(8)),
     minimum: Number((row.minimumMaterialBaseGp + row.minimumMaterialPerBulkGp * bulk).toFixed(8)),

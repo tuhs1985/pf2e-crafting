@@ -19,10 +19,35 @@ const { materialKind, findMaterial, materialAmounts, parseCarriedBulk, applyMate
 const { formatSummary, calculateCraftingDC } = load('crafting.ts');
 const silver = findMaterial('weapon', 'silver', 'low');
 
-test('only weapons and armor enable materials', () => {
+test('weapons, armor, and shields enable materials', () => {
   assert.equal(materialKind('weapon'), 'weapon');
   assert.equal(materialKind('armor'), 'armor');
-  for (const kind of ['shield', 'ammo', 'consumable', 'equipment', '']) assert.equal(materialKind(kind), null);
+  assert.equal(materialKind('shield'), 'shield');
+  for (const kind of ['ammo', 'consumable', 'equipment', '']) assert.equal(materialKind(kind), null);
+});
+
+test('Treasure Vault shields use the pinned Foundry pricing groups', () => {
+  for (const base of ['buckler', 'casters-targe', 'dart-shield', 'gauntlet-buckler', 'heavy-rondache', 'klar']) {
+    assert.equal(materialKind('shield', base), 'buckler');
+  }
+  for (const base of ['fortress-shield', 'tower-shield']) assert.equal(materialKind('shield', base), 'tower');
+  for (const base of ['harnessed-shield', 'hide-shield', 'meteor-shield', 'razor-disc', 'salvo-shield', 'swordstealer-shield']) {
+    assert.equal(materialKind('shield', base), 'shield');
+  }
+});
+
+test('shield prices and material requirements do not scale with Bulk', () => {
+  const buckler = findMaterial('buckler', 'silver', 'low');
+  const shield = findMaterial('shield', 'silver', 'low');
+  assert.equal(materialAmounts(buckler, 0.1).price, 30);
+  assert.equal(materialAmounts(shield, 1).price, 34);
+  assert.equal(materialAmounts(shield, 100).price, 34);
+  assert.equal(materialAmounts(shield, NaN).minimum, 1.7);
+  const tower = findMaterial('tower', 'duskwood', 'standard');
+  assert.ok(tower);
+  assert.equal(materialAmounts(tower, 5).price, tower.basePriceGp);
+  assert.equal(materialAmounts(tower, 5).minimum, tower.basePriceGp / 8);
+  assert.equal(findMaterial('tower', 'silver', 'low'), undefined);
 });
 
 test('silver longsword has full price 44, material minimum 2.2, and level 2 DC', () => {

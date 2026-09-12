@@ -525,6 +525,463 @@
         "standard": null,
         "high": null
       }
+    },
+    "buckler": {
+      "": {
+        "low": null,
+        "standard": null,
+        "high": null
+      },
+      "abysium": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 400,
+          "hardness": 4,
+          "maxHP": 16,
+          "rarity": "rare"
+        },
+        "high": {
+          "level": 16,
+          "price": 8000,
+          "hardness": 7,
+          "maxHP": 28,
+          "rarity": "rare"
+        }
+      },
+      "adamantine": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 400,
+          "rarity": "uncommon",
+          "hardness": 8,
+          "maxHP": 32
+        },
+        "high": {
+          "level": 16,
+          "price": 8000,
+          "hardness": 11,
+          "maxHP": 44,
+          "rarity": "uncommon"
+        }
+      },
+      "cold-iron": {
+        "low": {
+          "level": 2,
+          "price": 30,
+          "hardness": 3,
+          "maxHP": 12,
+          "rarity": "common"
+        },
+        "standard": {
+          "level": 7,
+          "price": 300,
+          "hardness": 5,
+          "maxHP": 20,
+          "rarity": "common"
+        },
+        "high": {
+          "level": 15,
+          "price": 5000,
+          "hardness": 8,
+          "maxHP": 32,
+          "rarity": "common"
+        }
+      },
+      "dawnsilver": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 400,
+          "hardness": 3,
+          "maxHP": 12,
+          "rarity": "uncommon"
+        },
+        "high": {
+          "level": 16,
+          "price": 8000,
+          "hardness": 6,
+          "maxHP": 24,
+          "rarity": "uncommon"
+        }
+      },
+      "djezet": {
+        "low": null,
+        "standard": {
+          "level": 9,
+          "price": 600,
+          "hardness": 3,
+          "maxHP": 12,
+          "rarity": "rare"
+        },
+        "high": {
+          "level": 16,
+          "price": 8000,
+          "hardness": 6,
+          "maxHP": 24,
+          "rarity": "rare"
+        }
+      },
+      "dragonhide": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 400,
+          "hardness": 2,
+          "maxHP": 8,
+          "rarity": "uncommon"
+        },
+        "high": {
+          "level": 16,
+          "price": 8000,
+          "hardness": 5,
+          "maxHP": 20,
+          "rarity": "uncommon"
+        }
+      },
+      "duskwood": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 400,
+          "hardness": 3,
+          "maxHP": 12,
+          "rarity": "uncommon"
+        },
+        "high": {
+          "level": 16,
+          "price": 8000,
+          "hardness": 5,
+          "maxHP": 20,
+          "rarity": "uncommon"
+        }
+      },
+      "inubrix": {
+        "low": null,
+        "standard": {
+          "level": 7,
+          "price": 320,
+          "hardness": 2,
+          "maxHP": 8,
+          "rarity": "rare"
+        },
+        "high": {
+          "level": 15,
+          "price": 5000,
+          "hardness": 5,
+          "maxHP": 20,
+          "rarity": "rare"
+        }
+      },
+      "noqual": {
+        "low": null,
+        "standard": null,
+        "high": {
+          "level": 17,
+          "price": 14000,
+          "hardness": 7,
+          "maxHP": 28,
+          "rarity": "rare"
+        }
+      },
+      "orichalcum": {
+        "low": null,
+        "standard": null,
+        "high": {
+          "level": 17,
+          "price": 12000,
+          "hardness": 14,
+          "maxHP": 56,
+          "rarity": "rare"
+        }
+      },
+      "siccatite": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 400,
+          "hardness": 4,
+          "maxHP": 16,
+          "rarity": "rare"
+        },
+        "high": {
+          "level": 16,
+          "price": 8000,
+          "hardness": 7,
+          "maxHP": 28,
+          "rarity": "rare"
+        }
+      },
+      "silver": {
+        "low": {
+          "level": 2,
+          "price": 30,
+          "hardness": 1,
+          "maxHP": 4,
+          "rarity": "common"
+        },
+        "standard": {
+          "level": 7,
+          "price": 300,
+          "hardness": 3,
+          "maxHP": 12,
+          "rarity": "common"
+        },
+        "high": {
+          "level": 15,
+          "price": 5000,
+          "hardness": 6,
+          "maxHP": 24,
+          "rarity": "common"
+        }
+      }
+    },
+    "shield": {
+      "": {
+        "low": null,
+        "standard": null,
+        "high": null
+      },
+      "abysium": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 440,
+          "hardness": 6,
+          "maxHP": 24,
+          "rarity": "rare"
+        },
+        "high": {
+          "level": 16,
+          "price": 8800,
+          "hardness": 10,
+          "maxHP": 40,
+          "rarity": "rare"
+        }
+      },
+      "adamantine": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 440,
+          "rarity": "uncommon",
+          "hardness": 10,
+          "maxHP": 40
+        },
+        "high": {
+          "level": 16,
+          "price": 8800,
+          "hardness": 13,
+          "maxHP": 52,
+          "rarity": "uncommon"
+        }
+      },
+      "cold-iron": {
+        "low": {
+          "level": 2,
+          "price": 34,
+          "hardness": 5,
+          "maxHP": 20,
+          "rarity": "common"
+        },
+        "standard": {
+          "level": 7,
+          "price": 340,
+          "hardness": 7,
+          "maxHP": 28,
+          "rarity": "common"
+        },
+        "high": {
+          "level": 15,
+          "price": 5500,
+          "hardness": 10,
+          "maxHP": 40,
+          "rarity": "common"
+        }
+      },
+      "dawnsilver": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 440,
+          "hardness": 5,
+          "maxHP": 20,
+          "rarity": "uncommon"
+        },
+        "high": {
+          "level": 16,
+          "price": 8800,
+          "hardness": 8,
+          "maxHP": 32,
+          "rarity": "uncommon"
+        }
+      },
+      "djezet": {
+        "low": null,
+        "standard": {
+          "level": 9,
+          "price": 660,
+          "hardness": 5,
+          "maxHP": 20,
+          "rarity": "rare"
+        },
+        "high": {
+          "level": 16,
+          "price": 8800,
+          "hardness": 8,
+          "maxHP": 32,
+          "rarity": "rare"
+        }
+      },
+      "dragonhide": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 440,
+          "hardness": 4,
+          "maxHP": 16,
+          "rarity": "uncommon"
+        },
+        "high": {
+          "level": 16,
+          "price": 8800,
+          "hardness": 7,
+          "maxHP": 28,
+          "rarity": "uncommon"
+        }
+      },
+      "duskwood": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 440,
+          "hardness": 5,
+          "maxHP": 20,
+          "rarity": "uncommon"
+        },
+        "high": {
+          "level": 16,
+          "price": 8800,
+          "hardness": 8,
+          "maxHP": 32,
+          "rarity": "uncommon"
+        }
+      },
+      "inubrix": {
+        "low": null,
+        "standard": {
+          "level": 7,
+          "price": 352,
+          "hardness": 4,
+          "maxHP": 16,
+          "rarity": "rare"
+        },
+        "high": {
+          "level": 15,
+          "price": 5500,
+          "hardness": 7,
+          "maxHP": 28,
+          "rarity": "rare"
+        }
+      },
+      "keep-stone": {
+        "low": null,
+        "standard": null,
+        "high": {
+          "level": 17,
+          "price": 13200,
+          "hardness": 11,
+          "maxHP": 46,
+          "rarity": "rare"
+        }
+      },
+      "noqual": {
+        "low": null,
+        "standard": null,
+        "high": {
+          "level": 17,
+          "price": 15400,
+          "hardness": 10,
+          "maxHP": 40,
+          "rarity": "rare"
+        }
+      },
+      "orichalcum": {
+        "low": null,
+        "standard": null,
+        "high": {
+          "level": 17,
+          "price": 13200,
+          "hardness": 16,
+          "maxHP": 64,
+          "rarity": "rare"
+        }
+      },
+      "siccatite": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 440,
+          "hardness": 6,
+          "maxHP": 24,
+          "rarity": "rare"
+        },
+        "high": {
+          "level": 16,
+          "price": 8800,
+          "hardness": 10,
+          "maxHP": 40,
+          "rarity": "rare"
+        }
+      },
+      "silver": {
+        "low": {
+          "level": 2,
+          "price": 34,
+          "hardness": 3,
+          "maxHP": 12,
+          "rarity": "common"
+        },
+        "standard": {
+          "level": 7,
+          "price": 340,
+          "hardness": 5,
+          "maxHP": 20,
+          "rarity": "common"
+        },
+        "high": {
+          "level": 15,
+          "price": 5500,
+          "hardness": 8,
+          "maxHP": 32,
+          "rarity": "common"
+        }
+      }
+    },
+    "tower": {
+      "": {
+        "low": null,
+        "standard": null,
+        "high": null
+      },
+      "duskwood": {
+        "low": null,
+        "standard": {
+          "level": 8,
+          "price": 560,
+          "hardness": 5,
+          "maxHP": 20,
+          "rarity": "uncommon"
+        },
+        "high": {
+          "level": 16,
+          "price": 11200,
+          "hardness": 8,
+          "maxHP": 32,
+          "rarity": "uncommon"
+        }
+      }
     }
   }
 }

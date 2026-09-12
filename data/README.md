@@ -18,7 +18,7 @@ pricePer, baseItem]` for each name. Armor's carried Bulk is its stored worn Bulk
 plus 1 unless an explicit held/stowed value exists. Other items retain their
 stored Bulk. The app reader also tolerates the previous format without metadata.
 
-Material data is restricted to weapons and armor. `materials.source.json` is a
+Material data includes weapons, armor, bucklers, ordinary shields, and tower shields. `materials.source.json` is a
 checked-in snapshot of the literal tables in Foundry PF2e's materials.ts. It
 records the upstream commit and path. Ordinary material regeneration is offline.
 To re-download the pinned source, run:
@@ -48,7 +48,7 @@ published precious-material minimum stays unchanged per item (and scales with
 quantity). Formula purchases remain separate. Failure summaries label the
 precious-material minimum as an initial supply requirement rather than a loss.
 No proficiency or build-legality checks are performed. Only combinations with
-pricing data appear. Shields and ammunition remain excluded from this feature.
+pricing data appear. Ammunition remains excluded from this feature.
 
 Sources and attribution:
 - Foundry PF2e: https://github.com/foundryvtt/pf2e
@@ -59,3 +59,6 @@ Sources and attribution:
 The compatibility test compares existing item fields against HEAD. A deliberate
 equipment-source update may require reviewing those differences before updating
 the baseline; do not discard that protection merely to make a test pass.
+
+### Shield pricing
+Shield classification follows Foundry shield/document.ts at the same revision as the material snapshot. Bucklers include Caster's Targe, Dart Shield, Gauntlet Buckler, Heavy Rondache, and Klar. Fortress Shield uses the tower table. Other shields use the ordinary shield table. Shield material prices and required material amounts do not scale with Bulk. Custom items categorized as shield use the ordinary table. The tower table supplies duskwood only; missing material/grade prices are not invented.

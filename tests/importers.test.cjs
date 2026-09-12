@@ -24,9 +24,9 @@ test('metadata distinguishes armor, weapons, and shields and preserves bundle pr
     material: { type: 'silver', grade: 'low' } } }).slice(0, 4), ['weapon', 1, 'silver', 'low']);
 });
 
-test('material file rebuilds offline and excludes shields', () => {
+test('material file rebuilds offline with all five pricing groups', () => {
   assert.deepEqual(buildDatabase(snapshot), materials);
-  assert.ok(materials.items.every(row => ['weapon', 'armor'].includes(row.kind)));
+  assert.deepEqual([...new Set(materials.items.map(row => row.kind))].sort(), ['armor', 'buckler', 'shield', 'tower', 'weapon']);
   const silver = materials.items.find(row => row.kind === 'weapon' && row.material === 'silver' && row.grade === 'low');
   assert.equal(silver.basePriceGp + silver.pricePerBulkGp, 44);
   assert.equal(silver.minimumMaterialBaseGp + silver.minimumMaterialPerBulkGp, 2.2);

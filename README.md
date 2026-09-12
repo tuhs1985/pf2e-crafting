@@ -10,7 +10,7 @@ A web-based tool for calculating crafting costs, time, and results for Pathfinde
 - ✅ **Automatic Calculations** - DC, setup days, end dates, and cost reductions
 - ✅ **Batch Crafting** - Craft up to 24 consumables/ammo at once
 - ✅ **Cost Modifiers** - Support for percentage discounts/markups or flat adjustments
-- ✅ **Precious Materials** - Material and grade selectors for weapons and armor, with automatic price, level, rarity, and minimum material value
+- ✅ **Precious Materials** - Material and grade selectors for weapons, armor, and shields, with automatic price, level, rarity, and minimum material value
 - ✅ **Formula Options** - Buy formulas or work an extra day if you don't own one
 - ✅ **Assurance Support** - Calculate with Assurance or manual roll values
 - ✅ **Earn Income Integration** - Automatic cost reduction based on character level and proficiency
@@ -65,10 +65,10 @@ See [database regeneration instructions](data/README.md) for source refresh and 
 
 ### Precious Materials
 
-Select a weapon or armor and enable **Precious material**, then choose material
+Select a weapon, armor, or shield and enable **Precious material**, then choose material
 and grade. The calculated price replaces the ordinary item price; unchecking
-restores the original fields. For custom items, use `weapon` or `armor` as the
-Item Category. Shields and ammunition are not supported yet.
+restores the original fields. For custom items, use `weapon`, `armor`, or `shield` as the
+Item Category. Ammunition is not supported yet.
 
 The summary shows the precious material included in the cost, for example:
 `Cost: 44 gp (includes at least 2.2 gp of silver)`. Cost Mod and additional

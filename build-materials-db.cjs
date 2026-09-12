@@ -7,6 +7,8 @@ const SOURCE_PATH = 'src/module/item/physical/materials.ts';
 const SNAPSHOT = path.join(__dirname, 'data', 'materials.source.json');
 const OUTPUT = path.join(__dirname, 'src', 'data', 'materials.db.json');
 const GRADES = { low: 0.1, standard: 0.25, high: 1 };
+const TABLES = { weapon: 'WEAPON', armor: 'ARMOR', buckler: 'BUCKLER',
+  shield: 'SHIELD', tower: 'TOWER_SHIELD' };
 
 // Read literal tables through TypeScript's parser; never execute downloaded code.
 function literal(node) {
@@ -34,20 +36,21 @@ function extractTables(source) {
     if (!ts.isVariableStatement(statement)) continue;
     for (const declaration of statement.declarationList.declarations) {
       const name = declaration.name.getText(file);
-      for (const kind of ['weapon', 'armor']) {
-        if (name === `${kind.toUpperCase()}_MATERIAL_VALUATION_DATA`) {
+      for (const [kind, prefix] of Object.entries(TABLES)) {
+        if (name === `${prefix}_MATERIAL_VALUATION_DATA`) {
           tables[kind] = literal(declaration.initializer);
         }
       }
     }
   }
-  if (!tables.weapon || !tables.armor) throw new Error('Missing weapon or armor table');
+  if (Object.keys(TABLES).some(kind => !tables[kind])) throw new Error('Missing material table');
   return tables;
 }
 
 function buildDatabase(snapshot) {
   const items = [];
-  for (const kind of ['weapon', 'armor']) {
+  for (const kind of Object.keys(TABLES)) {
+    const usesBulk = kind === 'weapon' || kind === 'armor';
     const table = snapshot.tables?.[kind];
     if (!table || !Object.keys(table).length) throw new Error(`Missing ${kind} materials`);
     for (const [material, grades] of Object.entries(table).sort(([a], [b]) => a.localeCompare(b))) {
@@ -61,10 +64,10 @@ function buildDatabase(snapshot) {
           throw new Error(`Invalid material: ${kind}/${material}/${grade}`);
         }
         items.push({ kind, material, grade, level: row.level, rarity: row.rarity,
-          basePriceGp: row.price, pricePerBulkGp: row.price / 10,
+          basePriceGp: row.price, pricePerBulkGp: usesBulk ? row.price / 10 : 0,
           // The precious material is part of the standard half-price investment.
           minimumMaterialBaseGp: row.price * fraction / 2,
-          minimumMaterialPerBulkGp: row.price * fraction / 20 });
+          minimumMaterialPerBulkGp: usesBulk ? row.price * fraction / 20 : 0 });
       }
     }
   }
@@ -93,7 +96,7 @@ async function main() {
   }
   fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
   fs.writeFileSync(OUTPUT, JSON.stringify(database));
-  console.log(`Wrote ${database.items.length} weapon/armor material grades to ${OUTPUT}`);
+  console.log(`Wrote ${database.items.length} equipment material grades to ${OUTPUT}`);
 }
 
 if (require.main === module) main().catch(error => { console.error(error.message); process.exitCode = 1; });
