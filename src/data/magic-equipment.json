@@ -1,0 +1,22 @@
+{
+  "sources": {
+    "weapon": "https://2e.aonprd.com/Equipment.aspx?ID=2861",
+    "armor": "https://2e.aonprd.com/Equipment.aspx?ID=2804"
+  },
+  "weapon": [
+    { "label": "+1", "level": 2, "price": 35 },
+    { "label": "+1 Striking", "level": 4, "price": 100 },
+    { "label": "+2 Striking", "level": 10, "price": 1000 },
+    { "label": "+2 Greater Striking", "level": 12, "price": 2000 },
+    { "label": "+3 Greater Striking", "level": 16, "price": 10000 },
+    { "label": "+3 Major Striking", "level": 19, "price": 40000 }
+  ],
+  "armor": [
+    { "label": "+1", "level": 5, "price": 160 },
+    { "label": "+1 Resilient", "level": 8, "price": 500 },
+    { "label": "+2 Resilient", "level": 11, "price": 1400 },
+    { "label": "+2 Greater Resilient", "level": 14, "price": 4500 },
+    { "label": "+3 Greater Resilient", "level": 18, "price": 24000 },
+    { "label": "+3 Major Resilient", "level": 20, "price": 70000 }
+  ]
+}

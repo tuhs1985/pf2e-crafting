@@ -1,3 +1,4 @@
+import { magicEquipmentKind, magicEquipmentOptions, applyMagicEquipment } from "./utils/magicEquipment";
 import { useState, useRef, useEffect } from "react";
 import type { Proficiency, CraftingInput } from "./utils/crafting";
 import {
@@ -156,6 +157,8 @@ export default function App() {
   const [itemCost, setItemCost] = useState<string>("");
   const [costModifier, setCostModifier] = useState<string>("");
   const [useMaterial, setUseMaterial] = useState(false);
+  const [useMagic, setUseMagic] = useState(false);
+  const [magicIndex, setMagicIndex] = useState(0);
   const [selectedMaterial, setSelectedMaterial] = useState("silver");
   const [selectedGrade, setSelectedGrade] = useState("low");
   const [quantity, setQuantity] = useState(1);
@@ -194,7 +197,7 @@ export default function App() {
 
   // Handle input for autocomplete/search
   function handleItemNameChange(val: string) {
-    if (val !== itemName) setUseMaterial(false);
+    if (val !== itemName) { setUseMaterial(false); setUseMagic(false); }
     setItemName(val);
     const matches = getItemSuggestions(val, items as ItemDbEntry[]);
     setItemSuggestions(matches);
@@ -214,6 +217,7 @@ export default function App() {
   }
 
   function handleSuggestionClick(item: ItemDbEntry) {
+    setUseMagic(false);
     setUseMaterial(false);
     setItemName(item.name);
     setItemLevel(String(item.level));
@@ -276,7 +280,15 @@ export default function App() {
   const itemType = matchedItem?.itemType ?? itemCategory.trim().toLowerCase();
   const kind = materialKind(itemType, matchedItem?.baseItem, matchedItem?.canCustomizeMaterial ?? true);
   const showMaterialOption = kind !== null;
-  const materialEnabled = useMaterial && kind !== null;
+  const magicKind = magicEquipmentKind(itemType, matchedItem?.canCustomizeMaterial ?? true, matchedItem?.materialType);
+  const magicOptions = magicKind ? magicEquipmentOptions[magicKind] : [];
+  const magicOption = magicOptions[magicIndex] ?? magicOptions[0];
+  const magicEnabled = useMagic && magicKind !== null && !!magicOption;
+  const materialEnabled = useMaterial && kind !== null && !magicEnabled;
+  const customized = materialEnabled || magicEnabled;
+  const magicResult = magicEnabled ? applyMagicEquipment(magicOption, {
+    name: itemName, level: Number(itemLevel), rarity: itemRarity,
+  }) : null;
   const availableMaterials = [...new Set(materialRows.filter(row => row.kind === kind).map(row => row.material))];
   const availableGrades = materialRows.filter(row => row.kind === kind && row.material === selectedMaterial);
   const materialRow = kind ? findMaterial(kind, selectedMaterial, selectedGrade) : undefined;
@@ -292,9 +304,9 @@ export default function App() {
     ? applyMaterial(materialRow, { carriedBulk, price: Number(itemCost), level: Number(itemLevel),
       rarity: itemRarity, existingMaterial: matchedItem?.materialType, existingGrade: matchedItem?.materialGrade })
     : null;
-  const effectiveLevel = materialResult?.level ?? itemLevel;
-  const effectiveRarity = materialResult?.rarity ?? itemRarity;
-  const effectiveCost = materialResult?.price ?? itemCost;
+  const effectiveLevel = magicResult?.level ?? materialResult?.level ?? itemLevel;
+  const effectiveRarity = magicResult?.rarity ?? materialResult?.rarity ?? itemRarity;
+  const effectiveCost = magicResult?.price ?? materialResult?.price ?? itemCost;
 
 
   // Auto-calculate DC if item fields change
@@ -309,7 +321,7 @@ export default function App() {
   // Setup days (auto, not user-editable)
   const craftingInput: CraftingInput = {
     character,
-    itemName,
+    itemName: magicResult?.name ?? itemName,
     itemLevel: Number(effectiveLevel),
     itemRarity: effectiveRarity,
     itemCategory,
@@ -399,6 +411,13 @@ export default function App() {
                   Do not mix percentages with arithmetic. The adjustment applies to each item before quantity and downtime reductions.
                 </li>
                 <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
+                <li>
+                  <strong>Magic weapon or armor:</strong> Select an eligible base item, check the box, and choose an enhancement.
+                  The listed magic price includes the base item. Level and automatic DC update; base rarity is retained.
+                  The enhancement appears in the summary name. Uncheck to restore the original values.
+                  Precious material and magic presets are mutually exclusive; existing precious-material, enchanted, and named specific items cannot use magic presets.
+                  Custom items can use the weapon or armor category. These presets include only the listed fundamental runes.
+                </li>
                 <li>
                   <strong>Precious material:</strong> Select a nonmagical weapon, armor, or shield, then check the box and choose a material and grade.
                   Named specific items and enchanted items keep their listed prices and cannot be customized here.
@@ -502,7 +521,7 @@ export default function App() {
 			  min={0}
 			  max={25}
 			  value={effectiveLevel}
-              readOnly={materialEnabled}
+              readOnly={customized}
 			  onChange={e => {
 				const inputValue = e.target.value;
 				// Allow empty/clearing, clamp between 0-25 otherwise
@@ -524,10 +543,26 @@ export default function App() {
 			</label>
           </div>
 
+          {(magicKind || showMaterialOption) && <div className="item-options-row">
+          {magicKind && <label>
+            <input type="checkbox" checked={magicEnabled}
+              onChange={e => {
+                setUseMagic(e.target.checked);
+                if (e.target.checked) { setUseMaterial(false); setMagicIndex(0); }
+              }} />
+            Magic {magicKind}{" "}
+            <PopoverHelp>
+              Choose a fundamental-rune preset for a standard-material weapon or armor.
+              The preset price replaces the base price; Cost Mod and downtime still apply.
+              Level and automatic DC update, and the base rarity is retained.
+              This option and Precious material cannot be used together. Uncheck to restore the original item.
+            </PopoverHelp>
+          </label>}
           {showMaterialOption && <label>
             <input type="checkbox" checked={materialEnabled} disabled={!kind}
               onChange={e => {
                 setUseMaterial(e.target.checked);
+                if (e.target.checked) setUseMagic(false);
                 if (e.target.checked && kind) {
                   const initial = findMaterial(kind, matchedItem?.materialType ?? "silver", matchedItem?.materialGrade ?? "low")
                     ?? materialRows.find(row => row.kind === kind)!;
@@ -545,6 +580,16 @@ export default function App() {
               Only materials and grades with listed prices appear. Uncheck to restore your original values. Ammunition is not included yet.
             </PopoverHelp>
           </label>}
+          </div>}
+          {magicEnabled && <div className="form-row">
+            <label>Magic enhancement
+              <select value={magicIndex} onChange={e => setMagicIndex(Number(e.target.value))}>
+                {magicOptions.map((option, index) => <option key={option.label} value={index}>
+                  {option.label} — {option.price.toLocaleString()} gp
+                </option>)}
+              </select>
+            </label>
+          </div>}
           {materialEnabled && (
             <div className="form-row">
               <label>Material
@@ -571,10 +616,10 @@ export default function App() {
               <input
                 type="text"
                 value={effectiveRarity}
-                readOnly={materialEnabled}
+                readOnly={customized}
                 onChange={e => handleRarityChange(e.target.value)}
                 onFocus={e => {
-                  if (materialEnabled) return;
+                  if (customized) return;
                   const suggestions = getRaritySuggestions(e.target.value);
                   setRaritySuggestions(suggestions);
                   setShowRaritySuggestions(true);
@@ -607,7 +652,7 @@ export default function App() {
                 value={itemCategory}
                 onChange={e => {
                   setItemCategory(e.target.value);
-                  if (!matchedItem) setUseMaterial(false);
+                  if (!matchedItem) { setUseMaterial(false); setUseMagic(false); }
                 }}
               />
             </label>
@@ -634,7 +679,7 @@ export default function App() {
                 min={0}
                 step={0.01}
                 value={effectiveCost}
-                readOnly={materialEnabled}
+                readOnly={customized}
                 onChange={e => setItemCost(e.target.value)}
                 placeholder="0"		
               />
