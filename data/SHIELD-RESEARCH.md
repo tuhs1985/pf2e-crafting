@@ -45,6 +45,12 @@ wants shields in that version before expanding beyond weapons and armor.
 
 ## User override to implement next
 
+SUPERSEDED: The user withdrew this override on 2026-09-12 ("Axe that idea.
+Shields are fine."). Keep the current published shield options; do not implement
+the fallback described below. New issue to investigate: named magical weapons,
+armor, and shields must not be customized with materials or have their listed
+prices replaced by a cheaper material price. No implementation authorized yet.
+
 The user explicitly rejects restricting tower/fortress shields to duskwood.
 This app is a flexible builder, not a rules validator. Allow other materials,
 including adamantine, for GM-approved tower/fortress shield builds. This overrides

@@ -24,7 +24,8 @@ export function materialLabel(slug: string): string {
 
 // Foundry shield/document.ts, pinned to the material snapshot's revision:
 // aaff60d1625ba92c8d06f41f21b61d4748484dc9
-export function materialKind(itemType: string, baseItem: string | null = null): MaterialKind | null {
+export function materialKind(itemType: string, baseItem: string | null = null, canCustomize = true): MaterialKind | null {
+  if (!canCustomize) return null;
   if (itemType === "shield") {
     if (["buckler", "casters-targe", "dart-shield", "gauntlet-buckler", "heavy-rondache", "klar"].includes(baseItem ?? "")) return "buckler";
     if (["fortress-shield", "tower-shield"].includes(baseItem ?? "")) return "tower";

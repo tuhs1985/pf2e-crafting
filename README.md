@@ -65,6 +65,10 @@ See [database regeneration instructions](data/README.md) for source refresh and 
 
 ### Precious Materials
 
+Material customization excludes named specific items and magical or rune-bearing
+equipment, preserving their listed prices. Ordinary nonmagical weapons, armor,
+and shields remain customizable, including those already made of precious material.
+
 Select a weapon, armor, or shield and enable **Precious material**, then choose material
 and grade. The calculated price replaces the ordinary item price; unchecking
 restores the original fields. For custom items, use `weapon`, `armor`, or `shield` as the

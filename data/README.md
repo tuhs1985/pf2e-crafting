@@ -12,9 +12,15 @@ Equipment input remains the locally supplied `src/packs/equipment/` Foundry JSON
 directory (not committed). The importer writes `src/data/items.db.json` only after
 validation. Original price values and bundle semantics are unchanged.
 
-Item schema version 2 preserves all six original row fields and lookup tables.
+Item schema version 3 preserves all six original row fields and lookup tables.
 The parallel `m` array stores `[itemType, carriedBulk, materialType, materialGrade,
-pricePer, baseItem]` for each name. Armor's carried Bulk is its stored worn Bulk
+pricePer, baseItem, canCustomizeMaterial]` for each name. The final flag is 1 only
+for nonmagical, nonspecific weapons, armor, and shields. Specific-item metadata,
+magical/tradition traits, and populated runes (including integrated runes) exclude
+an item. This prevents material pricing from replacing a named magic item's cost.
+Older metadata without the flag disables customization for database items until
+regenerated. Custom manually entered items remain available by category.
+Armor's carried Bulk is its stored worn Bulk
 plus 1 unless an explicit held/stowed value exists. Other items retain their
 stored Bulk. The app reader also tolerates the previous format without metadata.
 

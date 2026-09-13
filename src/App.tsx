@@ -18,7 +18,7 @@ import { materialRows, materialKind, materialLabel, gradeLabels, findMaterial,
 // Compressed database format
 type CompressedDb = {
   v?: number;
-  m?: [string, number, string | null, string | null, number, string | null][];
+  m?: [string, number, string | null, string | null, number, string | null, number?][];
   r: string[];      // rarities lookup
   c: string[];      // categories lookup
   b: string[];      // bulks lookup
@@ -42,6 +42,7 @@ type ItemDbEntry = {
   materialGrade: string | null;
   pricePer: number;
   baseItem: string | null;
+  canCustomizeMaterial: boolean;
 };
 
 // Decompress the database once on module load
@@ -60,6 +61,7 @@ const items: ItemDbEntry[] = db.i.map((item, idx) => ({
   materialGrade: db.m?.[idx]?.[3] ?? null,
   pricePer: db.m?.[idx]?.[4] ?? 1,
   baseItem: db.m?.[idx]?.[5] ?? null,
+  canCustomizeMaterial: db.m?.[idx]?.[6] === 1,
 }));
 
 // Add the possible rarities for autocomplete
@@ -272,8 +274,8 @@ export default function App() {
   const maxBatch = isBatchItem ? 24 : 1;
 
   const itemType = matchedItem?.itemType ?? itemCategory.trim().toLowerCase();
-  const showMaterialOption = ["weapon", "armor", "shield"].includes(itemType);
-  const kind = materialKind(itemType, matchedItem?.baseItem);
+  const kind = materialKind(itemType, matchedItem?.baseItem, matchedItem?.canCustomizeMaterial ?? true);
+  const showMaterialOption = kind !== null;
   const materialEnabled = useMaterial && kind !== null;
   const availableMaterials = [...new Set(materialRows.filter(row => row.kind === kind).map(row => row.material))];
   const availableGrades = materialRows.filter(row => row.kind === kind && row.material === selectedMaterial);
@@ -398,7 +400,8 @@ export default function App() {
                 </li>
                 <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
                 <li>
-                  <strong>Precious material:</strong> Select a weapon, armor, or shield, then check the box and choose a material and grade.
+                  <strong>Precious material:</strong> Select a nonmagical weapon, armor, or shield, then check the box and choose a material and grade.
+                  Named specific items and enchanted items keep their listed prices and cannot be customized here.
                   Cost, level, rarity, and automatic DC update. Uncheck to restore the original item.
                   For a custom item, enter <code>weapon</code>, <code>armor</code>, or <code>shield</code> in Item Category.
                   Bulk is the normal item Bulk; armor pricing includes its extra carried Bulk.
@@ -534,7 +537,8 @@ export default function App() {
               }} />
             Precious material{" "}
             <PopoverHelp>
-              Available for weapons, armor, and shields. Choose the material and grade to calculate its price, level, rarity, and DC.
+              Available for nonmagical weapons, armor, and shields, excluding named specific items.
+              Choose the material and grade to calculate its price, level, rarity, and DC.
               The material price replaces the ordinary item price. Cost Mod still adjusts it.
               The minimum precious material is included in the total and stays fixed through discounts and downtime.
               Shield pricing uses its buckler, ordinary shield, or tower group without a Bulk surcharge.

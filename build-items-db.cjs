@@ -21,6 +21,16 @@ function parseBulk(bulk) {
 const EQUIP_DIR = path.join(__dirname, 'src', 'packs', 'equipment');
 const OUT_FILE = path.join(__dirname, 'src', 'data', 'items.db.json');
 
+function canCustomizeMaterial(item) {
+  if (!['weapon', 'armor', 'shield'].includes(item.type)) return false;
+  const sys = item.system || item.data || {};
+  const magicalTraits = ['magical', 'arcane', 'divine', 'occult', 'primal'];
+  const hasRunes = runes => Object.values(runes ?? {}).some(value =>
+    Array.isArray(value) ? value.length > 0 : typeof value === 'number' ? value > 0 : false);
+  return !sys.specific && !(sys.traits?.value ?? []).some(trait => magicalTraits.includes(trait)) &&
+    !hasRunes(sys.runes) && !hasRunes(sys.traits?.integrated?.runes);
+}
+
 function materialMetadata(item) {
   const sys = item.system || item.data || {};
   const bulk = Number(sys.bulk?.value ?? 0);
@@ -32,7 +42,7 @@ function materialMetadata(item) {
     throw new Error(`Invalid Bulk or price quantity: ${item.name}`);
   }
   return [item.type ?? '', carriedBulk, sys.material?.type ?? null,
-    sys.material?.grade ?? null, pricePer, sys.baseItem ?? null];
+    sys.material?.grade ?? null, pricePer, sys.baseItem ?? null, canCustomizeMaterial(item) ? 1 : 0];
 }
 
 function getJsonFiles(dir) {
@@ -127,14 +137,14 @@ function buildDb(inputDir = EQUIP_DIR, outputFile = OUT_FILE) {
 
   // Ultra-compact output with single-letter keys
   const output = {
-    v: 2,
+    v: 3,
     r: rarities,      // rarity lookup
     c: categories,    // category lookup
     b: bulks,         // bulk lookup
     p: costs,         // price/cost lookup
     n: namePool,      // item names
     i: compressed,    // item data arrays
-    // Parallel metadata: [itemType, carriedBulk, material, grade, pricePer, baseItem]
+    // Parallel metadata: [itemType, carriedBulk, material, grade, pricePer, baseItem, canCustomizeMaterial]
     m: items.map(item => item.metadata),
   };
 
@@ -148,4 +158,4 @@ function buildDb(inputDir = EQUIP_DIR, outputFile = OUT_FILE) {
 }
 
 if (require.main === module) buildDb();
-module.exports = { buildDb, materialMetadata };
+module.exports = { buildDb, materialMetadata, canCustomizeMaterial };

@@ -26,6 +26,13 @@ test('weapons, armor, and shields enable materials', () => {
   for (const kind of ['ammo', 'consumable', 'equipment', '']) assert.equal(materialKind(kind), null);
 });
 
+test('ineligible items have no pricing group even if a material selection remains', () => {
+  for (const type of ['weapon', 'armor', 'shield']) {
+    assert.equal(materialKind(type, null, false), null);
+  }
+  assert.equal(materialKind('shield', 'fortress-shield', false), null);
+});
+
 test('Treasure Vault shields use the pinned Foundry pricing groups', () => {
   for (const base of ['buckler', 'casters-targe', 'dart-shield', 'gauntlet-buckler', 'heavy-rondache', 'klar']) {
     assert.equal(materialKind('shield', base), 'buckler');
