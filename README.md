@@ -128,7 +128,7 @@ The item database uses an ultra-compact format with **78.5% size reduction** (10
 
 ## Data Source
 
-Equipment data sourced from the Pathfinder 2e system for Foundry VTT. The `build-items-db.cjs` script processes JSON files from `src/packs/equipment/` and generates the compressed database.
+Equipment data sourced from the Pathfinder 2e system for Foundry VTT. The `build-items-db.cjs` script processes JSON files from `upstream/pf2e/packs/pf2e/equipment/` and generates the compressed database.
 
 ## Contributing
 
@@ -169,3 +169,8 @@ This project uses trademarks and/or copyrights owned by Paizo Inc., used under [
 - [Pathfinder 2e](https://paizo.com/pathfinder)
 
 ---
+
+### Updating PF2e equipment
+
+Run `npm run update:pf2e` to import the latest stable PF2e system release. See
+[plain-language update and publishing directions](UPDATING-PF2E.md).

@@ -2,7 +2,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 
-const REVISION = 'aaff60d1625ba92c8d06f41f21b61d4748484dc9';
+const { execFileSync } = require('node:child_process');
+const UPSTREAM = path.join(__dirname, 'upstream', 'pf2e');
 const SOURCE_PATH = 'src/module/item/physical/materials.ts';
 const SNAPSHOT = path.join(__dirname, 'data', 'materials.source.json');
 const OUTPUT = path.join(__dirname, 'src', 'data', 'materials.db.json');
@@ -77,23 +78,12 @@ function buildDatabase(snapshot) {
 }
 
 async function main() {
-  let snapshot;
-  if (process.argv.includes('--refresh')) {
-    const response = await fetch(`https://api.github.com/repos/foundryvtt/pf2e/contents/${SOURCE_PATH}?ref=${REVISION}`,
-      { headers: { 'User-Agent': 'pf2e-crafting-material-importer' }, signal: AbortSignal.timeout(30000) });
-    if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
-    const body = await response.json();
-    if (body.encoding !== 'base64' || typeof body.content !== 'string') throw new Error('Missing source content');
-    snapshot = { source: { repository: 'https://github.com/foundryvtt/pf2e', revision: REVISION,
-      path: SOURCE_PATH }, tables: extractTables(Buffer.from(body.content, 'base64').toString('utf8')) };
-  } else {
-    snapshot = JSON.parse(fs.readFileSync(SNAPSHOT, 'utf8'));
-  }
-  const database = buildDatabase(snapshot); // Validate before replacing either file.
-  if (process.argv.includes('--refresh')) {
-    fs.mkdirSync(path.dirname(SNAPSHOT), { recursive: true });
-    fs.writeFileSync(SNAPSHOT, JSON.stringify(snapshot, null, 2) + '\n');
-  }
+  const revision = execFileSync('git', ['-C', UPSTREAM, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+  const snapshot = { source: { repository: 'https://github.com/foundryvtt/pf2e', revision,
+    path: SOURCE_PATH }, tables: extractTables(fs.readFileSync(path.join(UPSTREAM, SOURCE_PATH), 'utf8')) };
+  const database = buildDatabase(snapshot);
+  fs.mkdirSync(path.dirname(SNAPSHOT), { recursive: true });
+  fs.writeFileSync(SNAPSHOT, JSON.stringify(snapshot, null, 2) + '\n');
   fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
   fs.writeFileSync(OUTPUT, JSON.stringify(database));
   console.log(`Wrote ${database.items.length} equipment material grades to ${OUTPUT}`);

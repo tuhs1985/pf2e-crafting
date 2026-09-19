@@ -1,16 +1,17 @@
 # Database regeneration
 
-Run from the repository root after `npm install`:
+For everyday instructions, see [Updating equipment and publishing](../UPDATING-PF2E.md).
 
-```powershell
-node build-items-db.cjs
-node build-materials-db.cjs
-node --test tests/*.test.cjs
-```
+`npm run setup:pf2e` initializes the pinned sparse submodule. `npm run update:pf2e`
+selects the latest stable PF2e system release, imports equipment and materials,
+runs tests, and builds. `npm run import:pf2e` uses the current checkout without
+advancing it. Both import commands restore generated sources and the checkout
+if generation, tests, or build fails.
 
-Equipment input remains the locally supplied `src/packs/equipment/` Foundry JSON
-directory (not committed). The importer writes `src/data/items.db.json` only after
-validation. Original price values and bundle semantics are unchanged.
+Equipment is read directly from `upstream/pf2e/packs/pf2e/equipment/`.
+The old ignored `src/packs/equipment/` folder is unused. `data/pf2e-version.json`
+records the imported release and revision. Commit the submodule pointer along
+with generated data after reviewing the update report.
 
 Item schema version 3 preserves all six original row fields and lookup tables.
 The parallel `m` array stores `[itemType, carriedBulk, materialType, materialGrade,
@@ -24,18 +25,12 @@ Armor's carried Bulk is its stored worn Bulk
 plus 1 unless an explicit held/stowed value exists. Other items retain their
 stored Bulk. The app reader also tolerates the previous format without metadata.
 
-Material data includes weapons, armor, bucklers, ordinary shields, and tower shields. `materials.source.json` is a
-checked-in snapshot of the literal tables in Foundry PF2e's materials.ts. It
-records the upstream commit and path. Ordinary material regeneration is offline.
-To re-download the pinned source, run:
-
-```powershell
-node build-materials-db.cjs --refresh
-```
-
-To adopt a newer upstream version, deliberately update `REVISION` in that importer,
-refresh, and review the diff. Downloaded TypeScript is parsed as literals, never
-executed. The generated file is `src/data/materials.db.json` (schema version 1).
+Material data includes weapons, armor, bucklers, ordinary shields, and tower shields.
+The material importer reads `src/module/item/physical/materials.ts` directly from
+the same upstream checkout as equipment. It parses literal tables without executing
+upstream TypeScript, and generates both `materials.source.json` (a reproducible
+test snapshot) and `src/data/materials.db.json`. No hard-coded download revision
+or separate `--refresh` step is needed.
 
 Each row records item kind, material, grade, level, rarity, base price, price per
 Bulk, and the minimum precious-material amounts. The latter use the general
@@ -62,9 +57,9 @@ Sources and attribution:
 - GM Core precious-material rules: https://2e.aonprd.com/Rules.aspx?ID=3135
 - Silver weapon example: https://2e.aonprd.com/Equipment.aspx?ID=2860
 
-The compatibility test compares existing item fields against HEAD. A deliberate
-equipment-source update may require reviewing those differences before updating
-the baseline; do not discard that protection merely to make a test pass.
+Tests validate lookup references, known equipment semantics, and material-table
+reproduction. The updater reports added, removed, and changed items rather than
+requiring every future release to equal the previous committed database.
 
 ### Shield pricing
 Shield classification follows Foundry shield/document.ts at the same revision as the material snapshot. Bucklers include Caster's Targe, Dart Shield, Gauntlet Buckler, Heavy Rondache, and Klar. Fortress Shield uses the tower table. Other shields use the ordinary shield table. Shield material prices and required material amounts do not scale with Bulk. Custom items categorized as shield use the ordinary table. The tower table supplies duskwood only; missing material/grade prices are not invented.

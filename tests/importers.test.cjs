@@ -1,16 +1,22 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { execFileSync } = require('node:child_process');
 const { materialMetadata, canCustomizeMaterial } = require('../build-items-db.cjs');
 const { extractTables, buildDatabase } = require('../build-materials-db.cjs');
 const items = require('../src/data/items.db.json');
 const materials = require('../src/data/materials.db.json');
 const snapshot = require('../data/materials.source.json');
 
-test('new item metadata leaves all original item fields unchanged', () => {
-  const previous = JSON.parse(execFileSync('git', ['show', 'HEAD:src/data/items.db.json'], { maxBuffer: 5e6 }));
-  for (const key of ['r', 'c', 'b', 'p', 'n', 'i']) assert.deepEqual(items[key], previous[key]);
+test('generated item rows contain valid lookup references and aligned metadata', () => {
+  assert.equal(new Set(items.n).size, items.n.length);
+  assert.equal(items.i.length, items.n.length);
   assert.equal(items.m.length, items.n.length);
+  for (const row of items.i) {
+    for (const [index, pool] of [[0, items.r], [1, items.c], [2, items.b], [3, items.p]]) {
+      assert.ok(Number.isInteger(row[index]) && row[index] >= 0 && row[index] < pool.length);
+    }
+    assert.ok([0, 1].includes(row[4]));
+    assert.ok(Number.isInteger(row[5]) && row[5] >= 0);
+  }
 });
 
 test('metadata distinguishes armor, weapons, and shields and preserves bundle prices', () => {

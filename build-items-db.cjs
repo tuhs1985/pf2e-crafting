@@ -18,7 +18,7 @@ function parseBulk(bulk) {
   return String(bulk);
 }
 
-const EQUIP_DIR = path.join(__dirname, 'src', 'packs', 'equipment');
+const EQUIP_DIR = path.join(__dirname, 'upstream', 'pf2e', 'packs', 'pf2e', 'equipment');
 const OUT_FILE = path.join(__dirname, 'src', 'data', 'items.db.json');
 
 function canCustomizeMaterial(item) {

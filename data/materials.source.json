@@ -1,7 +1,7 @@
 {
   "source": {
     "repository": "https://github.com/foundryvtt/pf2e",
-    "revision": "aaff60d1625ba92c8d06f41f21b61d4748484dc9",
+    "revision": "3601a90ce232134c590d9641df9b62a7254aee6d",
     "path": "src/module/item/physical/materials.ts"
   },
   "tables": {
@@ -623,23 +623,6 @@
           "rarity": "rare"
         }
       },
-      "dragonhide": {
-        "low": null,
-        "standard": {
-          "level": 8,
-          "price": 400,
-          "hardness": 2,
-          "maxHP": 8,
-          "rarity": "uncommon"
-        },
-        "high": {
-          "level": 16,
-          "price": 8000,
-          "hardness": 5,
-          "maxHP": 20,
-          "rarity": "uncommon"
-        }
-      },
       "duskwood": {
         "low": null,
         "standard": {
@@ -832,23 +815,6 @@
           "hardness": 8,
           "maxHP": 32,
           "rarity": "rare"
-        }
-      },
-      "dragonhide": {
-        "low": null,
-        "standard": {
-          "level": 8,
-          "price": 440,
-          "hardness": 4,
-          "maxHP": 16,
-          "rarity": "uncommon"
-        },
-        "high": {
-          "level": 16,
-          "price": 8800,
-          "hardness": 7,
-          "maxHP": 28,
-          "rarity": "uncommon"
         }
       },
       "duskwood": {
