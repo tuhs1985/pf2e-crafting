@@ -24,6 +24,7 @@ export interface CraftingInput {
   setupDays: number;
   additionalDays: number;
   costModifier?: string; // Now string, not number
+  craftingFee?: { overrideGp?: number };
   preciousMaterial?: { name: string; grade: string; minimumGpPerItem: number };
 }
 
@@ -317,16 +318,7 @@ export function applyCostModifier(itemCost: number, costModifierInput: string | 
   return normalizeMoney(itemCost + evaluateAdjustment(costModifierInput.trim()));
 }
 
-// Format the crafting summary with percent-aware cost modifier
-export function formatSummary(
-  input: CraftingInput,
-  resultType: string,
-  endDate: string
-): string {
-  const failed = resultType === "Failure" || resultType === "Critical Failure";
-  const material = input.preciousMaterial;
-  const activity = `Craft ${input.quantity} x ${input.itemName}` +
-    (material ? ` (${material.name}, ${material.grade})` : "");
+export function calculateOrderCosts(input: CraftingInput, resultType: string) {
   // Use itemCost with percent/flat costModifier, min 0 per item
   const costPer = Math.max(
     0,
@@ -368,6 +360,20 @@ export function formatSummary(
   const totalFinalCopper = finalCostCopper + formulaCost;
   const finalCost = normalizeMoney(totalFinalCopper / 100);
 
+  return { baseCostCopper, totalReduction, formulaCost, finalCost };
+}
+
+// Format the crafting summary with percent-aware cost modifier
+export function formatSummary(
+  input: CraftingInput,
+  resultType: string,
+  endDate: string
+): string {
+  const failed = resultType === "Failure" || resultType === "Critical Failure";
+  const material = input.preciousMaterial;
+  const activity = `Craft ${input.quantity} x ${input.itemName}` +
+    (material ? ` (${material.name}, ${material.grade})` : "");
+  const { baseCostCopper, totalReduction, formulaCost, finalCost } = calculateOrderCosts(input, resultType);
   // Only show reduction if any
   const reductionStr =
     totalReduction > 0
@@ -413,6 +419,16 @@ export function formatSummary(
     costLine += failed
       ? ` (initial supply required at least ${amount})`
       : ` (includes at least ${amount})`;
+  }
+
+  if (input.craftingFee) {
+    const fee = input.craftingFee.overrideGp ?? normalizeMoney(totalReduction / 100);
+    if (!Number.isFinite(fee) || fee < 0) throw new Error("Enter a nonnegative crafting fee in gp.");
+    const spent = failed
+      ? normalizeMoney((formulaCost + (resultType === "Critical Failure" ? baseCostCopper / 20 : 0)) / 100)
+      : finalCost;
+    costLine += `\n**Crafting fee:** ${normalizeMoney(fee)} gp`;
+    costLine += `\n**Total charged:** ${normalizeMoney(spent + fee)} gp`;
   }
 
   return (

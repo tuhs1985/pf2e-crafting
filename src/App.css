@@ -342,3 +342,27 @@ footer a:hover {
   align-items: center;
   gap: 0 1rem;
 }
+
+.character-saves { min-width: 0; position: relative; }
+.character-save-buttons { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.form-card .character-save-buttons button,
+.form-card .character-picker-actions button {
+  min-height: 44px; padding: 4px 2px; margin: 0; font-size: 0.8rem;
+  background: #333; color: #eee; border: 1px solid #777; border-radius: 5px;
+  cursor: pointer;
+}
+.character-save-note { font-size: 0.85rem; overflow-wrap: anywhere; margin: 0 0 0.3rem; }
+.form-card .character-save-buttons button,
+.form-card .character-picker-actions button {
+  min-height: 26px;
+  padding: 2px;
+  line-height: 1.2;
+}
+.character-save-note:empty { display: none; }
+.character-picker { min-width: 0; padding: 4px 0; }
+.form-card .character-picker select { width: 100%; min-width: 0; min-height: 26px; padding: 2px 4px; }
+.character-picker-actions { display: flex; gap: 8px; }
+.character-picker-actions button { flex: 1; }
+.character-saves button:focus-visible { outline: 2px solid #8dc8ff; outline-offset: 2px; }
+/* Keep the existing 320px minimum inclusive of the body's side padding. */
+body { box-sizing: border-box; }

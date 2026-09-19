@@ -1,3 +1,4 @@
+import CharacterSaves from "./CharacterSaves";
 import { magicEquipmentKind, magicEquipmentOptions, applyMagicEquipment } from "./utils/magicEquipment";
 import { useState, useRef, useEffect } from "react";
 import type { Proficiency, CraftingInput } from "./utils/crafting";
@@ -7,6 +8,7 @@ import {
   calculateCraftingDC,
   calculateEndDate,
   calculateSetupDays,
+  calculateOrderCosts,
   formatSummary,
   getCostModifierError,
 } from "./utils/crafting";
@@ -148,6 +150,8 @@ function getTodayDateString(): string {
 }
 
 export default function App() {
+  const [addCraftingFee, setAddCraftingFee] = useState(false);
+  const [feeOverride, setFeeOverride] = useState("");
   const [character, setCharacter] = useState("");
   const [itemName, setItemName] = useState("");
   const [itemLevel, setItemLevel] = useState<string>("");
@@ -342,14 +346,24 @@ export default function App() {
     setupDays,
     additionalDays: Number(additionalDays) || 0,
     costModifier: costModifier,
+    craftingFee: addCraftingFee ? { overrideGp: feeOverride.trim() === "" ? undefined : Number(feeOverride) } : undefined,
     preciousMaterial: materialResult ? { name: materialLabel(selectedMaterial),
       grade: gradeLabels[selectedGrade], minimumGpPerItem: materialResult.minimum } : undefined,
   };
 
+  let automaticFee = 0;
+  try {
+    automaticFee = calculateOrderCosts(craftingInput,
+      getResultType(craftingInput.craftingDC, craftingInput.craftingRoll)).totalReduction / 100;
+  } catch { /* Cost Mod errors are reported on Generate. */ }
+  const feeError = addCraftingFee && feeOverride.trim() !== "" &&
+    (!Number.isFinite(Number(feeOverride)) || Number(feeOverride) < 0)
+    ? "Enter a nonnegative crafting fee in gp." : "";
+
   // Calculate result and summary
   const handleGenerate = () => {
     if (modifierNoticeTimer.current !== null) clearTimeout(modifierNoticeTimer.current);
-    const costModifierError = materialError || getCostModifierError(costModifier);
+    const costModifierError = materialError || getCostModifierError(costModifier) || feeError;
     if (costModifierError) {
       setCopied(false);
       setModifierNotice(costModifierError);
@@ -402,6 +416,17 @@ export default function App() {
             <div className="instructions-content" id="instructions-content" style={{marginTop: "1em"}}>
               <h2>How to Use</h2>
               <ol>
+                <li><strong>Crafting fee:</strong> Check Add crafting fee to charge for your work.
+                  Leave Fee blank to use the order's actual downtime savings (up to the existing half-price cap).
+                  Enter an amount, including zero, to override it; clear the field to restore automatic pricing.
+                  The fee is added once per order. Cost remains your expense; Total charged includes the fee.
+                </li>
+                <li><strong>Saved characters:</strong> Save stores only your character name, level, and proficiency in this browser on this device.
+                  Load selects a saved character; Delete removes a save after confirmation.
+                  Save replaces the loaded character or a matching name after confirmation.
+                  Clearing browser/site data can erase saves. Export downloads all saved characters as a backup file;
+                  Import restores that file and asks before replacing matching names. Item and crafting settings are not saved.
+                </li>
                 <li>Fill in all the details for your crafting project.</li>
                 <li>
                   <strong>Cost Modifier:</strong> Enter a GP adjustment per item: <code>5</code> adds 5 gp;
@@ -450,6 +475,11 @@ export default function App() {
               placeholder="Bob the Barbarian"
             />
           </label>
+
+          <CharacterSaves name={character} level={characterLevel} proficiency={proficiency}
+            onLoad={profile => {
+              setCharacter(profile.name); setCharacterLevel(String(profile.level)); setProficiency(profile.proficiency);
+            }} />
 
           {/* Character Level and Proficiency, same line */}
           <div className="form-row">
@@ -826,6 +856,23 @@ export default function App() {
                 disabled={useAssurance}
               />
             </label>
+          </div>
+          <div className="form-row crafting-fee-row">
+            <label><input type="checkbox" checked={addCraftingFee}
+              onChange={e => { setAddCraftingFee(e.target.checked); if (!e.target.checked) setFeeOverride(""); }} />
+              Add crafting fee
+              <PopoverHelp>
+                Defaults to this order's actual downtime savings, capped by the existing half-price reduction.
+                Enter a fee to override it, or clear the field to return to automatic.
+                The fee is added once for the whole order after crafting costs, not per item.
+                Failed attempts have no automatic fee; a manual fee still applies.
+              </PopoverHelp>
+            </label>
+            {addCraftingFee && <label>Fee (gp)
+              <input type="number" min="0" step="any" value={feeOverride}
+                placeholder={String(automaticFee)} aria-label="Crafting fee in gp"
+                onChange={e => setFeeOverride(e.target.value)} />
+            </label>}
           </div>
           <button type="submit">Generate Summary</button>
         </form>

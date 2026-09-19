@@ -149,3 +149,24 @@ test('success and critical success keep their original cost and dates', () => {
     assert.doesNotMatch(output, /recoverable|not completed/);
   }
 });
+
+test('automatic fee uses actual batch reduction and stops at half price', () => {
+  const input={...base,itemCost:10,quantity:4,additionalDays:99999,craftingFee:{}};
+  const text=formatSummary(input,'Success','2026-10-01');
+  assert.match(text,/\*\*Cost:\*\* 20 gp/);
+  assert.match(text,/\*\*Crafting fee:\*\* 20 gp/);
+  assert.match(text,/\*\*Total charged:\*\* 40 gp/);
+});
+test('manual fee is once per order, permits above cap and explicit zero', () => {
+  for (const fee of [0,24,100]) {
+    const text=formatSummary({...base,itemCost:10,quantity:4,additionalDays:0,craftingFee:{overrideGp:fee}},'Success','');
+    assert.ok(text.includes(`**Total charged:** ${40+fee} gp`));
+  }
+});
+test('fee respects adjusted cost, formula costs, failure and disabled state', () => {
+  const input={...base,itemCost:10,quantity:4,costModifier:'-50%',additionalDays:99999,hasFormula:false,formulaOption:'buy',craftingFee:{}};
+  assert.match(formatSummary(input,'Success',''),/\*\*Total charged:\*\* 21 gp/);
+  for(const outcome of ['Failure','Critical Failure']) assert.match(formatSummary(input,outcome,''),/\*\*Crafting fee:\*\* 0 gp/);
+  assert.doesNotMatch(formatSummary({...base},'Success',''),/Crafting fee|Total charged/);
+  assert.throws(()=>formatSummary({...base,craftingFee:{overrideGp:-1}},'Success',''));
+});
