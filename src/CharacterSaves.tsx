@@ -9,16 +9,32 @@ export default function CharacterSaves({ name, level, proficiency, onLoad }: Pro
   const [picker, setPicker] = useState<'load' | 'delete' | null>(null);
   const [profiles, setProfiles] = useState<CharacterProfile[]>([]);
   const [selected, setSelected] = useState('');
-  const [notice, setNotice] = useState('');
+  const [notice, updateNotice] = useState('');
+  const dismissTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function setNotice(message: string) {
+    if (dismissTimer.current !== null) clearTimeout(dismissTimer.current);
+    dismissTimer.current = null;
+    updateNotice(message);
+  }
   const input = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (!notice) return;
-    const dismiss = () => setNotice('');
+    const dismiss = () => {
+      if (dismissTimer.current !== null) return;
+      dismissTimer.current = setTimeout(() => {
+        dismissTimer.current = null;
+        updateNotice('');
+      }, 0);
+    };
     // Capture catches interactions throughout the app, including nested scrollers.
     // The action that creates a notice has already passed this capture phase.
-    const events = ['pointerdown', 'click', 'keydown', 'input', 'change', 'scroll', 'wheel', 'touchmove'];
+    // Wait until clicks/key actions finish before collapsing the message space.
+    // A new notice from that action cancels dismissal of the previous one.
+    const events = ['click', 'keyup', 'input', 'change', 'scroll', 'wheel', 'touchmove'];
     for (const event of events) document.addEventListener(event, dismiss, { capture: true, passive: true });
     return () => {
+      if (dismissTimer.current !== null) clearTimeout(dismissTimer.current);
+      dismissTimer.current = null;
       for (const event of events) document.removeEventListener(event, dismiss, true);
     };
   }, [notice]);
