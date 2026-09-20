@@ -366,3 +366,5 @@ footer a:hover {
 .character-saves button:focus-visible { outline: 2px solid #8dc8ff; outline-offset: 2px; }
 /* Keep the existing 320px minimum inclusive of the body's side padding. */
 body { box-sizing: border-box; }
+
+.minimum-cost-estimate { margin: 0 0 0.35rem; font-size: 0.8rem; color: #ccc; overflow-wrap: anywhere; }

@@ -360,7 +360,20 @@ export function calculateOrderCosts(input: CraftingInput, resultType: string) {
   const totalFinalCopper = finalCostCopper + formulaCost;
   const finalCost = normalizeMoney(totalFinalCopper / 100);
 
-  return { baseCostCopper, totalReduction, formulaCost, finalCost };
+  return { baseCostCopper, minCostCopper, totalReduction, formulaCost, finalCost };
+}
+
+// Total additional days from the end of setup, not days remaining after the input.
+export function minimumCostEstimate(input: CraftingInput, resultType: string) {
+  if (resultType !== "Success" && resultType !== "Critical Success") return null;
+  const { baseCostCopper, minCostCopper, formulaCost } = calculateOrderCosts(input, resultType);
+  const daily = getEarnIncomeReduction(input.characterLevel, input.proficiency, resultType);
+  if (![baseCostCopper, minCostCopper, formulaCost, daily].every(Number.isFinite) || daily < 0) return null;
+  if (minCostCopper > 0 && daily === 0) return null;
+  return {
+    days: minCostCopper === 0 ? 0 : Math.ceil(minCostCopper / daily),
+    cost: normalizeMoney((baseCostCopper - minCostCopper + formulaCost) / 100),
+  };
 }
 
 // Format the crafting summary with percent-aware cost modifier

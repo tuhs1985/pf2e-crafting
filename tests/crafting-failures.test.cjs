@@ -170,3 +170,24 @@ test('fee respects adjusted cost, formula costs, failure and disabled state', ()
   assert.doesNotMatch(formatSummary({...base},'Success',''),/Crafting fee|Total charged/);
   assert.throws(()=>formatSummary({...base,craftingFee:{overrideGp:-1}},'Success',''));
 });
+
+test('minimum cost estimate rounds days up and agrees with capped order costs', () => {
+  const input={...base,itemCost:10,quantity:4};
+  for(const outcome of ['Success','Critical Success']) {
+    const estimate=context.exports.minimumCostEstimate(input,outcome);
+    const atCap=context.exports.calculateOrderCosts({...input,additionalDays:estimate.days},outcome);
+    const before=context.exports.calculateOrderCosts({...input,additionalDays:estimate.days-1},outcome);
+    assert.equal(estimate.cost,20);
+    assert.equal(atCap.finalCost,estimate.cost);
+    assert.ok(before.finalCost>estimate.cost);
+  }
+});
+test('minimum estimate handles failures, free items, modifiers, formulas and ignores fee', () => {
+  assert.equal(context.exports.minimumCostEstimate(base,'Failure'),null);
+  assert.equal(context.exports.minimumCostEstimate(base,'Critical Failure'),null);
+  assert.equal(context.exports.minimumCostEstimate({...base,itemCost:0},'Success').days,0);
+  const input={...base,itemCost:10,quantity:4,costModifier:'-50%',hasFormula:false,formulaOption:'buy',craftingFee:{overrideGp:100}};
+  assert.equal(context.exports.minimumCostEstimate(input,'Success').cost,11);
+  const fractional={...base,itemCost:0.03};
+  assert.equal(context.exports.minimumCostEstimate(fractional,'Success').cost,0.02);
+});

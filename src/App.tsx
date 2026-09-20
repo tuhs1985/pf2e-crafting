@@ -9,6 +9,7 @@ import {
   calculateEndDate,
   calculateSetupDays,
   calculateOrderCosts,
+  minimumCostEstimate,
   formatSummary,
   getCostModifierError,
 } from "./utils/crafting";
@@ -351,10 +352,18 @@ export default function App() {
       grade: gradeLabels[selectedGrade], minimumGpPerItem: materialResult.minimum } : undefined,
   };
 
+  let minimumEstimate: ReturnType<typeof minimumCostEstimate> = null;
+  let currentOrderCost = 0;
   let automaticFee = 0;
   try {
-    automaticFee = calculateOrderCosts(craftingInput,
-      getResultType(craftingInput.craftingDC, craftingInput.craftingRoll)).totalReduction / 100;
+    if (effectiveCost !== "" && characterLevel !== "" && (useAssurance || craftingRoll !== "") && !materialError) {
+      minimumEstimate = minimumCostEstimate(craftingInput,
+        getResultType(craftingInput.craftingDC, craftingInput.craftingRoll));
+    }
+    const orderCosts = calculateOrderCosts(craftingInput,
+      getResultType(craftingInput.craftingDC, craftingInput.craftingRoll));
+    automaticFee = orderCosts.totalReduction / 100;
+    currentOrderCost = orderCosts.finalCost;
   } catch { /* Cost Mod errors are reported on Generate. */ }
   const feeError = addCraftingFee && feeOverride.trim() !== "" &&
     (!Number.isFinite(Number(feeOverride)) || Number(feeOverride) < 0)
@@ -811,6 +820,12 @@ export default function App() {
               />
             </label>
           </div>
+
+          {minimumEstimate && <p className="minimum-cost-estimate">
+            Current cost: {currentOrderCost} gp after {craftingInput.additionalDays} additional {craftingInput.additionalDays === 1 ? "day" : "days"}
+            <br />
+            Minimum cost: {minimumEstimate.cost} gp - {minimumEstimate.days} additional {minimumEstimate.days === 1 ? "day" : "days"}
+          </p>}
 
           {/* Use Assurance, Crafting DC, Custom DC Adjustment, Crafting Roll on same line */}
           <div className="form-row">
