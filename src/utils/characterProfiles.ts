@@ -25,7 +25,7 @@ export function parseProfiles(text: string): CharacterProfile[] {
 export function serializeProfiles(characters: CharacterProfile[]) {
   return JSON.stringify({ version: 1, characters }, null, 2);
 }
-export function mergeProfiles(existing: CharacterProfile[], incoming: CharacterProfile[], replaceKey?: string) {
+export function mergeProfiles(existing: CharacterProfile[], incoming: CharacterProfile[]) {
   const names = new Set(incoming.map(p => profileKey(p.name)));
-  return [...existing.filter(p => profileKey(p.name) !== replaceKey && !names.has(profileKey(p.name))), ...incoming];
+  return [...existing.filter(p => !names.has(profileKey(p.name))), ...incoming];
 }

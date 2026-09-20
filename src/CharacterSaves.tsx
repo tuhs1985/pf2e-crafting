@@ -39,9 +39,9 @@ export default function CharacterSaves({ name, level, proficiency, onLoad }: Pro
   function save() { attempt(() => {
     const profile = validateProfile({ name, level: Number(level), proficiency });
     const current = read();
-    const replacing = current.filter(p => profileKey(p.name) === loaded || profileKey(p.name) === profileKey(profile.name));
+    const replacing = current.filter(p => profileKey(p.name) === profileKey(profile.name));
     if (replacing.length && !window.confirm(`Overwrite saved character${replacing.length > 1 ? 's' : ''}: ${replacing.map(p => p.name).join(', ')}?`)) return;
-    write(mergeProfiles(current, [profile], loaded));
+    write(mergeProfiles(current, [profile]));
     setLoaded(profileKey(profile.name));
     setNotice(`Saved ${profile.name}.`);
   }); }

@@ -423,7 +423,7 @@ export default function App() {
                 </li>
                 <li><strong>Saved characters:</strong> Save stores only your character name, level, and proficiency in this browser on this device.
                   Load selects a saved character; Delete removes a save after confirmation.
-                  Save replaces the loaded character or a matching name after confirmation.
+                  Save creates a separate character for a new name, or replaces a matching name after confirmation.
                   Clearing browser/site data can erase saves. Export downloads all saved characters as a backup file;
                   Import restores that file and asks before replacing matching names. Item and crafting settings are not saved.
                 </li>

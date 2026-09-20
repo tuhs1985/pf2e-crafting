@@ -26,11 +26,19 @@ test('invalid backups and duplicates are rejected before merging', () => {
   assert.throws(()=>parseProfiles('oops'));
   assert.throws(()=>validateProfile({...a,name:' '}));
 });
-test('saving renamed loaded profile handles both loaded and name collisions', () => {
+test('saving a new name preserves the originally loaded profile', () => {
+  const b={...a,name:'Bob',level:9};
+  const result=mergeProfiles([a],[b]);
+  assert.equal(result.length,2);
+  assert.equal(result.find(p=>p.name==='Alice').level,5);
+  assert.equal(result.find(p=>p.name==='Bob').level,9);
+});
+test('saving a matching name replaces only that profile', () => {
   const b={...a,name:'Bob'};
-  const result=mergeProfiles([a,b],[{...b,level:9}],'alice');
-  assert.equal(result.length,1); assert.equal(result[0].level,9);
-  assert.equal(a.level,5);
+  const result=mergeProfiles([a,b],[{...b,name:' BOB ',level:9}]);
+  assert.equal(result.length,2);
+  assert.equal(result.find(p=>p.name==='Alice').level,5);
+  assert.equal(result.find(p=>p.name===' BOB ').level,9);
 });
 test('import merges new profiles and replaces case-insensitive matches', () => {
   const result=mergeProfiles([a],[{...a,name:'ALICE',level:6},{...a,name:'Bob'}]);
