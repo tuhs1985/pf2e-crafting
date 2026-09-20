@@ -402,7 +402,7 @@ export default function App() {
 		  )}
 		  <h1 style={{ textAlign: "center", margin: 0 }}>PF2e Crafting Generator</h1>
 		</div>
-        <div className="instructions-container" style={{marginBottom: "1em"}}>
+        <div className="instructions-container">
           <button
             type="button"
             className="instructions-toggle"
