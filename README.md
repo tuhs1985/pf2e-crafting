@@ -23,6 +23,7 @@ See the [feature backlog](FEATURE-BACKLOG.md) for completed, deferred, and possi
 - ✅ **Assurance Support** - Calculate with Assurance or manual roll values
 - ✅ **Earn Income Integration** - Live cost and days-to-minimum estimate based on character level and proficiency
 - ✅ **Copy to Clipboard** - One-click formatted output for Discord/Roll20/Foundry
+- ✅ **Spreadsheet row** - Optional preview and copy of a header-free tab-separated row for Excel or Google Sheets
 - ✅ **PWA Enabled** - Install as an app for offline use
 - ✅ **Mobile Optimized** - Touch-friendly interface with responsive design
 

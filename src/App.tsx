@@ -15,6 +15,7 @@ import {
 } from "./utils/crafting";
 import itemsDbRaw from "./data/items.db.json";
 import PopoverHelp from "./PopoverHelp";
+import { formatSheetRow, formatSheetWithHeaders, SHEET_COLUMNS } from "./utils/sheetOutput";
 import "./App.css";
 import { materialRows, materialKind, materialLabel, gradeLabels, findMaterial,
   parseCarriedBulk, applyMaterial } from "./utils/materials";
@@ -157,6 +158,8 @@ export default function App() {
   const [addCraftingFee, setAddCraftingFee] = useState(false);
   const [feeOverride, setFeeOverride] = useState("");
   const [character, setCharacter] = useState("");
+  const [clientName, setClientName] = useState("");
+  const [clientDiscordId, setClientDiscordId] = useState("");
   const [itemName, setItemName] = useState("");
   const [itemLevel, setItemLevel] = useState<string>("");
   const [itemRarity, setItemRarity] = useState("");
@@ -184,7 +187,9 @@ export default function App() {
   const [dcAdjustment, setDcAdjustment] = useState<string>("");
   const [craftingRoll, setCraftingRoll] = useState<string>("");
   const [output, setOutput] = useState("");
-  const [copied, setCopied] = useState(false);
+  const [sheetRow, setSheetRow] = useState("");
+  const [outputMode, setOutputMode] = useState<"summary" | "sheet">("summary");
+  const [copyNotice, setCopyNotice] = useState("");
   const [modifierNotice, setModifierNotice] = useState("");
   const modifierNoticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => {
@@ -345,6 +350,8 @@ export default function App() {
   // Setup days (auto, not user-editable)
   const craftingInput: CraftingInput = {
     character,
+    clientName,
+    clientDiscordId,
     itemName: magicResult?.name ?? itemName,
     itemLevel: Number(effectiveLevel),
     itemRarity: effectiveRarity,
@@ -389,13 +396,15 @@ export default function App() {
   const feeError = addCraftingFee && feeOverride.trim() !== "" &&
     (!Number.isFinite(Number(feeOverride)) || Number(feeOverride) < 0)
     ? "Enter a nonnegative crafting fee in gp." : "";
+  const clientIdError = clientDiscordId.trim() && !/^\d+$/.test(clientDiscordId.trim())
+    ? "Enter the Discord user ID as digits only." : "";
 
   // Calculate result and summary
   const handleGenerate = () => {
     if (modifierNoticeTimer.current !== null) clearTimeout(modifierNoticeTimer.current);
-    const costModifierError = materialError || upgradeError || getCostModifierError(costModifier) || feeError;
+    const costModifierError = materialError || upgradeError || getCostModifierError(costModifier) || feeError || clientIdError;
     if (costModifierError) {
-      setCopied(false);
+      setCopyNotice("");
       setModifierNotice(costModifierError);
       modifierNoticeTimer.current = setTimeout(() => setModifierNotice(""), 5000);
       return;
@@ -413,9 +422,28 @@ export default function App() {
     );
     const summary = formatSummary(craftingInput, resultType, endDate);
     setOutput(summary);
+    setSheetRow(formatSheetRow(craftingInput, resultType, endDate));
+    setOutputMode("summary");
     navigator.clipboard.writeText(summary).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopyNotice("Summary copied to clipboard!");
+      setTimeout(() => setCopyNotice(""), 2000);
+    });
+  };
+
+  const copySelectedOutput = () => {
+    const selected = outputMode === "sheet" ? sheetRow : output;
+    if (!selected) return;
+    navigator.clipboard.writeText(selected).then(() => {
+      setCopyNotice(outputMode === "sheet" ? "Sheet row copied to clipboard!" : "Summary copied to clipboard!");
+      setTimeout(() => setCopyNotice(""), 2000);
+    });
+  };
+
+  const copySheetWithHeaders = () => {
+    if (!sheetRow) return;
+    navigator.clipboard.writeText(formatSheetWithHeaders(sheetRow)).then(() => {
+      setCopyNotice("Sheet headers and row copied!");
+      setTimeout(() => setCopyNotice(""), 2000);
     });
   };
 
@@ -473,6 +501,12 @@ export default function App() {
                   Do not mix percentages with arithmetic. The adjustment applies to each item before quantity and downtime reductions.
                 </li>
                 <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
+                <li><strong>Sheet row:</strong> After generating, switch to Sheet row to see each column and its value.
+                  Copy one row for an existing sheet, or copy with headers to start a new one in Excel or Google Sheets.
+                </li>
+                <li><strong>Client:</strong> Enter a name for the sheet row and an optional numeric Discord ID
+                  for a mention in the activity line. If both are blank, the sheet row shows None.
+                </li>
                 <li><strong>Natural roll:</strong> If the d20 itself was a 20 or 1, select it below the Crafting check.
                   It shifts the result one degree up or down. Leave it blank for other rolls; Assurance has no die roll.
                 </li>
@@ -838,6 +872,16 @@ export default function App() {
           </fieldset>
           <fieldset className="form-section">
             <legend>Crafting</legend>
+          <div className="form-row client-row">
+            <label>Client name <PopoverHelp>Leave both client fields empty for none.</PopoverHelp>
+              <input type="text" value={clientName} onChange={e => setClientName(e.target.value)}
+                placeholder="Name" />
+            </label>
+            <label>Discord ID
+              <input type="text" inputMode="numeric" value={clientDiscordId}
+                onChange={e => setClientDiscordId(e.target.value)} placeholder="User ID" />
+            </label>
+          </div>
           {/* Start Date, Setup Days, Add'l Downtime Days on same line */}
           <div className="form-row">
             <label>
@@ -947,14 +991,35 @@ export default function App() {
             {modifierNotice}
           </div>
         )}
-        {copied && !modifierNotice && (
+        {copyNotice && !modifierNotice && (
           <div className="copied-toast">
-            Summary copied to clipboard!
+            {copyNotice}
           </div>
         )}
 
         {output && (
-          <pre className="output-pre">{output}</pre>
+          <div className="output-section">
+            <div className="output-controls">
+              <button type="button" aria-pressed={outputMode === "summary"}
+                onClick={() => setOutputMode("summary")}>Summary</button>
+              <button type="button" aria-pressed={outputMode === "sheet"}
+                onClick={() => setOutputMode("sheet")}>Sheet row</button>
+              <button type="button" onClick={copySelectedOutput}>
+                Copy {outputMode === "sheet" ? "sheet row" : "summary"}
+              </button>
+              {outputMode === "sheet" && <button type="button" onClick={copySheetWithHeaders}>
+                Copy with headers
+              </button>}
+            </div>
+            {outputMode === "summary" ? <pre className="output-pre">{output}</pre> :
+              <div className="sheet-preview" aria-label="Sheet row preview">
+                {SHEET_COLUMNS.map((column, index) =>
+                  <div className="sheet-preview-pair" key={column}>
+                    <span className="sheet-preview-label">{column}</span>
+                    <span className="sheet-preview-value">{sheetRow.split("\t")[index]}</span>
+                  </div>)}
+              </div>}
+          </div>
         )}
 
           <footer className="footer">

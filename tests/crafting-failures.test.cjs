@@ -12,7 +12,7 @@ const compiled = ts.transpileModule(source, {
 }).outputText;
 const context = { exports: {} };
 vm.runInNewContext(compiled, context);
-const { formatSummary, calculateEndDate, calculateSetupDays, getResultType, applyCostModifier } = context.exports;
+const { formatSummary, calculateEndDate, calculateSetupDays, getResultType, applyCostModifier, formatClientForActivity } = context.exports;
 
 test('arithmetic adjusts the existing price with precedence and parentheses', () => {
   for (const [expression, expected] of [
@@ -68,6 +68,17 @@ test('natural d20 results shift one degree and stop at the endpoints', () => {
   assert.equal(getResultType(20, 9, '1'), 'Critical Failure');
   assert.equal(getResultType(20, 20), 'Success');
   assert.match(summary({ craftingRoll: 15, naturalRoll: '20' }), /Nat 20/);
+});
+
+test('client names and Discord IDs appear in the activity', () => {
+  assert.equal(formatClientForActivity('', ''), 'None');
+  assert.equal(formatClientForActivity('  Alice  ', ''), 'Alice');
+  assert.equal(formatClientForActivity('Alice', '695405739405082675'), '<@695405739405082675>');
+  assert.match(summary({ clientName: 'Alice', craftingRoll: 15 }),
+    /\*\*Activity:\*\* Crafting 1 x Example for Alice/);
+  assert.match(summary({ clientName: 'Alice', clientDiscordId: '695405739405082675', craftingRoll: 15 }),
+    /\*\*Activity:\*\* Crafting 1 x Example for <@695405739405082675>/);
+  assert.match(summary({ craftingRoll: 15 }), /\*\*Activity:\*\* Crafting 1 x Example\n/);
 });
 
 test('signed and unsigned percentage markups produce identical summaries', () => {

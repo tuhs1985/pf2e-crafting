@@ -5,6 +5,8 @@ export type ResultType = "Critical Success" | "Success" | "Failure" | "Critical 
 
 export interface CraftingInput {
   character: string;
+  clientName?: string;
+  clientDiscordId?: string;
   itemName: string;
   itemLevel: number;
   itemRarity: string;
@@ -378,6 +380,11 @@ export function minimumCostEstimate(input: CraftingInput, resultType: string) {
   };
 }
 
+export function formatClientForActivity(name = "", discordId = ""): string {
+  const id = discordId.trim();
+  return id ? `<@${id}>` : name.trim() || "None";
+}
+
 // Format the crafting summary with percent-aware cost modifier
 export function formatSummary(
   input: CraftingInput,
@@ -388,8 +395,11 @@ export function formatSummary(
   const material = input.preciousMaterial;
   const activity = input.upgradeFrom
     ? `Upgrade ${input.quantity} x (${input.upgradeFrom} → ${input.itemName})`
-    : `Craft ${input.quantity} x ${input.itemName}` +
+    : `Crafting ${input.quantity} x ${input.itemName}` +
       (material ? ` (${material.name}, ${material.grade})` : "");
+  const hasClient = !!(input.clientName?.trim() || input.clientDiscordId?.trim());
+  const activityWithClient = hasClient
+    ? `${activity} for ${formatClientForActivity(input.clientName, input.clientDiscordId)}` : activity;
   const { baseCostCopper, totalReduction, formulaCost, finalCost } = calculateOrderCosts(input, resultType);
   // Only show reduction if any
   const reductionStr =
@@ -450,7 +460,7 @@ export function formatSummary(
 
   return (
     `**Character:** ${input.character}\n` +
-    `**Activity:** ${activity}\n` +
+    `**Activity:** ${activityWithClient}\n` +
     `**Days:** ${daysStr}\n` +
     `**Item Level:** ${input.itemLevel}\n` +
     `**DC:** ${input.craftingDC}\n` +

@@ -37,12 +37,14 @@ h1 {
   flex: 1 1 0;
   min-width: 0;
 }
+.client-row { gap: .5rem; }
 @media (max-width: 325px) {
   .form-row {
     flex-direction: column;
     gap: 0.5rem;
     align-items: stretch;
   }
+  .client-row { flex-direction: row; align-items: flex-end; }
 }
 
 /* Autocomplete suggestions theme-aware */
@@ -203,6 +205,17 @@ form.form-card {
   font-size: 1rem;
   overflow-x: auto;
 }
+.output-controls { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+.output-controls button { background: #333; color: #eee; border: 1px solid #666; border-radius: .4rem; padding: .4rem .6rem; cursor: pointer; }
+.output-controls button[aria-pressed="true"] { border-color: #9dc6ef; background: #384b5e; }
+.output-controls button:last-child:not([aria-pressed]) { margin-left: auto; }
+.output-section .output-pre { margin-top: .4rem; overflow-wrap: anywhere; }
+.sheet-preview { margin-top: .4rem; border: 1px solid #444; border-radius: .4rem; overflow: hidden; }
+.sheet-preview-pair { display: grid; grid-template-columns: minmax(7rem, 40%) minmax(0, 1fr); border-top: 1px solid #444; }
+.sheet-preview-pair:first-child { border-top: 0; }
+.sheet-preview-label, .sheet-preview-value { padding: .4rem .6rem; overflow-wrap: anywhere; }
+.sheet-preview-label { background: #303030; font-weight: 600; }
+.sheet-preview-value { background: #181818; }
 
 
 .header-container {
