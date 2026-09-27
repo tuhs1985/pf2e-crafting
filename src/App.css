@@ -225,6 +225,7 @@ form.form-card {
 .sheet-layout-toggle { display: flex; align-items: center; gap: .25rem; padding-bottom: .35rem; white-space: nowrap; }
 .sheet-layout-name { min-width: 0; }
 .sheet-layout-name input { box-sizing: border-box; width: 100%; }
+.sheet-layout-blank { align-self: center; overflow-wrap: anywhere; }
 .sheet-layout-move { display: flex; gap: .2rem; padding-bottom: .1rem; }
 .sheet-layout-notice { margin: .25rem 0; font-size: .9rem; overflow-wrap: anywhere; }
 

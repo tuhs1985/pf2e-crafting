@@ -482,7 +482,7 @@ export default function App() {
     });
   };
 
-  const updateSheetColumn = (id: number, change: Partial<SheetLayout[number]>) => {
+  const updateSheetColumn = (id: SheetLayout[number]["id"], change: Partial<SheetLayout[number]>) => {
     setLayoutNotice("");
     setSheetLayout(current => current.map(column => column.id === id ? { ...column, ...change } : column));
   };
@@ -493,6 +493,17 @@ export default function App() {
     [next[index], next[swap]] = [next[swap], next[index]];
     setLayoutNotice("");
     setSheetLayout(next);
+  };
+  const addBlankColumn = () => {
+    const ids = sheetLayout.filter(column => typeof column.id === "string");
+    if (ids.length >= 20) { setLayoutNotice("A layout can have up to 20 blank columns."); return; }
+    const nextId = Math.max(0, ...ids.map(column => Number(String(column.id).slice(6)))) + 1;
+    setSheetLayout([...sheetLayout, { id: `blank-${nextId}`, label: "", enabled: true }]);
+    setLayoutNotice("");
+  };
+  const removeBlankColumn = (id: string) => {
+    setSheetLayout(sheetLayout.filter(column => column.id !== id));
+    setLayoutNotice("");
   };
   const saveSheetLayout = () => {
     try {
@@ -584,7 +595,8 @@ export default function App() {
                 <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
                 <li><strong>Sheet row:</strong> After generating, switch to Sheet row to see each column and its value.
                   Copy one row for an existing sheet, or copy with headers to start a new one. Edit columns to rename,
-                  hide, or reorder them; save the layout to a saved character or export it separately.
+                  hide, or reorder them, or add blank columns. Cost, crafting fee, and total charged are optional
+                  numeric columns. Save the layout to a saved character or export it separately.
                 </li>
                 <li><strong>Client:</strong> Enter a name for the sheet row and an optional numeric Discord ID
                   for a mention in the activity line. If both are blank, the sheet row shows None.
@@ -1110,6 +1122,7 @@ export default function App() {
                   <button type="button" onClick={() => { setSheetLayout(defaultSheetLayout()); setLayoutNotice(""); }}>Reset</button>
                   <button type="button" onClick={exportSheetLayout}>Export layout</button>
                   <button type="button" onClick={() => layoutInput.current?.click()}>Import layout</button>
+                  <button type="button" onClick={addBlankColumn}>Add blank column</button>
                   <input ref={layoutInput} type="file" accept=".json,application/json" hidden
                     onChange={e => void importSheetLayout(e.target.files?.[0])} />
                 </>}
@@ -1123,23 +1136,27 @@ export default function App() {
                       onChange={e => updateSheetColumn(column.id, { enabled: e.target.checked })} />
                     Show
                   </label>
-                  <label className="sheet-layout-name">Header
-                    <input type="text" maxLength={60} value={column.label}
-                      onChange={e => updateSheetColumn(column.id, { label: e.target.value })} />
-                  </label>
+                  {typeof column.id === "string"
+                    ? <span className="sheet-layout-blank">Blank column (empty cell)</span>
+                    : <label className="sheet-layout-name">Header
+                        <input type="text" maxLength={60} value={column.label}
+                          onChange={e => updateSheetColumn(column.id, { label: e.target.value })} />
+                      </label>}
                   <div className="sheet-layout-move">
-                    <button type="button" disabled={index === 0} aria-label={`Move ${column.label} up`}
+                    <button type="button" disabled={index === 0} aria-label={`Move ${column.label || "blank column"} up`}
                       onClick={() => moveSheetColumn(index, -1)}>↑</button>
-                    <button type="button" disabled={index === sheetLayout.length - 1} aria-label={`Move ${column.label} down`}
+                    <button type="button" disabled={index === sheetLayout.length - 1} aria-label={`Move ${column.label || "blank column"} down`}
                       onClick={() => moveSheetColumn(index, 1)}>↓</button>
+                    {typeof column.id === "string" && <button type="button" aria-label="Remove blank column"
+                      onClick={() => removeBlankColumn(column.id as string)}>×</button>}
                   </div>
                 </div>)}
               </div>}
               <div className="sheet-preview" aria-label="Sheet row preview">
                 {sheetLayout.filter(column => column.enabled).map(column =>
                   <div className="sheet-preview-pair" key={column.id}>
-                    <span className="sheet-preview-label">{column.label}</span>
-                    <span className="sheet-preview-value">{sheetRow.split("\t")[column.id]}</span>
+                    <span className="sheet-preview-label">{column.label || "Blank column"}</span>
+                    <span className="sheet-preview-value">{typeof column.id === "number" ? sheetRow.split("\t")[column.id] : ""}</span>
                   </div>)}
               </div>
             </>}

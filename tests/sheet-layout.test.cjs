@@ -37,10 +37,23 @@ test('eleven-column saved layouts gain the new roll link column hidden', () => {
   const legacy = defaultSheetLayout().slice(0, 11);
   legacy[0].label = 'Work';
   const migrated = validateSheetLayout(legacy);
-  assert.equal(migrated.length, 12);
+  assert.equal(migrated.length, 15);
   assert.equal(migrated[0].label, 'Work');
   assert.equal(migrated[11].label, 'Discord roll link');
   assert.equal(migrated[11].enabled, false);
+  assert.equal(migrated.slice(12).every(column => !column.enabled), true);
+});
+
+test('twelve-column layouts migrate and blank columns copy as empty cells', () => {
+  const old = defaultSheetLayout().slice(0, 12);
+  const migrated = validateSheetLayout(old);
+  assert.equal(migrated.length, 15);
+  const blank = { id: 'blank-1', label: '', enabled: true };
+  const columns = validateSheetLayout([migrated[0], blank, ...migrated.slice(1)]);
+  assert.equal(formatLayoutRow('Activity\tDate', columns).split('\t').slice(0, 3).join('|'), 'Activity||Date');
+  assert.equal(formatLayoutWithHeaders('Activity\tDate', columns).split('\n')[0].split('\t')[1], '');
+  assert.equal(JSON.stringify(parseSheetLayout(serializeSheetLayout(columns))), JSON.stringify(columns));
+  assert.throws(() => validateSheetLayout([...columns, blank]));
 });
 
 test('formula-looking imported header text is escaped when copied', () => {

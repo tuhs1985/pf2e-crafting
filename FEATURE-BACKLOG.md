@@ -21,10 +21,13 @@ This is a planning checklist, not a promise to implement every item. Status was 
 ### #13 Spreadsheet output scope
 
 - [x] **Default row:** Show labeled values and copy values only, in this order from the pictured sheet: Activity, Date, Character, Description, Status, Level, DC Mod (rarity, etc.), DC, Assured?, Roll Result, Client. A separate copy option includes column titles. The row uses the attempt completion date, the Crafting result for Status, item name and quantity for Description, and None or the entered Client name (Discord ID as fallback).
-- [x] **Limited customization:** Edit supported columns by renaming headers, turning columns on or off, moving them up or down, and resetting to the pictured default. The optional Discord roll link column starts hidden. No arbitrary formulas or user-defined data columns.
+- [x] **Limited customization:** Edit supported columns by renaming headers, turning columns on or off, moving them up or down, and resetting to the pictured default. Discord roll link, Cost (after reduction), Crafting fee, and Total charged start hidden. No arbitrary formulas or user-defined data columns.
 - [x] **Per-character settings:** Save a layout to an existing character profile and restore it on Load. Character backups now include layouts; older backups still import. Changing a character's name and saving creates a new profile, consistent with existing behavior.
 - [x] **Standalone layout backup:** Export and import only the column configuration. Imported layouts change the preview first and require Save layout to attach to a character. Invalid files are rejected.
 - [ ] **Safe paste:** Tabs and line breaks are flattened and formula-like text is prefixed before copying. Unit checks pass; actual paste into Excel and Google Sheets on a phone and desktop remains to be tested.
+- [x] **Empty cells:** Add blank columns, move them into place, and remove them. Copied rows and headers preserve empty cells; the editor labels them for clarity.
+- [x] **Money columns:** Cost (after reduction), Crafting fee, and Total charged are value-only optional columns, hidden by default. Cost matches the summary Cost line, including failure expenses; fee and total charged stay blank when the fee option is off.
+- [ ] **Maybe — combined output cell:** Consider allowing one sheet cell to contain several selected output values. This may make layouts harder to edit and paste, so defer until there is a concrete sheet example that needs it.
 
 ## Suggested order
 

@@ -1,4 +1,4 @@
-import { calculateEndDate, type CraftingInput, type ResultType } from "./crafting";
+import { calculateEndDate, calculateOrderCosts, type CraftingInput, type ResultType } from "./crafting";
 import { DEFAULT_SHEET_COLUMNS } from "./sheetLayout";
 
 // Matches the supplied spreadsheet. The copied row contains values only.
@@ -21,6 +21,13 @@ export function sheetCells(input: CraftingInput, result: ResultType, endDate: st
   const description = input.upgradeFrom
     ? `${input.quantity} x ${input.itemName} (from ${input.upgradeFrom})`
     : `${input.quantity} x ${input.itemName}`;
+  const costs = calculateOrderCosts(input, result);
+  const money = (value: number) => Number(value.toFixed(8));
+  const cost = failed
+    ? money((costs.formulaCost + (result === "Critical Failure" ? costs.baseCostCopper / 20 : 0)) / 100)
+    : costs.finalCost;
+  const fee = input.craftingFee
+    ? input.craftingFee.overrideGp ?? money(costs.totalReduction / 100) : null;
 
   return [
     input.upgradeFrom ? "Upgrade" : "Crafting",
@@ -35,6 +42,9 @@ export function sheetCells(input: CraftingInput, result: ResultType, endDate: st
     String(input.craftingRoll),
     input.clientName?.trim() || input.clientDiscordId?.trim() || "None",
     input.discordRollLink?.trim() || "",
+    String(cost),
+    fee === null ? "" : String(fee),
+    fee === null ? "" : String(money(cost + fee)),
   ];
 }
 

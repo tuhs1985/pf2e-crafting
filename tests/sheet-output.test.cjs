@@ -29,11 +29,11 @@ const input = {
 };
 
 test('sheet row follows pictured columns without a header and uses completion date', () => {
-  assert.equal(SHEET_COLUMNS.length, 12);
+  assert.equal(SHEET_COLUMNS.length, 15);
   assert.deepEqual(formatSheetRow(input, 'Critical Success', '2026-09-30').split('\t'), [
     'Upgrade', '2026-09-30', 'Kosta',
     '1 x Striking (Major) (from Striking (Greater))', 'Critical Success',
-    '19', 'uncommon; Custom +2', '41', 'FALSE', '43', 'None', '',
+    '19', 'uncommon; Custom +2', '41', 'FALSE', '43', 'None', '', '29400', '', '',
   ]);
 });
 
@@ -69,10 +69,23 @@ test('enabling the optional Discord roll link column copies the entered URL', ()
   assert.equal(layout.formatLayoutWithHeaders(row, columns).split('\n')[0].split('\t')[11], 'Discord roll link');
 });
 
+test('optional money columns contain numeric cost, fee, and total charged', () => {
+  const data = formatSheetRow({ ...input, craftingFee: { overrideGp: 7 } }, 'Critical Failure', '2026-09-30').split('\t');
+  assert.equal(data[12], '1500');
+  assert.equal(data[13], '7');
+  assert.equal(data[14], '1507');
+  const columns = layout.defaultSheetLayout();
+  assert.equal(columns.slice(12).every(column => !column.enabled), true);
+  columns[12].enabled = true;
+  columns[13].enabled = true;
+  columns[14].enabled = true;
+  assert.equal(layout.formatLayoutRow(data.join('\t'), columns).split('\t').slice(-3).join('\t'), '1500\t7\t1507');
+});
+
 test('text is one cell and cannot become a spreadsheet formula', () => {
   const row = formatSheetRow({ ...input, character: '=SUM(1,1)\nnext', itemName: '@cmd\tother' },
     'Success', '2026-09-30').split('\t');
-  assert.equal(row.length, 12);
+  assert.equal(row.length, 15);
   assert.equal(row[2], "'=SUM(1,1) next");
   assert.equal(row[3], "1 x @cmd other (from Striking (Greater))");
 });
