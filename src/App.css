@@ -35,6 +35,7 @@ h1 {
 }
 .form-row > label {
   flex: 1 1 0;
+  min-width: 0;
 }
 @media (max-width: 325px) {
   .form-row {
@@ -42,20 +43,6 @@ h1 {
     gap: 0.5rem;
     align-items: stretch;
   }
-}
-
-/* For vertically stacked label/input, such as checkbox column */
-.vertical-label {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 0; /* override default label spacing */
-}
-.vertical-label input[type="checkbox"] {
-  margin-right: 0;
-  margin-top: 0.2em;
-  width: 1.25em;
-  height: 1.25em;
 }
 
 /* Autocomplete suggestions theme-aware */
@@ -129,6 +116,15 @@ form.form-card {
   flex-direction: column;
   gap: .18rem;
 }
+
+.form-section {
+  min-width: 0;
+  padding: .6rem;
+  border: 1px solid #555;
+  border-radius: .85rem;
+}
+
+.form-section + .form-section { margin-top: .45rem; }
 
 .form-card label {
   display: block;
@@ -371,3 +367,6 @@ body { box-sizing: border-box; }
 .upgrade-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0 .35rem; }
 .form-card .upgrade-heading label { margin-bottom: 0; white-space: nowrap; }
 .upgrade-price { color: #ccc; font-size: .72rem; white-space: nowrap; }
+.crafting-options-row { display: flex; align-items: center; gap: .5rem 1rem; flex-wrap: wrap; }
+.form-card .crafting-options-row label { margin-bottom: 0; white-space: nowrap; }
+@media (max-width: 380px) { .crafting-options-row { gap: .5rem; font-size: .8rem; } }

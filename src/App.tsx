@@ -499,6 +499,7 @@ export default function App() {
           }}
           autoComplete="off"
         >
+          <section className="form-section" aria-label="Character details">
           {/* Character Name */}
           <label>
             Character Name
@@ -541,6 +542,8 @@ export default function App() {
             </label>
           </div>
 
+          </section>
+          <section className="form-section" aria-label="Item details">
           {/* Item Name and Item Level, same line */}
           <div className="form-row">
             <label style={{ position: "relative" }}>
@@ -823,6 +826,8 @@ export default function App() {
             </div>
           )}
 
+          </section>
+          <section className="form-section" aria-label="Crafting details">
           {/* Start Date, Setup Days, Add'l Downtime Days on same line */}
           <div className="form-row">
             <label>
@@ -859,16 +864,8 @@ export default function App() {
             Minimum cost: {minimumEstimate.cost} gp - {minimumEstimate.days} additional {minimumEstimate.days === 1 ? "day" : "days"}
           </p>}
 
-          {/* Use Assurance, Crafting DC, Custom DC Adjustment, Crafting Roll on same line */}
+          {/* Crafting check values */}
           <div className="form-row">
-            <label className="vertical-label">
-              Use Assurance
-              <input
-                type="checkbox"
-                checked={useAssurance}
-                onChange={e => setUseAssurance(e.target.checked)}
-              />
-            </label>
             <label>
               Crafting DC
               <input
@@ -880,18 +877,20 @@ export default function App() {
               />
             </label>
             <label>
-              Custom DC Adjustment
+              DC Adj.
               <input
                 type="number"
+                aria-label="Custom DC Adjustment"
                 value={dcAdjustment}
                 onChange={e => setDcAdjustment(e.target.value)}
                 placeholder="0"		
               />
             </label>
             <label>
-              Crafting Roll Value
+              Roll
               <input
                 type="number"
+                aria-label="Crafting Roll Value"
                 min={0}
                 value={
                   useAssurance
@@ -904,7 +903,11 @@ export default function App() {
               />
             </label>
           </div>
-          <div className="form-row crafting-fee-row">
+          <div className="crafting-options-row">
+            <label><input type="checkbox" checked={useAssurance}
+              onChange={e => setUseAssurance(e.target.checked)} />
+              Use Assurance
+            </label>
             <label><input type="checkbox" checked={addCraftingFee}
               onChange={e => { setAddCraftingFee(e.target.checked); if (!e.target.checked) setFeeOverride(""); }} />
               Add crafting fee
@@ -912,12 +915,13 @@ export default function App() {
                 Charge the downtime savings, or enter your own fee for the order.
               </PopoverHelp>
             </label>
-            {addCraftingFee && <label>Fee (gp)
+          </div>
+          {addCraftingFee && <div className="form-row"><label>Fee (gp)
               <input type="number" min="0" step="any" value={feeOverride}
                 placeholder={String(automaticFee)} aria-label="Crafting fee in gp"
                 onChange={e => setFeeOverride(e.target.value)} />
-            </label>}
-          </div>
+            </label></div>}
+          </section>
           <button type="submit">Generate Summary</button>
         </form>
 
