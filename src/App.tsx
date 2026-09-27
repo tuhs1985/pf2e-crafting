@@ -499,10 +499,11 @@ export default function App() {
           }}
           autoComplete="off"
         >
-          <section className="form-section" aria-label="Character details">
-          {/* Character Name */}
+          <fieldset className="form-section">
+            <legend>Character</legend>
+          {/* Character name */}
           <label>
-            Character Name
+            Name
             <input
               type="text"
               value={character}
@@ -516,10 +517,10 @@ export default function App() {
               setCharacter(profile.name); setCharacterLevel(String(profile.level)); setProficiency(profile.proficiency);
             }} />
 
-          {/* Character Level and Proficiency, same line */}
+          {/* Character level and proficiency, same line */}
           <div className="form-row">
             <label>
-              Character Level
+              Level
               <input
                 type="number"
                 min={1}
@@ -542,12 +543,13 @@ export default function App() {
             </label>
           </div>
 
-          </section>
-          <section className="form-section" aria-label="Item details">
-          {/* Item Name and Item Level, same line */}
+          </fieldset>
+          <fieldset className="form-section">
+            <legend>Item</legend>
+          {/* Item name and level, same line */}
           <div className="form-row">
             <label style={{ position: "relative" }}>
-              Item Name
+              Name
               <input
                 type="text"
                 value={itemName}
@@ -582,7 +584,7 @@ export default function App() {
               )}
             </label>
 			<label>
-			  Item Level
+			  Level
 			<input
 			  type="number"
 			  min={0}
@@ -688,10 +690,10 @@ export default function App() {
             </div>
           )}
 
-          {/* Item Rarity, Category, and Bulk, same line */}
+          {/* Rarity, category, and bulk, same line */}
           <div className="form-row">
             <label style={{ position: "relative" }}>
-              Item Rarity
+              Rarity
               <input
                 type="text"
                 value={effectiveRarity}
@@ -725,7 +727,7 @@ export default function App() {
               )}
             </label>
             <label>
-              Item Category
+              Category
               <input
                 type="text"
                 value={itemCategory}
@@ -826,8 +828,9 @@ export default function App() {
             </div>
           )}
 
-          </section>
-          <section className="form-section" aria-label="Crafting details">
+          </fieldset>
+          <fieldset className="form-section">
+            <legend>Crafting</legend>
           {/* Start Date, Setup Days, Add'l Downtime Days on same line */}
           <div className="form-row">
             <label>
@@ -920,7 +923,7 @@ export default function App() {
                 placeholder={String(automaticFee)} aria-label="Crafting fee in gp"
                 onChange={e => setFeeOverride(e.target.value)} />
             </label></div>}
-          </section>
+          </fieldset>
           <button type="submit">Generate Summary</button>
         </form>
 

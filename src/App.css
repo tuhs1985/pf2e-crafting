@@ -119,10 +119,12 @@ form.form-card {
 
 .form-section {
   min-width: 0;
+  margin: 0;
   padding: .6rem;
   border: 1px solid #555;
   border-radius: .85rem;
 }
+.form-section legend { padding: 0 .35rem; color: #eee; }
 
 .form-section + .form-section { margin-top: .45rem; }
 
