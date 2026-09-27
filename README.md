@@ -23,7 +23,7 @@ See the [feature backlog](FEATURE-BACKLOG.md) for completed, deferred, and possi
 - ✅ **Assurance Support** - Calculate with Assurance or manual roll values
 - ✅ **Earn Income Integration** - Live cost and days-to-minimum estimate based on character level and proficiency
 - ✅ **Copy to Clipboard** - One-click formatted output for Discord/Roll20/Foundry
-- ✅ **Spreadsheet row** - Optional preview and copy of a header-free tab-separated row for Excel or Google Sheets
+- ✅ **Spreadsheet row** - Preview labeled values, customize columns, and copy a tab-separated row with or without headers for Excel or Google Sheets
 - ✅ **PWA Enabled** - Install as an app for offline use
 - ✅ **Mobile Optimized** - Touch-friendly interface with responsive design
 
@@ -80,7 +80,7 @@ Choose a recognized permanent target item, check **Upgrade**, and select the ver
 
 ### Character Saves and Crafting Fees
 
-Save stores only character name, level, and proficiency in this browser. A matching name overwrites after confirmation; a new name creates a new save. Export a backup before clearing browser data, and Import it to restore saves. Item and crafting settings are not saved.
+Save stores character name, level, proficiency, and any sheet layout in this browser. A matching name overwrites after confirmation; a new name creates a new save. Export a backup before clearing browser data, and Import it to restore saves. Item and crafting settings are not saved. In the Sheet row view, Edit columns lets you rename, hide, or reorder columns. Save layout attaches the arrangement to the current saved character; layout export/import works separately from character backups.
 
 The optional crafting fee defaults to the order's actual downtime savings, or you can enter a fee manually. It appears separately from crafting cost in the output.
 

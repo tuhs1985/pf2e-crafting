@@ -216,6 +216,17 @@ form.form-card {
 .sheet-preview-label, .sheet-preview-value { padding: .4rem .6rem; overflow-wrap: anywhere; }
 .sheet-preview-label { background: #303030; font-weight: 600; }
 .sheet-preview-value { background: #181818; }
+.sheet-layout-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; margin: .6rem 0; }
+.sheet-layout-actions button, .sheet-layout-move button { background: #333; color: #eee; border: 1px solid #666; border-radius: .4rem; padding: .35rem .55rem; cursor: pointer; }
+.sheet-layout-actions button:disabled, .sheet-layout-move button:disabled { opacity: .45; cursor: default; }
+.sheet-layout-editor { border: 1px solid #555; border-radius: .4rem; margin: .5rem 0; }
+.sheet-layout-column { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: end; gap: .5rem; padding: .5rem; border-top: 1px solid #555; }
+.sheet-layout-column:first-child { border-top: 0; }
+.sheet-layout-toggle { display: flex; align-items: center; gap: .25rem; padding-bottom: .35rem; white-space: nowrap; }
+.sheet-layout-name { min-width: 0; }
+.sheet-layout-name input { box-sizing: border-box; width: 100%; }
+.sheet-layout-move { display: flex; gap: .2rem; padding-bottom: .1rem; }
+.sheet-layout-notice { margin: .25rem 0; font-size: .9rem; overflow-wrap: anywhere; }
 
 
 .header-container {

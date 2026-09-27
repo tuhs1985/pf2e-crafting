@@ -1,10 +1,8 @@
 import { calculateEndDate, type CraftingInput, type ResultType } from "./crafting";
+import { DEFAULT_SHEET_COLUMNS } from "./sheetLayout";
 
 // Matches the supplied spreadsheet. The copied row contains values only.
-export const SHEET_COLUMNS = [
-  "Activity", "Date", "Character", "Description", "Status", "Level",
-  "DC Mod (rarity, etc.)", "DC", "Assured?", "Roll Result", "Client",
-] as const;
+export const SHEET_COLUMNS = DEFAULT_SHEET_COLUMNS;
 
 function safeCell(value: string | number): string {
   if (typeof value === "number") return Number.isFinite(value) ? String(value) : "";

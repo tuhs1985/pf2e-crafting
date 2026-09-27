@@ -15,7 +15,10 @@ import {
 } from "./utils/crafting";
 import itemsDbRaw from "./data/items.db.json";
 import PopoverHelp from "./PopoverHelp";
-import { formatSheetRow, formatSheetWithHeaders, SHEET_COLUMNS } from "./utils/sheetOutput";
+import { formatSheetRow } from "./utils/sheetOutput";
+import { defaultSheetLayout, formatLayoutRow, formatLayoutWithHeaders, parseSheetLayout,
+  serializeSheetLayout, validateSheetLayout, type SheetLayout } from "./utils/sheetLayout";
+import { storageKey, profileKey, parseProfiles, serializeProfiles } from "./utils/characterProfiles";
 import "./App.css";
 import { materialRows, materialKind, materialLabel, gradeLabels, findMaterial,
   parseCarriedBulk, applyMaterial } from "./utils/materials";
@@ -188,6 +191,33 @@ export default function App() {
   const [craftingRoll, setCraftingRoll] = useState<string>("");
   const [output, setOutput] = useState("");
   const [sheetRow, setSheetRow] = useState("");
+  const [sheetLayout, setSheetLayout] = useState<SheetLayout>(defaultSheetLayout);
+  const [editingSheetLayout, setEditingSheetLayout] = useState(false);
+  const [layoutNotice, updateLayoutNotice] = useState("");
+  const layoutNoticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function setLayoutNotice(message: string) {
+    if (layoutNoticeTimer.current !== null) clearTimeout(layoutNoticeTimer.current);
+    layoutNoticeTimer.current = null;
+    updateLayoutNotice(message);
+  }
+  useEffect(() => {
+    if (!layoutNotice) return;
+    const dismiss = () => {
+      if (layoutNoticeTimer.current !== null) return;
+      layoutNoticeTimer.current = setTimeout(() => {
+        layoutNoticeTimer.current = null;
+        updateLayoutNotice("");
+      }, 0);
+    };
+    const events = ["click", "keyup", "input", "change", "scroll", "wheel", "touchmove"];
+    for (const event of events) document.addEventListener(event, dismiss, { capture: true, passive: true });
+    return () => {
+      if (layoutNoticeTimer.current !== null) clearTimeout(layoutNoticeTimer.current);
+      layoutNoticeTimer.current = null;
+      for (const event of events) document.removeEventListener(event, dismiss, true);
+    };
+  }, [layoutNotice]);
+  const layoutInput = useRef<HTMLInputElement>(null);
   const [outputMode, setOutputMode] = useState<"summary" | "sheet">("summary");
   const [copyNotice, setCopyNotice] = useState("");
   const [modifierNotice, setModifierNotice] = useState("");
@@ -431,7 +461,7 @@ export default function App() {
   };
 
   const copySelectedOutput = () => {
-    const selected = outputMode === "sheet" ? sheetRow : output;
+    const selected = outputMode === "sheet" ? formatLayoutRow(sheetRow, sheetLayout) : output;
     if (!selected) return;
     navigator.clipboard.writeText(selected).then(() => {
       setCopyNotice(outputMode === "sheet" ? "Sheet row copied to clipboard!" : "Summary copied to clipboard!");
@@ -441,10 +471,55 @@ export default function App() {
 
   const copySheetWithHeaders = () => {
     if (!sheetRow) return;
-    navigator.clipboard.writeText(formatSheetWithHeaders(sheetRow)).then(() => {
+    navigator.clipboard.writeText(formatLayoutWithHeaders(sheetRow, sheetLayout)).then(() => {
       setCopyNotice("Sheet headers and row copied!");
       setTimeout(() => setCopyNotice(""), 2000);
     });
+  };
+
+  const updateSheetColumn = (id: number, change: Partial<SheetLayout[number]>) => {
+    setLayoutNotice("");
+    setSheetLayout(current => current.map(column => column.id === id ? { ...column, ...change } : column));
+  };
+  const moveSheetColumn = (index: number, direction: -1 | 1) => {
+    const next = [...sheetLayout];
+    const swap = index + direction;
+    if (swap < 0 || swap >= next.length) return;
+    [next[index], next[swap]] = [next[swap], next[index]];
+    setLayoutNotice("");
+    setSheetLayout(next);
+  };
+  const saveSheetLayout = () => {
+    try {
+      const text = localStorage.getItem(storageKey);
+      const profiles = text ? parseProfiles(text) : [];
+      const key = profileKey(character);
+      const index = profiles.findIndex(profile => profileKey(profile.name) === key);
+      if (!key || index < 0) throw new Error("Save this character first, then save the sheet layout.");
+      const layout = validateSheetLayout(sheetLayout);
+      profiles[index] = { ...profiles[index], sheetLayout: layout };
+      localStorage.setItem(storageKey, serializeProfiles(profiles));
+      setLayoutNotice(`Sheet layout saved for ${profiles[index].name}.`);
+    } catch (error) { setLayoutNotice(error instanceof Error ? error.message : "Could not save layout."); }
+  };
+  const exportSheetLayout = () => {
+    try {
+      const url = URL.createObjectURL(new Blob([serializeSheetLayout(sheetLayout)], { type: "application/json" }));
+      const link = document.createElement("a"); link.href = url; link.download = "pf2e-sheet-layout.json";
+      document.body.appendChild(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      setLayoutNotice("Sheet layout download requested.");
+    } catch (error) { setLayoutNotice(error instanceof Error ? error.message : "Could not export layout."); }
+  };
+  const importSheetLayout = async (file?: File) => {
+    if (!file) return;
+    try {
+      if (file.size > 100_000) throw new Error("This layout file is too large.");
+      setSheetLayout(parseSheetLayout(await file.text()));
+      setEditingSheetLayout(true);
+      setLayoutNotice("Sheet layout imported. Save it to your character if you want to keep it.");
+    } catch (error) { setLayoutNotice(error instanceof Error ? error.message : "Could not import layout."); }
+    finally { if (layoutInput.current) layoutInput.current.value = ""; }
   };
 
   // Click-away for rarity suggestions
@@ -490,7 +565,8 @@ export default function App() {
                   Load selects a saved character; Delete removes a save after confirmation.
                   Save creates a separate character for a new name, or replaces a matching name after confirmation.
                   Clearing browser/site data can erase saves. Export downloads all saved characters as a backup file;
-                  Import restores that file and asks before replacing matching names. Item and crafting settings are not saved.
+                  Import restores that file and asks before replacing matching names. Saved sheet layouts are included;
+                  item and crafting settings are not saved.
                 </li>
                 <li>Fill in all the details for your crafting project.</li>
                 <li>
@@ -502,7 +578,8 @@ export default function App() {
                 </li>
                 <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
                 <li><strong>Sheet row:</strong> After generating, switch to Sheet row to see each column and its value.
-                  Copy one row for an existing sheet, or copy with headers to start a new one in Excel or Google Sheets.
+                  Copy one row for an existing sheet, or copy with headers to start a new one. Edit columns to rename,
+                  hide, or reorder them; save the layout to a saved character or export it separately.
                 </li>
                 <li><strong>Client:</strong> Enter a name for the sheet row and an optional numeric Discord ID
                   for a mention in the activity line. If both are blank, the sheet row shows None.
@@ -552,9 +629,11 @@ export default function App() {
             />
           </label>
 
-          <CharacterSaves name={character} level={characterLevel} proficiency={proficiency}
+          <CharacterSaves name={character} level={characterLevel} proficiency={proficiency} sheetLayout={sheetLayout}
             onLoad={profile => {
               setCharacter(profile.name); setCharacterLevel(String(profile.level)); setProficiency(profile.proficiency);
+              setSheetLayout(profile.sheetLayout ?? defaultSheetLayout());
+              setLayoutNotice("");
             }} />
 
           {/* Character level and proficiency, same line */}
@@ -1004,21 +1083,56 @@ export default function App() {
                 onClick={() => setOutputMode("summary")}>Summary</button>
               <button type="button" aria-pressed={outputMode === "sheet"}
                 onClick={() => setOutputMode("sheet")}>Sheet row</button>
-              <button type="button" onClick={copySelectedOutput}>
-                Copy {outputMode === "sheet" ? "sheet row" : "summary"}
-              </button>
-              {outputMode === "sheet" && <button type="button" onClick={copySheetWithHeaders}>
-                Copy with headers
+              {outputMode === "summary" && <button type="button" onClick={copySelectedOutput}>
+                Copy summary
               </button>}
             </div>
-            {outputMode === "summary" ? <pre className="output-pre">{output}</pre> :
-              <div className="sheet-preview" aria-label="Sheet row preview">
-                {SHEET_COLUMNS.map((column, index) =>
-                  <div className="sheet-preview-pair" key={column}>
-                    <span className="sheet-preview-label">{column}</span>
-                    <span className="sheet-preview-value">{sheetRow.split("\t")[index]}</span>
-                  </div>)}
+            {outputMode === "summary" ? <pre className="output-pre">{output}</pre> : <>
+              <div className="sheet-layout-actions">
+                <button type="button" aria-expanded={editingSheetLayout}
+                  onClick={() => setEditingSheetLayout(value => !value)}>
+                  {editingSheetLayout ? "Done editing" : "Edit columns"}
+                </button>
+                <button type="button" onClick={copySelectedOutput}>Copy sheet row</button>
+                <button type="button" onClick={copySheetWithHeaders}>Copy with headers</button>
+                {editingSheetLayout && <>
+                  <button type="button" onClick={saveSheetLayout}>Save layout</button>
+                  <button type="button" onClick={() => { setSheetLayout(defaultSheetLayout()); setLayoutNotice(""); }}>Reset</button>
+                  <button type="button" onClick={exportSheetLayout}>Export layout</button>
+                  <button type="button" onClick={() => layoutInput.current?.click()}>Import layout</button>
+                  <input ref={layoutInput} type="file" accept=".json,application/json" hidden
+                    onChange={e => void importSheetLayout(e.target.files?.[0])} />
+                </>}
+              </div>
+              {layoutNotice && <p className="sheet-layout-notice" role="status">{layoutNotice}</p>}
+              {editingSheetLayout && <div className="sheet-layout-editor" aria-label="Edit sheet columns">
+                {sheetLayout.map((column, index) => <div className="sheet-layout-column" key={column.id}>
+                  <label className="sheet-layout-toggle">
+                    <input type="checkbox" checked={column.enabled}
+                      disabled={column.enabled && sheetLayout.filter(c => c.enabled).length === 1}
+                      onChange={e => updateSheetColumn(column.id, { enabled: e.target.checked })} />
+                    Show
+                  </label>
+                  <label className="sheet-layout-name">Header
+                    <input type="text" maxLength={60} value={column.label}
+                      onChange={e => updateSheetColumn(column.id, { label: e.target.value })} />
+                  </label>
+                  <div className="sheet-layout-move">
+                    <button type="button" disabled={index === 0} aria-label={`Move ${column.label} up`}
+                      onClick={() => moveSheetColumn(index, -1)}>↑</button>
+                    <button type="button" disabled={index === sheetLayout.length - 1} aria-label={`Move ${column.label} down`}
+                      onClick={() => moveSheetColumn(index, 1)}>↓</button>
+                  </div>
+                </div>)}
               </div>}
+              <div className="sheet-preview" aria-label="Sheet row preview">
+                {sheetLayout.filter(column => column.enabled).map(column =>
+                  <div className="sheet-preview-pair" key={column.id}>
+                    <span className="sheet-preview-label">{column.label}</span>
+                    <span className="sheet-preview-value">{sheetRow.split("\t")[column.id]}</span>
+                  </div>)}
+              </div>
+            </>}
           </div>
         )}
 

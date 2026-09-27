@@ -1,5 +1,6 @@
 import type { Proficiency } from './crafting';
-export type CharacterProfile = { name: string; level: number; proficiency: Proficiency };
+import { validateSheetLayout, type SheetLayout } from './sheetLayout';
+export type CharacterProfile = { name: string; level: number; proficiency: Proficiency; sheetLayout?: SheetLayout };
 export const profileKey = (name: string) => name.trim().toLocaleLowerCase();
 export const storageKey = 'pf2e-crafting.characters.v1';
 export function validateProfile(value: unknown): CharacterProfile {
@@ -9,7 +10,9 @@ export function validateProfile(value: unknown): CharacterProfile {
     !['trained', 'expert', 'master', 'legendary'].includes(p.proficiency)) {
     throw new Error('Each character needs a name, a whole-number level from 1 to 100, and a proficiency rank.');
   }
-  return { name: p.name.trim(), level: p.level, proficiency: p.proficiency };
+  const profile: CharacterProfile = { name: p.name.trim(), level: p.level, proficiency: p.proficiency };
+  if (p.sheetLayout !== undefined) profile.sheetLayout = validateSheetLayout(p.sheetLayout);
+  return profile;
 }
 export function parseProfiles(text: string): CharacterProfile[] {
   const data = JSON.parse(text);

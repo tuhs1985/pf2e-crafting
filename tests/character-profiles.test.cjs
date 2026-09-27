@@ -2,7 +2,6 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { createRequire } = require('node:module');
 const vm = require('node:vm');
 const ts = require('typescript');
 
@@ -11,15 +10,27 @@ function load(file) {
   const code = ts.transpileModule(fs.readFileSync(filename, 'utf8'), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true },
   }).outputText;
-  const context = { exports: {}, require: createRequire(filename) };
+  const context = { exports: {}, require: (specifier) => {
+    if (specifier === './sheetLayout') return load('sheetLayout.ts');
+    throw new Error(`Unexpected import: ${specifier}`);
+  } };
   vm.runInNewContext(code, context);
   return context.exports;
 }
 const { parseProfiles, serializeProfiles, mergeProfiles, validateProfile } = load('characterProfiles.ts');
+const { defaultSheetLayout } = load('sheetLayout.ts');
 const a = {name:'Alice',level:5,proficiency:'expert'};
 test('character backups round trip only intended fields', () => {
   const result=parseProfiles(serializeProfiles([{...a,item:'Sword'}]));
   assert.equal(JSON.stringify(result),JSON.stringify([a]));
+});
+test('older character backups load and new backups preserve their column layouts', () => {
+  assert.equal(parseProfiles(serializeProfiles([a]))[0].sheetLayout, undefined);
+  const layout = defaultSheetLayout();
+  layout[0].label = 'Task';
+  const restored = parseProfiles(serializeProfiles([{ ...a, sheetLayout: layout }]));
+  assert.equal(restored[0].sheetLayout[0].label, 'Task');
+  assert.throws(() => parseProfiles(JSON.stringify({ version: 1, characters: [{ ...a, sheetLayout: [] }] })));
 });
 test('invalid backups and duplicates are rejected before merging', () => {
   for (const data of [{version:2,characters:[a]}, {version:1,characters:[a,{...a,name:' ALICE '}]}, {version:1,characters:[{...a,level:0}]}, {version:1,characters:[{...a,proficiency:'god'}]}]) assert.throws(()=>parseProfiles(JSON.stringify(data)));

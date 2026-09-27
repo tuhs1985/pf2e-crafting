@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import type { Proficiency } from './utils/crafting';
 import { type CharacterProfile, storageKey, profileKey, validateProfile, parseProfiles,
   serializeProfiles, mergeProfiles } from './utils/characterProfiles';
+import type { SheetLayout } from './utils/sheetLayout';
 
-type Props = { name: string; level: string; proficiency: Proficiency; onLoad: (p: CharacterProfile) => void };
-export default function CharacterSaves({ name, level, proficiency, onLoad }: Props) {
+type Props = { name: string; level: string; proficiency: Proficiency; sheetLayout: SheetLayout; onLoad: (p: CharacterProfile) => void };
+export default function CharacterSaves({ name, level, proficiency, sheetLayout, onLoad }: Props) {
   const [loaded, setLoaded] = useState<string>();
   const [picker, setPicker] = useState<'load' | 'delete' | null>(null);
   const [profiles, setProfiles] = useState<CharacterProfile[]>([]);
@@ -53,7 +54,7 @@ export default function CharacterSaves({ name, level, proficiency, onLoad }: Pro
     }
   }
   function save() { attempt(() => {
-    const profile = validateProfile({ name, level: Number(level), proficiency });
+    const profile = validateProfile({ name, level: Number(level), proficiency, sheetLayout });
     const current = read();
     const replacing = current.filter(p => profileKey(p.name) === profileKey(profile.name));
     if (replacing.length && !window.confirm(`Overwrite saved character${replacing.length > 1 ? 's' : ''}: ${replacing.map(p => p.name).join(', ')}?`)) return;

@@ -14,7 +14,9 @@ function compile(file, requireFn = () => { throw new Error('Unexpected import');
 }
 
 const crafting = compile('src/utils/crafting.ts');
-const { formatSheetRow, formatSheetWithHeaders, SHEET_COLUMNS } = compile('src/utils/sheetOutput.ts', () => crafting);
+const layout = compile('src/utils/sheetLayout.ts');
+const { formatSheetRow, formatSheetWithHeaders, SHEET_COLUMNS } = compile('src/utils/sheetOutput.ts',
+  specifier => specifier === './sheetLayout' ? layout : crafting);
 
 const input = {
   character: 'Kosta', itemName: 'Striking (Major)', itemLevel: 19,
