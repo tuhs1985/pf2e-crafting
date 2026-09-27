@@ -858,12 +858,6 @@ export default function App() {
             </label>
           </div>
 
-          {minimumEstimate && <p className="minimum-cost-estimate">
-            Current cost: {currentOrderCost} gp after {craftingInput.additionalDays} additional {craftingInput.additionalDays === 1 ? "day" : "days"}
-            <br />
-            Minimum cost: {minimumEstimate.cost} gp - {minimumEstimate.days} additional {minimumEstimate.days === 1 ? "day" : "days"}
-          </p>}
-
           {/* Crafting check values */}
           <div className="form-row">
             <label>
@@ -916,6 +910,11 @@ export default function App() {
               </PopoverHelp>
             </label>
           </div>
+          {minimumEstimate && <p className="minimum-cost-estimate">
+            Current cost: {currentOrderCost} gp after {craftingInput.additionalDays} additional {craftingInput.additionalDays === 1 ? "day" : "days"}
+            <br />
+            Minimum cost: {minimumEstimate.cost} gp - {minimumEstimate.days} additional {minimumEstimate.days === 1 ? "day" : "days"}
+          </p>}
           {addCraftingFee && <div className="form-row"><label>Fee (gp)
               <input type="number" min="0" step="any" value={feeOverride}
                 placeholder={String(automaticFee)} aria-label="Crafting fee in gp"
