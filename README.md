@@ -6,6 +6,8 @@ A mobile-friendly builder for Pathfinder 2e crafting projects. It calculates cos
 
 **Live App:** [https://crafting.tuhsrpg.com](https://crafting.tuhsrpg.com)
 
+See the [feature backlog](FEATURE-BACKLOG.md) for completed, deferred, and possible future additions.
+
 ## Features
 
 - ✅ **5,874 Item Database** - Autocomplete from a pinned Foundry PF2e release, with published handwrap rune combinations supplied by the importer
