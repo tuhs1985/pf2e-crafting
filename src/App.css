@@ -223,6 +223,7 @@ form.form-card {
 .sheet-layout-column { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: end; gap: .5rem; padding: .5rem; border-top: 1px solid #555; }
 .sheet-layout-column:first-child { border-top: 0; }
 .sheet-layout-toggle { display: flex; align-items: center; gap: .25rem; padding-bottom: .35rem; white-space: nowrap; }
+.sheet-layout-flags { align-self: center; }
 .sheet-layout-name { min-width: 0; }
 .sheet-layout-name input { box-sizing: border-box; width: 100%; }
 .sheet-layout-blank { align-self: center; overflow-wrap: anywhere; }

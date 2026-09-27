@@ -56,6 +56,26 @@ test('twelve-column layouts migrate and blank columns copy as empty cells', () =
   assert.throws(() => validateSheetLayout([...columns, blank]));
 });
 
+test('negative option changes only selected numeric cells and survives backup', () => {
+  const columns = defaultSheetLayout();
+  columns[5].negative = true;  // level
+  columns[7].negative = true;  // DC
+  columns[12].negative = true; // cost
+  columns[12].enabled = true;
+  columns[13].negative = true; // fee, blank when no fee was added
+  columns[13].enabled = true;
+  const cells = Array.from({ length: 15 }, () => '');
+  cells[5] = '19'; cells[7] = '41'; cells[12] = '29400';
+  const copied = formatLayoutRow(cells.join('\t'), columns).split('\t');
+  assert.equal(copied[5], '-19');
+  assert.equal(copied[7], '-41');
+  assert.equal(copied.at(-2), '-29400');
+  assert.equal(copied.at(-1), '');
+  assert.equal(JSON.stringify(parseSheetLayout(serializeSheetLayout(columns))), JSON.stringify(columns));
+  assert.throws(() => validateSheetLayout(columns.map((column, index) =>
+    index === 0 ? { ...column, negative: true } : column)));
+});
+
 test('formula-looking imported header text is escaped when copied', () => {
   const columns = defaultSheetLayout();
   columns[0].label = '=HYPERLINK("bad")';

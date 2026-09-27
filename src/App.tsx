@@ -18,7 +18,7 @@ import itemsDbRaw from "./data/items.db.json";
 import PopoverHelp from "./PopoverHelp";
 import { formatSheetRow } from "./utils/sheetOutput";
 import { defaultSheetLayout, formatLayoutRow, formatLayoutWithHeaders, parseSheetLayout,
-  serializeSheetLayout, validateSheetLayout, type SheetLayout } from "./utils/sheetLayout";
+  serializeSheetLayout, validateSheetLayout, isNumericSheetColumn, type SheetLayout } from "./utils/sheetLayout";
 import { storageKey, profileKey, parseProfiles, serializeProfiles } from "./utils/characterProfiles";
 import "./App.css";
 import { materialRows, materialKind, materialLabel, gradeLabels, findMaterial,
@@ -537,6 +537,7 @@ export default function App() {
     } catch (error) { setLayoutNotice(error instanceof Error ? error.message : "Could not import layout."); }
     finally { if (layoutInput.current) layoutInput.current.value = ""; }
   };
+  const sheetPreviewCells = formatLayoutRow(sheetRow, sheetLayout).split("\t");
 
   // Click-away for rarity suggestions
   function handleRarityBlur() {
@@ -596,7 +597,8 @@ export default function App() {
                 <li><strong>Sheet row:</strong> After generating, switch to Sheet row to see each column and its value.
                   Copy one row for an existing sheet, or copy with headers to start a new one. Edit columns to rename,
                   hide, or reorder them, or add blank columns. Cost, crafting fee, and total charged are optional
-                  numeric columns. Save the layout to a saved character or export it separately.
+                  numeric columns. Use Negative on a numeric column if your sheet needs its value subtracted.
+                  Save the layout to a saved character or export it separately.
                 </li>
                 <li><strong>Client:</strong> Enter a name for the sheet row and an optional numeric Discord ID
                   for a mention in the activity line. If both are blank, the sheet row shows None.
@@ -1130,12 +1132,19 @@ export default function App() {
               {layoutNotice && <p className="sheet-layout-notice" role="status">{layoutNotice}</p>}
               {editingSheetLayout && <div className="sheet-layout-editor" aria-label="Edit sheet columns">
                 {sheetLayout.map((column, index) => <div className="sheet-layout-column" key={column.id}>
-                  <label className="sheet-layout-toggle">
-                    <input type="checkbox" checked={column.enabled}
-                      disabled={column.enabled && sheetLayout.filter(c => c.enabled).length === 1}
-                      onChange={e => updateSheetColumn(column.id, { enabled: e.target.checked })} />
-                    Show
-                  </label>
+                  <div className="sheet-layout-flags">
+                    <label className="sheet-layout-toggle">
+                      <input type="checkbox" checked={column.enabled}
+                        disabled={column.enabled && sheetLayout.filter(c => c.enabled).length === 1}
+                        onChange={e => updateSheetColumn(column.id, { enabled: e.target.checked })} />
+                      Show
+                    </label>
+                    {isNumericSheetColumn(column.id) && <label className="sheet-layout-toggle">
+                      <input type="checkbox" checked={!!column.negative}
+                        onChange={e => updateSheetColumn(column.id, { negative: e.target.checked })} />
+                      Negative
+                    </label>}
+                  </div>
                   {typeof column.id === "string"
                     ? <span className="sheet-layout-blank">Blank column (empty cell)</span>
                     : <label className="sheet-layout-name">Header
@@ -1153,10 +1162,10 @@ export default function App() {
                 </div>)}
               </div>}
               <div className="sheet-preview" aria-label="Sheet row preview">
-                {sheetLayout.filter(column => column.enabled).map(column =>
+                {sheetLayout.filter(column => column.enabled).map((column, index) =>
                   <div className="sheet-preview-pair" key={column.id}>
                     <span className="sheet-preview-label">{column.label || "Blank column"}</span>
-                    <span className="sheet-preview-value">{typeof column.id === "number" ? sheetRow.split("\t")[column.id] : ""}</span>
+                    <span className="sheet-preview-value">{sheetPreviewCells[index]}</span>
                   </div>)}
               </div>
             </>}

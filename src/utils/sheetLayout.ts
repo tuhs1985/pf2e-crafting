@@ -4,8 +4,11 @@ export const DEFAULT_SHEET_COLUMNS = [
   "Cost (after reduction)", "Crafting fee", "Total charged",
 ] as const;
 
-export type SheetColumn = { id: number | string; label: string; enabled: boolean };
+export type SheetColumn = { id: number | string; label: string; enabled: boolean; negative?: boolean };
 export type SheetLayout = SheetColumn[];
+const NUMERIC_COLUMN_IDS = new Set([5, 7, 9, 12, 13, 14]);
+export const isNumericSheetColumn = (id: SheetColumn["id"]): boolean =>
+  typeof id === "number" && NUMERIC_COLUMN_IDS.has(id);
 
 export function defaultSheetLayout(): SheetLayout {
   return DEFAULT_SHEET_COLUMNS.map((label, id) => ({ id, label, enabled: id < 11 }));
@@ -17,13 +20,16 @@ export function validateSheetLayout(value: unknown): SheetLayout {
   }
   const columns = value.map((entry): SheetColumn => {
     if (!entry || typeof entry !== "object") throw new Error("This sheet layout has an invalid column.");
-    const { id, label, enabled } = entry as Partial<SheetColumn>;
+    const { id, label, enabled, negative } = entry as Partial<SheetColumn>;
     const base = typeof id === "number" && Number.isSafeInteger(id) && id >= 0 && id < DEFAULT_SHEET_COLUMNS.length;
     const blank = typeof id === "string" && /^blank-[1-9]\d*$/.test(id);
     if ((!base && !blank) || typeof label !== "string" || (base && !label.trim()) ||
       (blank && label !== "") || label.length > 60 || /[\t\r\n\u2028\u2029]/.test(label) ||
-      typeof enabled !== "boolean") throw new Error("This sheet layout has an invalid column.");
-    return { id: id!, label: label.trim(), enabled };
+      typeof enabled !== "boolean" ||
+      (negative !== undefined && (typeof negative !== "boolean" || !isNumericSheetColumn(id!)))) {
+      throw new Error("This sheet layout has an invalid column.");
+    }
+    return { id: id!, label: label.trim(), enabled, ...(negative === undefined ? {} : { negative }) };
   });
   const ids = new Set(columns.map(column => column.id));
   const baseIds = columns.filter(column => typeof column.id === "number").map(column => column.id as number);
@@ -50,8 +56,12 @@ export function serializeSheetLayout(columns: SheetLayout): string {
 
 export function formatLayoutRow(row: string, columns: SheetLayout): string {
   const cells = row.split("\t");
-  return columns.filter(column => column.enabled).map(column =>
-    typeof column.id === "number" ? cells[column.id] ?? "" : "").join("\t");
+  return columns.filter(column => column.enabled).map(column => {
+    const value = typeof column.id === "number" ? cells[column.id] ?? "" : "";
+    if (!column.negative || !isNumericSheetColumn(column.id) || value === "") return value;
+    const number = Number(value);
+    return Number.isFinite(number) ? String(-number) : value;
+  }).join("\t");
 }
 
 export function formatLayoutWithHeaders(row: string, columns: SheetLayout): string {

@@ -27,7 +27,9 @@ This is a planning checklist, not a promise to implement every item. Status was 
 - [ ] **Safe paste:** Tabs and line breaks are flattened and formula-like text is prefixed before copying. Unit checks pass; actual paste into Excel and Google Sheets on a phone and desktop remains to be tested.
 - [x] **Empty cells:** Add blank columns, move them into place, and remove them. Copied rows and headers preserve empty cells; the editor labels them for clarity.
 - [x] **Money columns:** Cost (after reduction), Crafting fee, and Total charged are value-only optional columns, hidden by default. Cost matches the summary Cost line, including failure expenses; fee and total charged stay blank when the fee option is off.
-- [ ] **Maybe — combined output cell:** Consider allowing one sheet cell to contain several selected output values. This may make layouts harder to edit and paste, so defer until there is a concrete sheet example that needs it.
+- [x] **Negative numeric values:** Each numeric sheet column can optionally copy as a negative number. Blank values stay blank and zero stays zero; the setting travels with saved layouts.
+- [ ] **Deferred — combined output cell:** A future column could join selected output values with `, ` in one spreadsheet cell. Revisit only if a specific sheet needs this often; it would add mobile editing and layout-backup complexity.
+- [ ] **Future — multiple sheet formats:** Consider named layouts per character (for different destinations) if one layout becomes limiting. Decide how switching, saving, and exporting several layouts would work before implementation.
 
 ## Suggested order
 
