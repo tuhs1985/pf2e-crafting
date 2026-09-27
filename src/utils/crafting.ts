@@ -7,6 +7,7 @@ export interface CraftingInput {
   character: string;
   clientName?: string;
   clientDiscordId?: string;
+  discordRollLink?: string;
   itemName: string;
   itemLevel: number;
   itemRarity: string;
@@ -380,6 +381,18 @@ export function minimumCostEstimate(input: CraftingInput, resultType: string) {
   };
 }
 
+export function normalizeDiscordRollLink(value: string): string | null {
+  const link = value.trim();
+  if (!link || /\s/.test(link)) return null;
+  try {
+    const url = new URL(link);
+    if (url.protocol !== "https:" ||
+      !/^(?:[a-z0-9-]+\.)?discord(?:app)?\.com$/i.test(url.hostname) ||
+      !/^\/channels\/(?:@me|\d+)\/\d+\/\d+\/?$/.test(url.pathname)) return null;
+    return `${url.origin}${url.pathname}`;
+  } catch { return null; }
+}
+
 export function formatClientForActivity(name = "", discordId = ""): string {
   const id = discordId.trim();
   return id ? `<@${id}>` : name.trim() || "None";
@@ -410,6 +423,8 @@ export function formatSummary(
   let resultStr = resultType;
   if (input.useAssurance) resultStr = "Assurance " + resultStr;
   resultStr += ` (${input.craftingRoll}${input.naturalRoll && !input.useAssurance ? `, Nat ${input.naturalRoll}` : ""})`;
+  const rollLink = normalizeDiscordRollLink(input.discordRollLink ?? "");
+  const resultDisplay = rollLink ? `[${resultStr}](${rollLink})` : resultStr;
 
   // Format days as MM/dd-MM/dd (show single date if same day)
   let daysStr = formatMMDD(input.startDate);
@@ -464,7 +479,7 @@ export function formatSummary(
     `**Days:** ${daysStr}\n` +
     `**Item Level:** ${input.itemLevel}\n` +
     `**DC:** ${input.craftingDC}\n` +
-    `**Result:** ${resultStr}\n` +
+    `**Result:** ${resultDisplay}\n` +
     costLine + `\n`
   );
 }

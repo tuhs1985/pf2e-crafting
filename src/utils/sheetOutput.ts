@@ -34,13 +34,10 @@ export function sheetCells(input: CraftingInput, result: ResultType, endDate: st
     input.useAssurance ? "TRUE" : "FALSE",
     String(input.craftingRoll),
     input.clientName?.trim() || input.clientDiscordId?.trim() || "None",
+    input.discordRollLink?.trim() || "",
   ];
 }
 
 export function formatSheetRow(input: CraftingInput, result: ResultType, endDate: string): string {
   return sheetCells(input, result, endDate).map(safeCell).join("\t");
-}
-
-export function formatSheetWithHeaders(row: string): string {
-  return `${SHEET_COLUMNS.join("\t")}\n${row}`;
 }

@@ -12,6 +12,7 @@ import {
   minimumCostEstimate,
   formatSummary,
   getCostModifierError,
+  normalizeDiscordRollLink,
 } from "./utils/crafting";
 import itemsDbRaw from "./data/items.db.json";
 import PopoverHelp from "./PopoverHelp";
@@ -189,6 +190,7 @@ export default function App() {
   const [craftingDC, setCraftingDC] = useState<string>("");
   const [dcAdjustment, setDcAdjustment] = useState<string>("");
   const [craftingRoll, setCraftingRoll] = useState<string>("");
+  const [discordRollLink, setDiscordRollLink] = useState("");
   const [output, setOutput] = useState("");
   const [sheetRow, setSheetRow] = useState("");
   const [sheetLayout, setSheetLayout] = useState<SheetLayout>(defaultSheetLayout);
@@ -382,6 +384,7 @@ export default function App() {
     character,
     clientName,
     clientDiscordId,
+    discordRollLink: normalizeDiscordRollLink(discordRollLink) ?? "",
     itemName: magicResult?.name ?? itemName,
     itemLevel: Number(effectiveLevel),
     itemRarity: effectiveRarity,
@@ -428,11 +431,13 @@ export default function App() {
     ? "Enter a nonnegative crafting fee in gp." : "";
   const clientIdError = clientDiscordId.trim() && !/^\d+$/.test(clientDiscordId.trim())
     ? "Enter the Discord user ID as digits only." : "";
+  const rollLinkError = discordRollLink.trim() && !normalizeDiscordRollLink(discordRollLink)
+    ? "Enter a Discord message link." : "";
 
   // Calculate result and summary
   const handleGenerate = () => {
     if (modifierNoticeTimer.current !== null) clearTimeout(modifierNoticeTimer.current);
-    const costModifierError = materialError || upgradeError || getCostModifierError(costModifier) || feeError || clientIdError;
+    const costModifierError = materialError || upgradeError || getCostModifierError(costModifier) || feeError || clientIdError || rollLinkError;
     if (costModifierError) {
       setCopyNotice("");
       setModifierNotice(costModifierError);
@@ -583,6 +588,9 @@ export default function App() {
                 </li>
                 <li><strong>Client:</strong> Enter a name for the sheet row and an optional numeric Discord ID
                   for a mention in the activity line. If both are blank, the sheet row shows None.
+                </li>
+                <li><strong>Discord roll link:</strong> Paste the message link from your Discord roll to make
+                  the Result clickable in the summary. It is hidden from the sheet unless you enable its column.
                 </li>
                 <li><strong>Natural roll:</strong> If the d20 itself was a 20 or 1, select it below the Crafting check.
                   It shifts the result one degree up or down. Leave it blank for other rolls; Assurance has no die roll.
@@ -1051,6 +1059,11 @@ export default function App() {
               </select>
             </label>
           </div>
+          <label>Discord roll link <PopoverHelp>Paste a Discord message link. Leave blank to omit.</PopoverHelp>
+            <input type="text" inputMode="url" value={discordRollLink}
+              onChange={e => setDiscordRollLink(e.target.value)}
+              placeholder="https://discord.com/channels/…" />
+          </label>
           {minimumEstimate && <p className="minimum-cost-estimate">
             Current cost: {currentOrderCost} gp after {craftingInput.additionalDays} additional {craftingInput.additionalDays === 1 ? "day" : "days"}
             <br />

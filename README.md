@@ -24,6 +24,7 @@ See the [feature backlog](FEATURE-BACKLOG.md) for completed, deferred, and possi
 - ✅ **Earn Income Integration** - Live cost and days-to-minimum estimate based on character level and proficiency
 - ✅ **Copy to Clipboard** - One-click formatted output for Discord/Roll20/Foundry
 - ✅ **Spreadsheet row** - Preview labeled values, customize columns, and copy a tab-separated row with or without headers for Excel or Google Sheets
+- ✅ **Discord roll link** - Optionally make the result clickable with a Discord message link; enable its sheet column only if needed
 - ✅ **PWA Enabled** - Install as an app for offline use
 - ✅ **Mobile Optimized** - Touch-friendly interface with responsive design
 

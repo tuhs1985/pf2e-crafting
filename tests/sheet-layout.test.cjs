@@ -33,6 +33,16 @@ test('layout backup round trips and rejects missing, duplicate, or unsafe column
   assert.throws(() => parseSheetLayout('<script>alert(1)</script>'));
 });
 
+test('eleven-column saved layouts gain the new roll link column hidden', () => {
+  const legacy = defaultSheetLayout().slice(0, 11);
+  legacy[0].label = 'Work';
+  const migrated = validateSheetLayout(legacy);
+  assert.equal(migrated.length, 12);
+  assert.equal(migrated[0].label, 'Work');
+  assert.equal(migrated[11].label, 'Discord roll link');
+  assert.equal(migrated[11].enabled, false);
+});
+
 test('formula-looking imported header text is escaped when copied', () => {
   const columns = defaultSheetLayout();
   columns[0].label = '=HYPERLINK("bad")';

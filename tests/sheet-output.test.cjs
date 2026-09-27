@@ -15,7 +15,7 @@ function compile(file, requireFn = () => { throw new Error('Unexpected import');
 
 const crafting = compile('src/utils/crafting.ts');
 const layout = compile('src/utils/sheetLayout.ts');
-const { formatSheetRow, formatSheetWithHeaders, SHEET_COLUMNS } = compile('src/utils/sheetOutput.ts',
+const { formatSheetRow, SHEET_COLUMNS } = compile('src/utils/sheetOutput.ts',
   specifier => specifier === './sheetLayout' ? layout : crafting);
 
 const input = {
@@ -29,11 +29,11 @@ const input = {
 };
 
 test('sheet row follows pictured columns without a header and uses completion date', () => {
-  assert.equal(SHEET_COLUMNS.length, 11);
+  assert.equal(SHEET_COLUMNS.length, 12);
   assert.deepEqual(formatSheetRow(input, 'Critical Success', '2026-09-30').split('\t'), [
     'Upgrade', '2026-09-30', 'Kosta',
     '1 x Striking (Major) (from Striking (Greater))', 'Critical Success',
-    '19', 'uncommon; Custom +2', '41', 'FALSE', '43', 'None',
+    '19', 'uncommon; Custom +2', '41', 'FALSE', '43', 'None', '',
   ]);
 });
 
@@ -52,15 +52,27 @@ test('sheet Client prefers the name, with ID fallback', () => {
     '695405739405082675');
 });
 
-test('copy with headers adds the exact column names above the same data row', () => {
+test('default sheet copy omits the optional Discord roll link column', () => {
   const row = formatSheetRow(input, 'Success', '2026-09-30');
-  assert.equal(formatSheetWithHeaders(row), `${SHEET_COLUMNS.join('\t')}\n${row}`);
+  const defaultLayout = layout.defaultSheetLayout();
+  assert.equal(defaultLayout[11].enabled, false);
+  assert.equal(layout.formatLayoutRow(row, defaultLayout).split('\t').length, 11);
+  assert.equal(layout.formatLayoutWithHeaders(row, defaultLayout).split('\n')[0].split('\t').length, 11);
+});
+
+test('enabling the optional Discord roll link column copies the entered URL', () => {
+  const link = 'https://discord.com/channels/123/456/789';
+  const row = formatSheetRow({ ...input, discordRollLink: link }, 'Success', '2026-09-30');
+  const columns = layout.defaultSheetLayout();
+  columns[11].enabled = true;
+  assert.equal(layout.formatLayoutRow(row, columns).split('\t')[11], link);
+  assert.equal(layout.formatLayoutWithHeaders(row, columns).split('\n')[0].split('\t')[11], 'Discord roll link');
 });
 
 test('text is one cell and cannot become a spreadsheet formula', () => {
   const row = formatSheetRow({ ...input, character: '=SUM(1,1)\nnext', itemName: '@cmd\tother' },
     'Success', '2026-09-30').split('\t');
-  assert.equal(row.length, 11);
+  assert.equal(row.length, 12);
   assert.equal(row[2], "'=SUM(1,1) next");
   assert.equal(row[3], "1 x @cmd other (from Striking (Greater))");
 });

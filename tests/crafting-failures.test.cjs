@@ -10,9 +10,10 @@ const source = fs.readFileSync(path.join(__dirname, '../src/utils/crafting.ts'),
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.CommonJS },
 }).outputText;
-const context = { exports: {} };
+const context = { exports: {}, URL };
 vm.runInNewContext(compiled, context);
-const { formatSummary, calculateEndDate, calculateSetupDays, getResultType, applyCostModifier, formatClientForActivity } = context.exports;
+const { formatSummary, calculateEndDate, calculateSetupDays, getResultType, applyCostModifier,
+  formatClientForActivity, normalizeDiscordRollLink } = context.exports;
 
 test('arithmetic adjusts the existing price with precedence and parentheses', () => {
   for (const [expression, expected] of [
@@ -79,6 +80,15 @@ test('client names and Discord IDs appear in the activity', () => {
   assert.match(summary({ clientName: 'Alice', clientDiscordId: '695405739405082675', craftingRoll: 15 }),
     /\*\*Activity:\*\* Crafting 1 x Example for <@695405739405082675>/);
   assert.match(summary({ craftingRoll: 15 }), /\*\*Activity:\*\* Crafting 1 x Example\n/);
+});
+
+test('Discord roll link makes Result clickable only when provided', () => {
+  const link = 'https://discord.com/channels/123/456/789';
+  assert.match(summary({ discordRollLink: link }), /\*\*Result:\*\* \[Failure \(10\)\]\(https:\/\/discord\.com\/channels\/123\/456\/789\)\n\*\*Cost:/);
+  assert.match(summary(), /\*\*Result:\*\* Failure \(10\)\n\*\*Cost:/);
+  assert.doesNotMatch(summary({ discordRollLink: link }), /Discord roll:/);
+  assert.equal(normalizeDiscordRollLink(`${link}?source=copy`), link);
+  assert.equal(normalizeDiscordRollLink('https://example.com/channels/123/456/789'), null);
 });
 
 test('signed and unsigned percentage markups produce identical summaries', () => {
