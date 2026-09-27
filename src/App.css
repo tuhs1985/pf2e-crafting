@@ -397,4 +397,9 @@ body { box-sizing: border-box; }
 .form-card .crafting-options-row label { margin-bottom: 0; white-space: nowrap; }
 .form-card .crafting-options-row .natural-roll-control { display: inline-flex; align-items: center; gap: .3rem; margin-left: auto; }
 .form-card .natural-roll-control select { width: 4rem; padding: .25rem; }
-@media (max-width: 380px) { .crafting-options-row { gap: .5rem; font-size: .8rem; } }
+@media (max-width: 380px) {
+  .crafting-options-row { gap: .25rem; font-size: .8rem; }
+  .form-card .crafting-options-row input[type="checkbox"] { width: 1em; height: 1em; margin-right: .2rem; }
+  .form-card .crafting-options-row .natural-roll-control { margin-left: auto; gap: .2rem; }
+  .form-card .natural-roll-control select { width: 3rem; padding: .15rem; }
+}

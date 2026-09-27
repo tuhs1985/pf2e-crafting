@@ -1041,14 +1041,11 @@ export default function App() {
           <div className="crafting-options-row">
             <label><input type="checkbox" checked={useAssurance}
               onChange={e => { setUseAssurance(e.target.checked); if (e.target.checked) setNaturalRoll(""); }} />
-              Use Assurance
+              Assurance
             </label>
             <label><input type="checkbox" checked={addCraftingFee}
               onChange={e => { setAddCraftingFee(e.target.checked); if (!e.target.checked) setFeeOverride(""); }} />
-              Add crafting fee
-              <PopoverHelp>
-                Charge the downtime savings, or enter your own fee for the order.
-              </PopoverHelp>
+              + Crafting fee
             </label>
             <label className="natural-roll-control">Nat
               <select aria-label="Natural d20 roll" value={naturalRoll} disabled={useAssurance}
