@@ -1,19 +1,25 @@
 # PF2e Crafting Calculator
 
-A web-based tool for calculating crafting costs, time, and results for Pathfinder 2e crafting activities. Generate formatted summaries for Discord/VTT use with automatic calculations for Earn Income reductions, batch crafting, and formula costs.
+A mobile-friendly builder for Pathfinder 2e crafting projects. It calculates costs, downtime, and results, then generates a formatted summary for Discord or a VTT. Custom costs and items are welcome; it does not enforce every equipment rule.
+
+**Version 2.0 in development:** The upgrade feature is implemented locally and will appear on the live site after the next deployment.
 
 **Live App:** [https://crafting.tuhsrpg.com](https://crafting.tuhsrpg.com)
 
 ## Features
 
-- ✅ **5,566+ Item Database** - Autocomplete from Pathfinder 2e equipment with name/cost/level/rarity
+- ✅ **5,874 Item Database** - Autocomplete from a pinned Foundry PF2e release, with published handwrap rune combinations supplied by the importer
 - ✅ **Automatic Calculations** - DC, setup days, end dates, and cost reductions
 - ✅ **Batch Crafting** - Craft up to 24 consumables/ammo at once
 - ✅ **Cost Modifiers** - Support for percentage discounts/markups or flat adjustments
 - ✅ **Precious Materials** - Material and grade selectors for weapons, armor, and shields, with automatic price, level, rarity, and minimum material value
+- ✅ **Magic Weapons and Armor** - Fundamental-rune presets for eligible base equipment
+- ✅ **Upgrades (v2.0)** - Craft the difference between recognized permanent item versions, including Handwraps of Mighty Blows
+- ✅ **Character Saves** - Save, load, delete, export, and import name, level, and proficiency in your browser
+- ✅ **Crafting Fee** - Add the order's downtime savings or set your own fee
 - ✅ **Formula Options** - Buy formulas or work an extra day if you don't own one
 - ✅ **Assurance Support** - Calculate with Assurance or manual roll values
-- ✅ **Earn Income Integration** - Automatic cost reduction based on character level and proficiency
+- ✅ **Earn Income Integration** - Live cost and days-to-minimum estimate based on character level and proficiency
 - ✅ **Copy to Clipboard** - One-click formatted output for Discord/Roll20/Foundry
 - ✅ **PWA Enabled** - Install as an app for offline use
 - ✅ **Mobile Optimized** - Touch-friendly interface with responsive design
@@ -43,7 +49,7 @@ npm run dev
 ### Usage
 
 1. **Enter character details** - Name, level, and crafting proficiency rank
-2. **Search for item** - Type to autocomplete from 5,566+ items (or enter custom)
+2. **Search for item** - Type to autocomplete from the equipment database (or enter a custom item)
 3. **Set quantity** - Craft 1-24 items (consumables/ammo only for batches)
 4. **Choose formula option** - Own it, buy it, or work an extra day
 5. **Set dates** - Start date and additional downtime days for cost reduction
@@ -57,11 +63,23 @@ npm run dev
 - `npm run preview` - Preview production build locally
 - `npm run lint` - Run ESLint on source files
 - `npm run deploy` - Deploy to GitHub Pages
+- `npm run update:pf2e` - Update the upstream submodule to the latest stable PF2e release and rebuild equipment data
+- `npm run import:pf2e` - Rebuild equipment data from the currently pinned PF2e release
 - `node build-items-db.cjs` - Regenerate compressed item database
 - `node build-materials-db.cjs` - Regenerate weapon/armor material data from the bundled source snapshot
 - `node --test tests/*.test.cjs` - Run calculation and importer checks
 
-See [database regeneration instructions](data/README.md) for source refresh and format details.
+See [plain-language update and publishing directions](UPDATING-PF2E.md) and [database details](data/README.md).
+
+### Item Upgrades (v2.0)
+
+Choose a recognized permanent target item, check **Upgrade**, and select the version you own. The builder uses the difference between the two listed prices as the crafting price. Cost Mod and downtime then apply; the target item's level and DC remain in effect. The generated summary names both versions. Consumables are excluded. Handwraps of Mighty Blows include the typical rune combinations listed in GM Core even though the Foundry equipment pack contains only the base entry.
+
+### Character Saves and Crafting Fees
+
+Save stores only character name, level, and proficiency in this browser. A matching name overwrites after confirmation; a new name creates a new save. Export a backup before clearing browser data, and Import it to restore saves. Item and crafting settings are not saved.
+
+The optional crafting fee defaults to the order's actual downtime savings, or you can enter a fee manually. It appears separately from crafting cost in the output.
 
 ### Precious Materials
 
@@ -83,11 +101,12 @@ character level, or build legality.
 ## Architecture
 
 ### Database Compression
-The item database uses an ultra-compact format with **78.5% size reduction** (1000 KB → 215 KB):
+The generated item database is roughly 463 KB in the current build:
 - Deduplicated lookup tables for rarities, categories, bulks, and costs
 - Items stored as index arrays instead of objects
+- Parallel upgrade links identify recognized earlier versions
 - Single-character keys and no whitespace
-- Decompressed once on app load for zero runtime impact
+- Decompressed once on app load
 
 ### Technology Stack
 - **React** 19.1.0 - UI framework
@@ -128,7 +147,7 @@ The item database uses an ultra-compact format with **78.5% size reduction** (10
 
 ## Data Source
 
-Equipment data sourced from the Pathfinder 2e system for Foundry VTT. The `build-items-db.cjs` script processes JSON files from `upstream/pf2e/packs/pf2e/equipment/` and generates the compressed database.
+Equipment data comes from the Pathfinder 2e system for Foundry VTT, pinned as a Git submodule. The importer reads its equipment JSON and generates the compressed database. A small importer supplement adds the published Handwraps of Mighty Blows rune combinations that are not separate Foundry equipment entries. Run `npm run update:pf2e` to move to the latest stable PF2e release; review and publish the resulting changes as described in [UPDATING-PF2E.md](UPDATING-PF2E.md).
 
 ## Contributing
 
@@ -143,9 +162,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Known Limitations
 
-1. **Item Database**: Only includes equipment from PF2e Foundry data packs. Custom items must be entered manually.
-2. **Homebrew Rules**: The calculator uses strict Core Rulebook crafting rules. House rules require manual adjustments.
-3. **Rarity DC**: Rarity adjustments follow standard rules; GM-specific adjustments use the DC Adjustment field.
+1. **Equipment coverage**: The importer uses Foundry's equipment pack plus the documented handwrap supplement. Custom items can be entered manually.
+2. **Upgrade paths**: Only clear permanent-item versions recognized by the importer are offered. An absent option can still be handled with Cost Mod.
+3. **Browser saves**: Character saves stay on this device unless exported; clearing site data can erase them.
+4. **Rules flexibility**: The builder does not enforce every build restriction. GM-specific DC changes can use the DC Adjustment field.
 
 ## License
 
@@ -159,7 +179,7 @@ This project uses trademarks and/or copyrights owned by Paizo Inc., used under [
 
 - **Paizo** for Pathfinder 2e and the Crafting rules
 - **Foundry VTT** PF2e system for equipment data
-- **GitHub Copilot** for AI-assisted development support
+- **GitHub Copilot and Codex** for AI-assisted development support
 
 ## Links
 

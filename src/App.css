@@ -368,3 +368,6 @@ footer a:hover {
 body { box-sizing: border-box; }
 
 .minimum-cost-estimate { margin: 0 0 0.35rem; font-size: 0.8rem; color: #ccc; overflow-wrap: anywhere; }
+.upgrade-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0 .35rem; }
+.form-card .upgrade-heading label { margin-bottom: 0; white-space: nowrap; }
+.upgrade-price { color: #ccc; font-size: .72rem; white-space: nowrap; }

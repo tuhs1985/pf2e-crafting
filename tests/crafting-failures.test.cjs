@@ -157,6 +157,14 @@ test('automatic fee uses actual batch reduction and stops at half price', () => 
   assert.match(text,/\*\*Crafting fee:\*\* 20 gp/);
   assert.match(text,/\*\*Total charged:\*\* 40 gp/);
 });
+test('upgrade summary uses the price difference and target level while retaining Cost Mod', () => {
+  const text = summary({ itemName: 'Striking (Major)', itemLevel: 19,
+    itemCost: 30000, upgradeFrom: 'Striking (Greater)', costModifier: '-100', craftingRoll: 20,
+    additionalDays: 0 });
+  assert.match(text, /\*\*Activity:\*\* Upgrade 1 x \(Striking \(Greater\) → Striking \(Major\)\)/);
+  assert.match(text, /\*\*Item Level:\*\* 19/);
+  assert.match(text, /\*\*Cost:\*\* 29900 gp/);
+});
 test('manual fee is once per order, permits above cap and explicit zero', () => {
   for (const fee of [0,24,100]) {
     const text=formatSummary({...base,itemCost:10,quantity:4,additionalDays:0,craftingFee:{overrideGp:fee}},'Success','');

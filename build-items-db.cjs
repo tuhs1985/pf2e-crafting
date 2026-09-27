@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const { upgradeLinks } = require('./upgrade-paths.cjs');
+const { BASE: HANDWRAPS, VARIANTS: HANDWRAPS_VARIANTS } = require('./handwraps-variants.cjs');
 
 // Parses Foundry-style price objects { gp: 70 }, { sp: 10 }, etc. Returns decimal GP
 function parseCostObj(costValue) {
@@ -111,6 +113,17 @@ function buildDb(inputDir = EQUIP_DIR, outputFile = OUT_FILE) {
     });
   }
 
+  // Foundry has only the base handwraps; add the published common rune
+  // combinations until upstream supplies rows with these names itself.
+  const handwraps = items.find(item => item.name === HANDWRAPS);
+  if (handwraps) {
+    for (const variant of HANDWRAPS_VARIANTS) {
+      if (items.some(item => item.name === variant.name)) continue;
+      items.push({ ...handwraps, ...variant, metadata: [...handwraps.metadata] });
+      costSet.add(variant.cost);
+    }
+  }
+
   items.sort((a, b) => a.name.localeCompare(b.name));
   if (!items.length) throw new Error('No equipment found; existing database left unchanged.');
   if (new Set(items.map(item => item.name)).size !== items.length) {
@@ -137,7 +150,7 @@ function buildDb(inputDir = EQUIP_DIR, outputFile = OUT_FILE) {
 
   // Ultra-compact output with single-letter keys
   const output = {
-    v: 3,
+    v: 4,
     r: rarities,      // rarity lookup
     c: categories,    // category lookup
     b: bulks,         // bulk lookup
@@ -146,6 +159,8 @@ function buildDb(inputDir = EQUIP_DIR, outputFile = OUT_FILE) {
     i: compressed,    // item data arrays
     // Parallel metadata: [itemType, carriedBulk, material, grade, pricePer, baseItem, canCustomizeMaterial]
     m: items.map(item => item.metadata),
+    // Parallel list of indexes of lower-level, lower-price versions.
+    u: upgradeLinks(items),
   };
 
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });

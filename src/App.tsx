@@ -23,6 +23,7 @@ import { materialRows, materialKind, materialLabel, gradeLabels, findMaterial,
 type CompressedDb = {
   v?: number;
   m?: [string, number, string | null, string | null, number, string | null, number?][];
+  u?: number[][];
   r: string[];      // rarities lookup
   c: string[];      // categories lookup
   b: string[];      // bulks lookup
@@ -47,6 +48,7 @@ type ItemDbEntry = {
   pricePer: number;
   baseItem: string | null;
   canCustomizeMaterial: boolean;
+  upgradeFrom: number[];
 };
 
 // Decompress the database once on module load
@@ -66,6 +68,7 @@ const items: ItemDbEntry[] = db.i.map((item, idx) => ({
   pricePer: db.m?.[idx]?.[4] ?? 1,
   baseItem: db.m?.[idx]?.[5] ?? null,
   canCustomizeMaterial: db.m?.[idx]?.[6] === 1,
+  upgradeFrom: db.u?.[idx] ?? [],
 }));
 
 // Add the possible rarities for autocomplete
@@ -164,6 +167,8 @@ export default function App() {
   const [useMaterial, setUseMaterial] = useState(false);
   const [useMagic, setUseMagic] = useState(false);
   const [magicIndex, setMagicIndex] = useState(0);
+  const [useUpgrade, setUseUpgrade] = useState(false);
+  const [upgradeChoice, setUpgradeChoice] = useState(0);
   const [selectedMaterial, setSelectedMaterial] = useState("silver");
   const [selectedGrade, setSelectedGrade] = useState("low");
   const [quantity, setQuantity] = useState(1);
@@ -202,7 +207,7 @@ export default function App() {
 
   // Handle input for autocomplete/search
   function handleItemNameChange(val: string) {
-    if (val !== itemName) { setUseMaterial(false); setUseMagic(false); }
+    if (val !== itemName) { setUseMaterial(false); setUseMagic(false); setUseUpgrade(false); }
     setItemName(val);
     const matches = getItemSuggestions(val, items as ItemDbEntry[]);
     setItemSuggestions(matches);
@@ -224,6 +229,7 @@ export default function App() {
   function handleSuggestionClick(item: ItemDbEntry) {
     setUseMagic(false);
     setUseMaterial(false);
+    setUseUpgrade(false);
     setItemName(item.name);
     setItemLevel(String(item.level));
     setItemRarity(item.rarity);
@@ -312,6 +318,18 @@ export default function App() {
   const effectiveLevel = magicResult?.level ?? materialResult?.level ?? itemLevel;
   const effectiveRarity = magicResult?.rarity ?? materialResult?.rarity ?? itemRarity;
   const effectiveCost = magicResult?.price ?? materialResult?.price ?? itemCost;
+  const upgradeOptions = (isBatchItem ? [] : magicEnabled
+    ? magicOptions.slice(0, magicIndex).map(option => ({ name: `${itemName} (${option.label})`, cost: option.price }))
+    : !materialEnabled && matchedItem && !matchedItem.consumable
+      ? matchedItem.upgradeFrom.map(index => items[index]) : [])
+    .sort((a, b) => b.cost - a.cost);
+  const upgradeEnabled = useUpgrade && upgradeOptions.length > 0;
+  const selectedPrior = upgradeOptions[upgradeChoice] ?? upgradeOptions[0];
+  const targetCost = Number(effectiveCost);
+  const upgradeCost = upgradeEnabled && selectedPrior && Number.isFinite(targetCost)
+    ? Math.max(0, Number((targetCost - selectedPrior.cost).toFixed(8))) : null;
+  const upgradeError = upgradeEnabled && (upgradeCost === null || upgradeCost <= 0)
+    ? "The target price must be higher than the owned version's price." : "";
 
 
   // Auto-calculate DC if item fields change
@@ -331,7 +349,8 @@ export default function App() {
     itemRarity: effectiveRarity,
     itemCategory,
     itemBulk,
-    itemCost: Number(effectiveCost),
+    itemCost: upgradeCost ?? Number(effectiveCost),
+    upgradeFrom: upgradeEnabled ? selectedPrior.name : undefined,
     quantity,
     hasFormula,
     formulaOption,
@@ -372,7 +391,7 @@ export default function App() {
   // Calculate result and summary
   const handleGenerate = () => {
     if (modifierNoticeTimer.current !== null) clearTimeout(modifierNoticeTimer.current);
-    const costModifierError = materialError || getCostModifierError(costModifier) || feeError;
+    const costModifierError = materialError || upgradeError || getCostModifierError(costModifier) || feeError;
     if (costModifierError) {
       setCopied(false);
       setModifierNotice(costModifierError);
@@ -425,10 +444,16 @@ export default function App() {
             <div className="instructions-content" id="instructions-content" style={{marginTop: "1em"}}>
               <h2>How to Use</h2>
               <ol>
+                <li><strong>Upgrades:</strong> Select a non-consumable target item with a recognized lower version,
+                  check Upgrade, and select the version you own. The crafting price is
+                  the difference between their listed prices. Cost Mod applies afterward; the target item's
+                  level and DC still apply. Uncheck Upgrade to craft the target at full price.
+                </li>
                 <li><strong>Crafting fee:</strong> Check Add crafting fee to charge for your work.
                   Leave Fee blank to use the order's actual downtime savings (up to the existing half-price cap).
                   Enter an amount, including zero, to override it; clear the field to restore automatic pricing.
-                  The fee is added once per order. Cost remains your expense; Total charged includes the fee.
+                  The fee is added once per order. Failed attempts have no automatic fee, but you can enter one.
+                  Cost remains your expense; Total charged includes the fee.
                 </li>
                 <li><strong>Saved characters:</strong> Save stores only your character name, level, and proficiency in this browser on this device.
                   Load selects a saved character; Delete removes a save after confirmation.
@@ -587,20 +612,19 @@ export default function App() {
             <input type="checkbox" checked={magicEnabled}
               onChange={e => {
                 setUseMagic(e.target.checked);
+                setUseUpgrade(false);
                 if (e.target.checked) { setUseMaterial(false); setMagicIndex(0); }
               }} />
             Magic {magicKind}{" "}
             <PopoverHelp>
-              Choose a fundamental-rune preset for a standard-material weapon or armor.
-              The preset price replaces the base price; Cost Mod and downtime still apply.
-              Level and automatic DC update, and the base rarity is retained.
-              This option and Precious material cannot be used together. Uncheck to restore the original item.
+              Choose a magic enhancement. Its listed price, level, and DC replace the base values.
             </PopoverHelp>
           </label>}
           {showMaterialOption && <label>
             <input type="checkbox" checked={materialEnabled} disabled={!kind}
               onChange={e => {
                 setUseMaterial(e.target.checked);
+                if (e.target.checked) setUseUpgrade(false);
                 if (e.target.checked) setUseMagic(false);
                 if (e.target.checked && kind) {
                   const initial = findMaterial(kind, matchedItem?.materialType ?? "silver", matchedItem?.materialGrade ?? "low")
@@ -611,18 +635,31 @@ export default function App() {
               }} />
             Precious material{" "}
             <PopoverHelp>
-              Available for nonmagical weapons, armor, and shields, excluding named specific items.
-              Choose the material and grade to calculate its price, level, rarity, and DC.
-              The material price replaces the ordinary item price. Cost Mod still adjusts it.
-              The minimum precious material is included in the total and stays fixed through discounts and downtime.
-              Shield pricing uses its buckler, ordinary shield, or tower group without a Bulk surcharge.
-              Only materials and grades with listed prices appear. Uncheck to restore your original values. Ammunition is not included yet.
+              Choose a material and grade to update cost, level, rarity, and DC.
             </PopoverHelp>
           </label>}
           </div>}
+          {upgradeOptions.length > 0 && <div className="upgrade-heading">
+            <label>
+              <input type="checkbox" checked={upgradeEnabled}
+                onChange={e => { setUseUpgrade(e.target.checked); setUpgradeChoice(0); }} />
+              Upgrade{" "}
+              <PopoverHelp>
+                Choose your current version; craft the price difference.
+              </PopoverHelp>
+            </label>
+            {upgradeEnabled && upgradeCost !== null &&
+              <span className="upgrade-price">Upgrade crafting price: {upgradeCost.toLocaleString()} gp</span>}
+          </div>}
+          {upgradeEnabled && <div className="form-row"><label>Owned version
+            <select value={upgradeChoice} onChange={e => setUpgradeChoice(Number(e.target.value))}>
+              {upgradeOptions.map((option, index) =>
+                <option key={option.name} value={index}>{option.name} - saves {option.cost.toLocaleString()} gp</option>)}
+            </select>
+          </label></div>}
           {magicEnabled && <div className="form-row">
             <label>Magic enhancement
-              <select value={magicIndex} onChange={e => setMagicIndex(Number(e.target.value))}>
+              <select value={magicIndex} onChange={e => { setMagicIndex(Number(e.target.value)); setUseUpgrade(false); }}>
                 {magicOptions.map((option, index) => <option key={option.label} value={index}>
                   {option.label} — {option.price.toLocaleString()} gp
                 </option>)}
@@ -710,8 +747,7 @@ export default function App() {
             <label>
               Cost {" "}
 			  <PopoverHelp>
-				Use the base gold cost per item.<br />
-				<br /><em>Tap or click outside to close.</em>
+				Base cost in gold pieces, per item.
 			  </PopoverHelp>
               <input
                 type="number"
@@ -726,11 +762,7 @@ export default function App() {
 			<label>
 			  Cost Mod{" "}
 			  <PopoverHelp>
-                Add/subtract GP per item using a number or arithmetic: -25+10 subtracts 15 gp; (50-25+10) adds 35 gp.
-                Use +, -, *, /, decimals, and parentheses. This adjusts the existing price, not the final price.<br />
-                Alternatively, use one percentage: -20% discounts 20%; +50% or 50% adds 50%. Do not mix % with arithmetic.
-                Applies before quantity and downtime reductions.<br />
-				<br /><em>Tap or click outside to close.</em>
+				Adjust each item's cost. Try -25+10 or -20%. Details are in Instructions.
 			  </PopoverHelp>
               <input
                 type="text"
@@ -877,10 +909,7 @@ export default function App() {
               onChange={e => { setAddCraftingFee(e.target.checked); if (!e.target.checked) setFeeOverride(""); }} />
               Add crafting fee
               <PopoverHelp>
-                Defaults to this order's actual downtime savings, capped by the existing half-price reduction.
-                Enter a fee to override it, or clear the field to return to automatic.
-                The fee is added once for the whole order after crafting costs, not per item.
-                Failed attempts have no automatic fee; a manual fee still applies.
+                Charge the downtime savings, or enter your own fee for the order.
               </PopoverHelp>
             </label>
             {addCraftingFee && <label>Fee (gp)

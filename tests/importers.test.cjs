@@ -10,6 +10,16 @@ test('generated item rows contain valid lookup references and aligned metadata',
   assert.equal(new Set(items.n).size, items.n.length);
   assert.equal(items.i.length, items.n.length);
   assert.equal(items.m.length, items.n.length);
+  assert.equal(items.u.length, items.n.length);
+  items.u.forEach((links, target) => {
+    for (const prior of links) {
+      assert.ok(Number.isInteger(prior) && prior >= 0 && prior < items.n.length);
+      assert.ok(items.i[prior][5] < items.i[target][5]);
+      assert.ok(items.p[items.i[prior][3]] < items.p[items.i[target][3]]);
+      assert.equal(items.i[prior][4], 0);
+      assert.equal(items.i[target][4], 0);
+    }
+  });
   for (const row of items.i) {
     for (const [index, pool] of [[0, items.r], [1, items.c], [2, items.b], [3, items.p]]) {
       assert.ok(Number.isInteger(row[index]) && row[index] >= 0 && row[index] < pool.length);

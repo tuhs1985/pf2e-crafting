@@ -25,6 +25,7 @@ export interface CraftingInput {
   additionalDays: number;
   costModifier?: string; // Now string, not number
   craftingFee?: { overrideGp?: number };
+  upgradeFrom?: string;
   preciousMaterial?: { name: string; grade: string; minimumGpPerItem: number };
 }
 
@@ -384,8 +385,10 @@ export function formatSummary(
 ): string {
   const failed = resultType === "Failure" || resultType === "Critical Failure";
   const material = input.preciousMaterial;
-  const activity = `Craft ${input.quantity} x ${input.itemName}` +
-    (material ? ` (${material.name}, ${material.grade})` : "");
+  const activity = input.upgradeFrom
+    ? `Upgrade ${input.quantity} x (${input.upgradeFrom} → ${input.itemName})`
+    : `Craft ${input.quantity} x ${input.itemName}` +
+      (material ? ` (${material.name}, ${material.grade})` : "");
   const { baseCostCopper, totalReduction, formulaCost, finalCost } = calculateOrderCosts(input, resultType);
   // Only show reduction if any
   const reductionStr =

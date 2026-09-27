@@ -13,7 +13,11 @@ The old ignored `src/packs/equipment/` folder is unused. `data/pf2e-version.json
 records the imported release and revision. Commit the submodule pointer along
 with generated data after reviewing the update report.
 
-Item schema version 3 preserves all six original row fields and lookup tables.
+Item schema version 4 preserves all six original row fields and lookup tables.
+The parallel `u` array stores indexes of eligible earlier versions for each
+item. It is generated from recognizable tier suffixes and strictly lower levels
+and prices. Consumables, ambiguous names, and equal-price entries have no links.
+No extra copy of names or prices is stored for upgrades.
 The parallel `m` array stores `[itemType, carriedBulk, materialType, materialGrade,
 pricePer, baseItem, canCustomizeMaterial]` for each name. The final flag is 1 only
 for nonmagical, nonspecific weapons, armor, and shields. Specific-item metadata,
