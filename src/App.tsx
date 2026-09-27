@@ -179,6 +179,7 @@ export default function App() {
   const [characterLevel, setCharacterLevel] = useState<string>("");
   const [proficiency, setProficiency] = useState<Proficiency>("trained");
   const [useAssurance, setUseAssurance] = useState(false);
+  const [naturalRoll, setNaturalRoll] = useState<"" | "20" | "1">("");
   const [craftingDC, setCraftingDC] = useState<string>("");
   const [dcAdjustment, setDcAdjustment] = useState<string>("");
   const [craftingRoll, setCraftingRoll] = useState<string>("");
@@ -358,6 +359,7 @@ export default function App() {
     characterLevel: Number(characterLevel),
     proficiency,
     useAssurance,
+    naturalRoll: useAssurance ? "" : naturalRoll,
     craftingDC: craftingDC === "" ? Number(autoDC) : Number(craftingDC),
     dcAdjustment: Number(dcAdjustment) || 0,
     craftingRoll: useAssurance
@@ -377,10 +379,10 @@ export default function App() {
   try {
     if (effectiveCost !== "" && characterLevel !== "" && (useAssurance || craftingRoll !== "") && !materialError) {
       minimumEstimate = minimumCostEstimate(craftingInput,
-        getResultType(craftingInput.craftingDC, craftingInput.craftingRoll));
+        getResultType(craftingInput.craftingDC, craftingInput.craftingRoll, craftingInput.naturalRoll));
     }
     const orderCosts = calculateOrderCosts(craftingInput,
-      getResultType(craftingInput.craftingDC, craftingInput.craftingRoll));
+      getResultType(craftingInput.craftingDC, craftingInput.craftingRoll, craftingInput.naturalRoll));
     automaticFee = orderCosts.totalReduction / 100;
     currentOrderCost = orderCosts.finalCost;
   } catch { /* Cost Mod errors are reported on Generate. */ }
@@ -401,7 +403,8 @@ export default function App() {
     setModifierNotice("");
     const resultType = getResultType(
       craftingInput.craftingDC,
-      craftingInput.craftingRoll
+      craftingInput.craftingRoll,
+      craftingInput.naturalRoll
     );
     const endDate = calculateEndDate(
       craftingInput.startDate,
@@ -470,6 +473,9 @@ export default function App() {
                   Do not mix percentages with arithmetic. The adjustment applies to each item before quantity and downtime reductions.
                 </li>
                 <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
+                <li><strong>Natural roll:</strong> If the d20 itself was a 20 or 1, select it below the Crafting check.
+                  It shifts the result one degree up or down. Leave it blank for other rolls; Assurance has no die roll.
+                </li>
                 <li>
                   <strong>Magic weapon or armor:</strong> Select an eligible base item, check the box, and choose an enhancement.
                   The listed magic price includes the base item. Level and automatic DC update; base rarity is retained.
@@ -656,12 +662,13 @@ export default function App() {
             {upgradeEnabled && upgradeCost !== null &&
               <span className="upgrade-price">Upgrade crafting price: {upgradeCost.toLocaleString()} gp</span>}
           </div>}
-          {upgradeEnabled && <div className="form-row"><label>Owned version
-            <select value={upgradeChoice} onChange={e => setUpgradeChoice(Number(e.target.value))}>
+          {upgradeEnabled && <div className="form-row">
+            <select aria-label="Version to upgrade from" value={upgradeChoice}
+              onChange={e => setUpgradeChoice(Number(e.target.value))}>
               {upgradeOptions.map((option, index) =>
                 <option key={option.name} value={index}>{option.name} - saves {option.cost.toLocaleString()} gp</option>)}
             </select>
-          </label></div>}
+          </div>}
           {magicEnabled && <div className="form-row">
             <label>Magic enhancement
               <select value={magicIndex} onChange={e => { setMagicIndex(Number(e.target.value)); setUseUpgrade(false); }}>
@@ -902,7 +909,7 @@ export default function App() {
           </div>
           <div className="crafting-options-row">
             <label><input type="checkbox" checked={useAssurance}
-              onChange={e => setUseAssurance(e.target.checked)} />
+              onChange={e => { setUseAssurance(e.target.checked); if (e.target.checked) setNaturalRoll(""); }} />
               Use Assurance
             </label>
             <label><input type="checkbox" checked={addCraftingFee}
@@ -911,6 +918,14 @@ export default function App() {
               <PopoverHelp>
                 Charge the downtime savings, or enter your own fee for the order.
               </PopoverHelp>
+            </label>
+            <label className="natural-roll-control">Nat
+              <select aria-label="Natural d20 roll" value={naturalRoll} disabled={useAssurance}
+                onChange={e => setNaturalRoll(e.target.value as "" | "20" | "1")}>
+                <option value="">—</option>
+                <option value="20">20</option>
+                <option value="1">1</option>
+              </select>
             </label>
           </div>
           {minimumEstimate && <p className="minimum-cost-estimate">

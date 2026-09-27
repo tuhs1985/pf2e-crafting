@@ -53,9 +53,22 @@ const base = {
 
 function summary(overrides = {}) {
   const input = { ...base, ...overrides };
-  return formatSummary(input, getResultType(input.craftingDC, input.craftingRoll),
+  return formatSummary(input, getResultType(input.craftingDC, input.craftingRoll, input.naturalRoll),
     calculateEndDate(input.startDate, input.setupDays, input.additionalDays));
 }
+
+test('natural d20 results shift one degree and stop at the endpoints', () => {
+  assert.equal(getResultType(20, 9, '20'), 'Failure');
+  assert.equal(getResultType(20, 19, '20'), 'Success');
+  assert.equal(getResultType(20, 20, '20'), 'Critical Success');
+  assert.equal(getResultType(20, 30, '20'), 'Critical Success');
+  assert.equal(getResultType(20, 30, '1'), 'Success');
+  assert.equal(getResultType(20, 20, '1'), 'Failure');
+  assert.equal(getResultType(20, 19, '1'), 'Critical Failure');
+  assert.equal(getResultType(20, 9, '1'), 'Critical Failure');
+  assert.equal(getResultType(20, 20), 'Success');
+  assert.match(summary({ craftingRoll: 15, naturalRoll: '20' }), /Nat 20/);
+});
 
 test('signed and unsigned percentage markups produce identical summaries', () => {
   for (const craftingRoll of [5, 10, 15, 25]) {

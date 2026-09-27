@@ -366,9 +366,11 @@ footer a:hover {
 body { box-sizing: border-box; }
 
 .minimum-cost-estimate { margin: 0 0 0.35rem; font-size: 0.8rem; color: #ccc; overflow-wrap: anywhere; }
-.upgrade-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0 .35rem; }
+.upgrade-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 .5rem; }
 .form-card .upgrade-heading label { margin-bottom: 0; white-space: nowrap; }
 .upgrade-price { color: #ccc; font-size: .72rem; white-space: nowrap; }
 .crafting-options-row { display: flex; align-items: center; gap: .5rem 1rem; flex-wrap: wrap; }
 .form-card .crafting-options-row label { margin-bottom: 0; white-space: nowrap; }
+.form-card .crafting-options-row .natural-roll-control { display: inline-flex; align-items: center; gap: .3rem; margin-left: auto; }
+.form-card .natural-roll-control select { width: 4rem; padding: .25rem; }
 @media (max-width: 380px) { .crafting-options-row { gap: .5rem; font-size: .8rem; } }

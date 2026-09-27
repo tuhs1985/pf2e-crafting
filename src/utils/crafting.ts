@@ -18,6 +18,7 @@ export interface CraftingInput {
   characterLevel: number;
   proficiency: Proficiency;
   useAssurance: boolean;
+  naturalRoll?: "" | "20" | "1";
   craftingDC: number;
   dcAdjustment: number;
   craftingRoll: number;
@@ -185,11 +186,11 @@ export function getProficiencyBonus(level: number, proficiency: Proficiency): nu
   }
 }
 
-export function getResultType(dc: number, roll: number): ResultType {
-  if (roll >= dc + 10) return "Critical Success";
-  if (roll >= dc) return "Success";
-  if (roll <= dc - 10) return "Critical Failure";
-  return "Failure";
+export function getResultType(dc: number, roll: number, naturalRoll: "" | "20" | "1" = ""): ResultType {
+  const degrees: ResultType[] = ["Critical Failure", "Failure", "Success", "Critical Success"];
+  const byTotal = roll >= dc + 10 ? 3 : roll >= dc ? 2 : roll <= dc - 10 ? 0 : 1;
+  const shift = naturalRoll === "20" ? 1 : naturalRoll === "1" ? -1 : 0;
+  return degrees[Math.max(0, Math.min(3, byTotal + shift))];
 }
 
 const DC_BY_LEVEL: { [level: number]: number } = {
@@ -398,7 +399,7 @@ export function formatSummary(
 
   let resultStr = resultType;
   if (input.useAssurance) resultStr = "Assurance " + resultStr;
-  resultStr += ` (${input.craftingRoll})`;
+  resultStr += ` (${input.craftingRoll}${input.naturalRoll && !input.useAssurance ? `, Nat ${input.naturalRoll}` : ""})`;
 
   // Format days as MM/dd-MM/dd (show single date if same day)
   let daysStr = formatMMDD(input.startDate);

@@ -19,7 +19,8 @@ export default function PopoverHelp({ icon = "ℹ️", children }: PopoverHelpPr
   }, [open]);
 
   return (
-    <span ref={ref} style={{ position: "relative", display: "inline-block" }}>
+    <span ref={ref} style={{ position: "relative", display: "inline-block" }}
+      onClick={e => { e.preventDefault(); e.stopPropagation(); }}>
       <span
         style={{
           cursor: "pointer",
@@ -31,8 +32,12 @@ export default function PopoverHelp({ icon = "ℹ️", children }: PopoverHelpPr
         aria-label="Show help"
         onClick={() => setOpen((v) => !v)}
         onKeyDown={e => {
-          if (e.key === "Enter" || e.key === " ") setOpen(v => !v);
-          if (e.key === "Escape") setOpen(false);
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            setOpen(v => !v);
+          }
+          if (e.key === "Escape") { e.stopPropagation(); setOpen(false); }
         }}
         role="button"
       >
