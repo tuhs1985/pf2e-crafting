@@ -1150,7 +1150,7 @@ export default function App() {
             </label>
             <label><input type="checkbox" checked={addCraftingFee}
               onChange={e => { setAddCraftingFee(e.target.checked); if (!e.target.checked) setFeeOverride(""); }} />
-              + Crafting fee
+              Crafting fee
             </label>
             <label className="natural-roll-control">Nat
               <select aria-label="Natural d20 roll" value={naturalRoll} disabled={useAssurance}
