@@ -477,8 +477,7 @@ export function formatSummary(
     `**Character:** ${input.character}\n` +
     `**Activity:** ${activityWithClient}\n` +
     `**Days:** ${daysStr}\n` +
-    `**Item Level:** ${input.itemLevel}\n` +
-    `**DC:** ${input.craftingDC}\n` +
+    `**Item Level:** ${input.itemLevel} | **DC:** ${input.craftingDC}\n` +
     `**Result:** ${resultDisplay}\n` +
     costLine + `\n`
   );
