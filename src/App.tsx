@@ -19,7 +19,8 @@ import PopoverHelp from "./PopoverHelp";
 import { formatSheetRow } from "./utils/sheetOutput";
 import { defaultSheetLayout, formatLayoutRow, formatLayoutWithHeaders, parseSheetLayout,
   serializeSheetLayout, validateSheetLayout, isNumericSheetColumn, type SheetLayout } from "./utils/sheetLayout";
-import { storageKey, profileKey, parseProfiles, serializeProfiles } from "./utils/characterProfiles";
+import { storageKey, profileKey, parseProfiles, serializeProfiles, validateSheetTemplates,
+  type SheetTemplate } from "./utils/characterProfiles";
 import "./App.css";
 import { materialRows, materialKind, materialLabel, gradeLabels, findMaterial,
   parseCarriedBulk, applyMaterial } from "./utils/materials";
@@ -194,6 +195,12 @@ export default function App() {
   const [output, setOutput] = useState("");
   const [sheetRow, setSheetRow] = useState("");
   const [sheetLayout, setSheetLayout] = useState<SheetLayout>(defaultSheetLayout);
+  const [sheetTemplates, setSheetTemplates] = useState<SheetTemplate[]>([
+    { name: "Default", layout: defaultSheetLayout() },
+  ]);
+  const [activeSheetTemplate, setActiveSheetTemplate] = useState("Default");
+  const [creatingSheetTemplate, setCreatingSheetTemplate] = useState(false);
+  const [newSheetTemplateName, setNewSheetTemplateName] = useState("");
   const [editingSheetLayout, setEditingSheetLayout] = useState(false);
   const [layoutNotice, updateLayoutNotice] = useState("");
   const layoutNoticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -505,6 +512,47 @@ export default function App() {
     setSheetLayout(sheetLayout.filter(column => column.id !== id));
     setLayoutNotice("");
   };
+  const selectSheetTemplate = (name: string) => {
+    const current = sheetTemplates.find(template => template.name === activeSheetTemplate);
+    const next = sheetTemplates.find(template => template.name === name);
+    if (!next) return;
+    if (current && JSON.stringify(sheetLayout) !== JSON.stringify(current.layout) &&
+      !window.confirm("Discard unsaved changes to this sheet template?")) return;
+    setLayoutNotice("");
+    try {
+      const text = localStorage.getItem(storageKey);
+      const profiles = text ? parseProfiles(text) : [];
+      const index = profiles.findIndex(profile => profileKey(profile.name) === profileKey(character));
+      if (index >= 0 && profiles[index].sheetTemplates?.some(template => template.name === name)) {
+        profiles[index] = { ...profiles[index], activeSheetTemplate: name, sheetLayout: next.layout };
+        localStorage.setItem(storageKey, serializeProfiles(profiles));
+      }
+    } catch (error) {
+      setLayoutNotice(error instanceof Error ? error.message : "Could not remember the selected template.");
+    }
+    setActiveSheetTemplate(name);
+    setSheetLayout(next.layout);
+  };
+  const deleteSheetTemplate = () => {
+    if (activeSheetTemplate === "Default" ||
+      !window.confirm(`Delete the ${activeSheetTemplate} sheet template?`)) return;
+    try {
+      const remaining = validateSheetTemplates(sheetTemplates.filter(template => template.name !== activeSheetTemplate));
+      const fallback = remaining.find(template => template.name === "Default")!;
+      const text = localStorage.getItem(storageKey);
+      const profiles = text ? parseProfiles(text) : [];
+      const index = profiles.findIndex(profile => profileKey(profile.name) === profileKey(character));
+      if (index >= 0) {
+        profiles[index] = { ...profiles[index], sheetLayout: fallback.layout,
+          sheetTemplates: remaining, activeSheetTemplate: "Default" };
+        localStorage.setItem(storageKey, serializeProfiles(profiles));
+      }
+      setSheetTemplates(remaining);
+      setActiveSheetTemplate("Default");
+      setSheetLayout(fallback.layout);
+      setLayoutNotice("Sheet template deleted.");
+    } catch (error) { setLayoutNotice(error instanceof Error ? error.message : "Could not delete template."); }
+  };
   const saveSheetLayout = () => {
     try {
       const text = localStorage.getItem(storageKey);
@@ -513,9 +561,21 @@ export default function App() {
       const index = profiles.findIndex(profile => profileKey(profile.name) === key);
       if (!key || index < 0) throw new Error("Save this character first, then save the sheet layout.");
       const layout = validateSheetLayout(sheetLayout);
-      profiles[index] = { ...profiles[index], sheetLayout: layout };
+      const templateName = creatingSheetTemplate ? newSheetTemplateName.trim() : activeSheetTemplate;
+      if (creatingSheetTemplate && sheetTemplates.some(template => profileKey(template.name) === profileKey(templateName))) {
+        throw new Error("That template name is already in use.");
+      }
+      const templates = validateSheetTemplates(creatingSheetTemplate
+        ? [...sheetTemplates, { name: templateName, layout }]
+        : sheetTemplates.map(template => template.name === templateName ? { ...template, layout } : template));
+      profiles[index] = { ...profiles[index], sheetLayout: layout,
+        sheetTemplates: templates, activeSheetTemplate: templateName };
       localStorage.setItem(storageKey, serializeProfiles(profiles));
-      setLayoutNotice(`Sheet layout saved for ${profiles[index].name}.`);
+      setSheetTemplates(templates);
+      setActiveSheetTemplate(templateName);
+      setCreatingSheetTemplate(false);
+      setNewSheetTemplateName("");
+      setLayoutNotice(`${templateName} template saved for ${profiles[index].name}.`);
     } catch (error) { setLayoutNotice(error instanceof Error ? error.message : "Could not save layout."); }
   };
   const exportSheetLayout = () => {
@@ -598,7 +658,8 @@ export default function App() {
                   Copy one row for an existing sheet, or copy with headers to start a new one. Edit columns to rename,
                   hide, or reorder them, or add blank columns. Cost, crafting fee, and total charged are optional
                   numeric columns. Use Negative on a numeric column if your sheet needs its value subtracted.
-                  Save the layout to a saved character or export it separately.
+                  Create named sheet templates for different destinations. Save layout stores the selected template
+                  with the current saved character; Export layout downloads just the selected layout.
                 </li>
                 <li><strong>Client:</strong> Enter a name for the sheet row and an optional numeric Discord ID
                   for a mention in the activity line. If both are blank, the sheet row shows None.
@@ -652,9 +713,17 @@ export default function App() {
           </label>
 
           <CharacterSaves name={character} level={characterLevel} proficiency={proficiency} sheetLayout={sheetLayout}
+            sheetTemplates={sheetTemplates} activeSheetTemplate={activeSheetTemplate}
+            onSave={profile => { setSheetTemplates(profile.sheetTemplates!); setLayoutNotice(""); }}
             onLoad={profile => {
               setCharacter(profile.name); setCharacterLevel(String(profile.level)); setProficiency(profile.proficiency);
-              setSheetLayout(profile.sheetLayout ?? defaultSheetLayout());
+              const templates = profile.sheetTemplates ?? [
+                { name: "Default", layout: profile.sheetLayout ?? defaultSheetLayout() },
+              ];
+              const active = profile.activeSheetTemplate ?? "Default";
+              setSheetTemplates(templates);
+              setActiveSheetTemplate(active);
+              setSheetLayout(templates.find(template => template.name === active)!.layout);
               setLayoutNotice("");
             }} />
 
@@ -1112,19 +1181,38 @@ export default function App() {
               </button>}
             </div>
             {outputMode === "summary" ? <pre className="output-pre">{output}</pre> : <>
+              <div className="sheet-template-row">
+                <label>Sheet template
+                  <select value={activeSheetTemplate} onChange={e => selectSheetTemplate(e.target.value)}>
+                    {sheetTemplates.map(template => <option key={template.name} value={template.name}>{template.name}</option>)}
+                  </select>
+                </label>
+                <button type="button" onClick={() => { setCreatingSheetTemplate(true); setLayoutNotice(""); }}>New</button>
+                <button type="button" disabled={activeSheetTemplate === "Default"} onClick={deleteSheetTemplate}>Delete</button>
+              </div>
+              {creatingSheetTemplate && <div className="sheet-template-new">
+                <label>New template name
+                  <input type="text" maxLength={50} value={newSheetTemplateName}
+                    onChange={e => setNewSheetTemplateName(e.target.value)} placeholder="e.g. Living World" />
+                </label>
+                <button type="button" onClick={() => { setCreatingSheetTemplate(false); setNewSheetTemplateName(""); }}>Cancel</button>
+              </div>}
               <div className="sheet-layout-actions">
                 <button type="button" aria-expanded={editingSheetLayout}
                   onClick={() => setEditingSheetLayout(value => !value)}>
                   {editingSheetLayout ? "Done editing" : "Edit columns"}
                 </button>
+                {(editingSheetLayout || creatingSheetTemplate) &&
+                  <button type="button" onClick={saveSheetLayout}>Save</button>}
+                {editingSheetLayout && <>
+                  <button type="button" onClick={() => { setSheetLayout(defaultSheetLayout()); setLayoutNotice(""); }}>Reset</button>
+                  <button type="button" onClick={addBlankColumn}>Add blank column</button>
+                </>}
                 <button type="button" onClick={copySelectedOutput}>Copy sheet row</button>
                 <button type="button" onClick={copySheetWithHeaders}>Copy with headers</button>
                 {editingSheetLayout && <>
-                  <button type="button" onClick={saveSheetLayout}>Save layout</button>
-                  <button type="button" onClick={() => { setSheetLayout(defaultSheetLayout()); setLayoutNotice(""); }}>Reset</button>
                   <button type="button" onClick={exportSheetLayout}>Export layout</button>
                   <button type="button" onClick={() => layoutInput.current?.click()}>Import layout</button>
-                  <button type="button" onClick={addBlankColumn}>Add blank column</button>
                   <input ref={layoutInput} type="file" accept=".json,application/json" hidden
                     onChange={e => void importSheetLayout(e.target.files?.[0])} />
                 </>}

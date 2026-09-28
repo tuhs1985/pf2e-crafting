@@ -229,6 +229,12 @@ form.form-card {
 .sheet-layout-blank { align-self: center; overflow-wrap: anywhere; }
 .sheet-layout-move { display: flex; gap: .2rem; padding-bottom: .1rem; }
 .sheet-layout-notice { margin: .25rem 0; font-size: .9rem; overflow-wrap: anywhere; }
+.sheet-template-row, .sheet-template-new { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: end; gap: .4rem; margin-top: .6rem; }
+.sheet-template-row label, .sheet-template-new label { min-width: 0; }
+.sheet-template-row select, .sheet-template-new input { box-sizing: border-box; width: 100%; padding: .4rem; border: 1px solid #555; border-radius: .4rem; background: #181818; color: #eee; }
+.sheet-template-row button, .sheet-template-new button { padding: .4rem .6rem; border: 1px solid #666; border-radius: .4rem; background: #333; color: #eee; }
+.sheet-template-row button:disabled { opacity: .45; }
+.sheet-template-new { grid-template-columns: minmax(0, 1fr) auto; }
 
 
 .header-container {

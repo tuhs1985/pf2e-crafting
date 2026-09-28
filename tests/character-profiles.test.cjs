@@ -32,6 +32,23 @@ test('older character backups load and new backups preserve their column layouts
   assert.equal(restored[0].sheetLayout[0].label, 'Task');
   assert.throws(() => parseProfiles(JSON.stringify({ version: 1, characters: [{ ...a, sheetLayout: [] }] })));
 });
+test('character backups preserve named sheet templates and active selection', () => {
+  const standard = defaultSheetLayout();
+  const charges = defaultSheetLayout();
+  charges[12].enabled = true;
+  charges[12].negative = true;
+  const profile = { ...a, sheetTemplates: [
+    { name: 'Default', layout: standard }, { name: 'Living World', layout: charges },
+  ], activeSheetTemplate: 'Living World' };
+  const restored = parseProfiles(serializeProfiles([profile]))[0];
+  assert.equal(restored.sheetTemplates.length, 2);
+  assert.equal(restored.activeSheetTemplate, 'Living World');
+  assert.equal(restored.sheetTemplates[1].layout[12].negative, true);
+  assert.throws(() => validateProfile({ ...profile, activeSheetTemplate: 'Missing' }));
+  assert.throws(() => validateProfile({ ...profile, sheetTemplates: [
+    { name: 'Default', layout: standard }, { name: 'default', layout: charges },
+  ] }));
+});
 test('invalid backups and duplicates are rejected before merging', () => {
   for (const data of [{version:2,characters:[a]}, {version:1,characters:[a,{...a,name:' ALICE '}]}, {version:1,characters:[{...a,level:0}]}, {version:1,characters:[{...a,proficiency:'god'}]}]) assert.throws(()=>parseProfiles(JSON.stringify(data)));
   assert.throws(()=>parseProfiles('oops'));

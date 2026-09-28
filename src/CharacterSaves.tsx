@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Proficiency } from './utils/crafting';
-import { type CharacterProfile, storageKey, profileKey, validateProfile, parseProfiles,
+import { type CharacterProfile, type SheetTemplate, storageKey, profileKey, validateProfile, parseProfiles,
   serializeProfiles, mergeProfiles } from './utils/characterProfiles';
 import type { SheetLayout } from './utils/sheetLayout';
 
-type Props = { name: string; level: string; proficiency: Proficiency; sheetLayout: SheetLayout; onLoad: (p: CharacterProfile) => void };
-export default function CharacterSaves({ name, level, proficiency, sheetLayout, onLoad }: Props) {
+type Props = { name: string; level: string; proficiency: Proficiency; sheetLayout: SheetLayout;
+  sheetTemplates: SheetTemplate[]; activeSheetTemplate: string; onLoad: (p: CharacterProfile) => void;
+  onSave: (p: CharacterProfile) => void };
+export default function CharacterSaves({ name, level, proficiency, sheetLayout, sheetTemplates, activeSheetTemplate, onLoad, onSave }: Props) {
   const [loaded, setLoaded] = useState<string>();
   const [picker, setPicker] = useState<'load' | 'delete' | null>(null);
   const [profiles, setProfiles] = useState<CharacterProfile[]>([]);
@@ -54,11 +56,15 @@ export default function CharacterSaves({ name, level, proficiency, sheetLayout, 
     }
   }
   function save() { attempt(() => {
-    const profile = validateProfile({ name, level: Number(level), proficiency, sheetLayout });
+    const templates = sheetTemplates.map(template => profileKey(template.name) === profileKey(activeSheetTemplate)
+      ? { ...template, layout: sheetLayout } : template);
+    const profile = validateProfile({ name, level: Number(level), proficiency, sheetLayout,
+      sheetTemplates: templates, activeSheetTemplate });
     const current = read();
     const replacing = current.filter(p => profileKey(p.name) === profileKey(profile.name));
     if (replacing.length && !window.confirm(`Overwrite saved character${replacing.length > 1 ? 's' : ''}: ${replacing.map(p => p.name).join(', ')}?`)) return;
     write(mergeProfiles(current, [profile]));
+    onSave(profile);
     setLoaded(profileKey(profile.name));
     setNotice(`Saved ${profile.name}.`);
   }); }

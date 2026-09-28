@@ -82,6 +82,7 @@ Choose a recognized permanent target item, check **Upgrade**, and select the ver
 ### Character Saves and Crafting Fees
 
 Save stores character name, level, proficiency, and any sheet layout in this browser. A matching name overwrites after confirmation; a new name creates a new save. Export a backup before clearing browser data, and Import it to restore saves. Item and crafting settings are not saved. In the Sheet row view, Edit columns lets you rename, hide, or reorder columns. Save layout attaches the arrangement to the current saved character; layout export/import works separately from character backups.
+Each character can keep up to ten named sheet templates. Choose one in Sheet row, use New to copy the current arrangement, then Save layout to store it. Character backups include all named templates; standalone layout export/import still handles one layout at a time.
 
 The optional crafting fee defaults to the order's actual downtime savings, or you can enter a fee manually. It appears separately from crafting cost in the output.
 
