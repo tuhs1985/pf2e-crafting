@@ -28,6 +28,22 @@ const input = {
   upgradeFrom: 'Striking (Greater)',
 };
 
+test('ammunition output counts pieces while pricing counts packs', () => {
+  for (const [itemName, packSize, packs, price] of [
+    ['Arrows', 10, 1, 0.1],
+    ['Arrows', 10, 4, 0.1],
+    ['Rounds (Dwarven Scattergun)', 5, 2, 0.1],
+  ]) {
+    const ammo = { ...input, itemName, ammunitionPackSize: packSize, quantity: packs,
+      itemCost: price, upgradeFrom: undefined, additionalDays: 0 };
+    const description = `${packSize * packs} ${itemName} (${packs} ${packs === 1 ? 'pack' : 'packs'})`;
+    assert.equal(formatSheetRow(ammo, 'Success', '2026-09-27').split('\t')[3], description);
+    assert.ok(crafting.formatSummary(ammo, 'Success', '2026-09-27').includes(`Crafting ${description}`));
+    assert.equal(crafting.calculateOrderCosts(ammo, 'Success').baseCostCopper, price * packs * 100);
+  }
+  assert.equal(crafting.formatItemQuantity({ ...input, upgradeFrom: undefined }), '1 x Striking (Major)');
+});
+
 test('sheet row follows pictured columns without a header and uses completion date', () => {
   assert.equal(SHEET_COLUMNS.length, 15);
   assert.deepEqual(formatSheetRow(input, 'Critical Success', '2026-09-30').split('\t'), [

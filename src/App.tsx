@@ -332,6 +332,8 @@ export default function App() {
     itemCategory.toLowerCase() === "consumable" ||
     itemCategory.toLowerCase() === "ammo";
   const maxBatch = isBatchItem ? 24 : 1;
+  const ammunitionPackSize = matchedItem?.itemType === "ammo" && matchedItem.pricePer > 1
+    ? matchedItem.pricePer : 1;
 
   const itemType = matchedItem?.itemType ?? itemCategory.trim().toLowerCase();
   const kind = materialKind(itemType, matchedItem?.baseItem, matchedItem?.canCustomizeMaterial ?? true);
@@ -400,6 +402,7 @@ export default function App() {
     itemCost: upgradeCost ?? Number(effectiveCost),
     upgradeFrom: upgradeEnabled ? selectedPrior.name : undefined,
     quantity,
+    ammunitionPackSize,
     hasFormula,
     formulaOption,
     startDate,
@@ -629,6 +632,7 @@ export default function App() {
               <ol>
                 <li>Enter or load your character, then choose an item.</li>
                 <li>Set the quantity, formula, dates, and roll or Assurance.</li>
+                <li>For bundled ammunition, Packs counts bundles and Cost / 10 (or / 5) is the price for that many pieces. Output shows the total pieces.</li>
                 <li>Generate Summary to preview and copy it. Choose Sheet row for spreadsheet output.</li>
               </ol>
               <details className="instruction-section">
@@ -979,9 +983,9 @@ export default function App() {
           {/* Item Cost (per item), Cost Modifier, Qty */}
           <div className="form-row">
             <label>
-              Cost {" "}
+              {ammunitionPackSize > 1 ? `Cost / ${ammunitionPackSize}` : "Cost"} {" "}
 			  <PopoverHelp>
-				Base cost in gold pieces, per item.
+				{ammunitionPackSize > 1 ? "Base cost in gold pieces, per pack." : "Base cost in gold pieces, per item."}
 			  </PopoverHelp>
               <input
                 type="number"
@@ -996,7 +1000,7 @@ export default function App() {
 			<label>
 			  Cost Mod{" "}
 			  <PopoverHelp>
-				Adjust each item's cost. Try -25+10 or -20%. Details are in Instructions.
+				Adjust each {ammunitionPackSize > 1 ? "pack's" : "item's"} cost. Try -25+10 or -20%. Details are in Instructions.
 			  </PopoverHelp>
               <input
                 type="text"
@@ -1006,7 +1010,7 @@ export default function App() {
               />
             </label>
             <label>
-              Qty
+              {ammunitionPackSize > 1 ? "Packs" : "Qty"}
               <input
                 type="number"
                 min={1}

@@ -1,4 +1,4 @@
-import { calculateEndDate, calculateOrderCosts, type CraftingInput, type ResultType } from "./crafting";
+import { calculateEndDate, calculateOrderCosts, formatItemQuantity, type CraftingInput, type ResultType } from "./crafting";
 import { DEFAULT_SHEET_COLUMNS } from "./sheetLayout";
 
 // Matches the supplied spreadsheet. The copied row contains values only.
@@ -20,7 +20,7 @@ export function sheetCells(input: CraftingInput, result: ResultType, endDate: st
   ].filter(Boolean);
   const description = input.upgradeFrom
     ? `${input.quantity} x ${input.itemName} (from ${input.upgradeFrom})`
-    : `${input.quantity} x ${input.itemName}`;
+    : formatItemQuantity(input);
   const costs = calculateOrderCosts(input, result);
   const money = (value: number) => Number(value.toFixed(8));
   const cost = failed

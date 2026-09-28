@@ -15,6 +15,7 @@ export interface CraftingInput {
   itemBulk: string;
   itemCost: number;
   quantity: number;
+  ammunitionPackSize?: number;
   hasFormula: boolean;
   formulaOption: "buy" | "work" | "";
   startDate: string;
@@ -398,6 +399,13 @@ export function formatClientForActivity(name = "", discordId = ""): string {
   return id ? `<@${id}>` : name.trim() || "None";
 }
 
+export function formatItemQuantity(input: CraftingInput): string {
+  const packSize = input.ammunitionPackSize ?? 1;
+  return packSize > 1
+    ? `${input.quantity * packSize} ${input.itemName} (${input.quantity} ${input.quantity === 1 ? "pack" : "packs"})`
+    : `${input.quantity} x ${input.itemName}`;
+}
+
 // Format the crafting summary with percent-aware cost modifier
 export function formatSummary(
   input: CraftingInput,
@@ -408,7 +416,7 @@ export function formatSummary(
   const material = input.preciousMaterial;
   const activity = input.upgradeFrom
     ? `Upgrade ${input.quantity} x (${input.upgradeFrom} → ${input.itemName})`
-    : `Crafting ${input.quantity} x ${input.itemName}` +
+    : `Crafting ${formatItemQuantity(input)}` +
       (material ? ` (${material.name}, ${material.grade})` : "");
   const hasClient = !!(input.clientName?.trim() || input.clientDiscordId?.trim());
   const activityWithClient = hasClient
