@@ -108,6 +108,9 @@ body.theme-dark, [data-theme="dark"] {
 .instructions-content {
   margin-top: 0.5em;
 }
+.instruction-section { border-top: 1px solid #555; padding: .6rem 0; }
+.instruction-section summary { cursor: pointer; font-weight: 600; }
+.instruction-section li { margin-bottom: .5rem; }
 
 form.form-card {
   background: #262626;

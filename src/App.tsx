@@ -625,69 +625,87 @@ export default function App() {
           </button>
           {showInstructions && (
             <div className="instructions-content" id="instructions-content" style={{marginTop: "1em"}}>
-              <h2>How to Use</h2>
+              <h2>Quick start</h2>
               <ol>
-                <li><strong>Upgrades:</strong> Select a non-consumable target item with a recognized lower version,
-                  check Upgrade, and select the version you own. The crafting price is
-                  the difference between their listed prices. Cost Mod applies afterward; the target item's
-                  level and DC still apply. Uncheck Upgrade to craft the target at full price.
-                </li>
-                <li><strong>Crafting fee:</strong> Check Add crafting fee to charge for your work.
-                  Leave Fee blank to use the order's actual downtime savings (up to the existing half-price cap).
-                  Enter an amount, including zero, to override it; clear the field to restore automatic pricing.
-                  The fee is added once per order. Failed attempts have no automatic fee, but you can enter one.
-                  Cost remains your expense; Total charged includes the fee.
-                </li>
-                <li><strong>Saved characters:</strong> Save stores only your character name, level, and proficiency in this browser on this device.
-                  Load selects a saved character; Delete removes a save after confirmation.
-                  Save creates a separate character for a new name, or replaces a matching name after confirmation.
-                  Clearing browser/site data can erase saves. Export downloads all saved characters as a backup file;
-                  Import restores that file and asks before replacing matching names. Saved sheet layouts are included;
-                  item and crafting settings are not saved.
-                </li>
-                <li>Fill in all the details for your crafting project.</li>
-                <li>
-                  <strong>Cost Modifier:</strong> Enter a GP adjustment per item: <code>5</code> adds 5 gp;
-                  <code> -25+10</code> subtracts 15 gp; <code>(50-25+10)</code> adds 35 gp.
-                  Arithmetic supports +, -, *, /, decimals, and parentheses. Multiplication and division happen before addition and subtraction.<br />
-                  Or enter one percentage: <code>-20%</code> discounts 20%; <code>50%</code> or <code>+50%</code> adds 50%.
-                  Do not mix percentages with arithmetic. The adjustment applies to each item before quantity and downtime reductions.
-                </li>
-                <li>Click "Generate Summary" to see the results and copy them to your clipboard.</li>
-                <li><strong>Sheet row:</strong> After generating, switch to Sheet row to see each column and its value.
-                  Copy one row for an existing sheet, or copy with headers to start a new one. Edit columns to rename,
-                  hide, or reorder them, or add blank columns. Cost, crafting fee, and total charged are optional
-                  numeric columns. Use Negative on a numeric column if your sheet needs its value subtracted.
-                  Create named sheet templates for different destinations. Save layout stores the selected template
-                  with the current saved character; Export layout downloads just the selected layout.
-                </li>
-                <li><strong>Client:</strong> Enter a name for the sheet row and an optional numeric Discord ID
-                  for a mention in the activity line. If both are blank, the sheet row shows None.
-                </li>
-                <li><strong>Discord roll link:</strong> Paste the message link from your Discord roll to make
-                  the Result clickable in the summary. It is hidden from the sheet unless you enable its column.
-                </li>
-                <li><strong>Natural roll:</strong> If the d20 itself was a 20 or 1, select it below the Crafting check.
-                  It shifts the result one degree up or down. Leave it blank for other rolls; Assurance has no die roll.
-                </li>
-                <li>
-                  <strong>Magic weapon or armor:</strong> Select an eligible base item, check the box, and choose an enhancement.
-                  The listed magic price includes the base item. Level and automatic DC update; base rarity is retained.
-                  The enhancement appears in the summary name. Uncheck to restore the original values.
-                  Precious material and magic presets are mutually exclusive; existing precious-material, enchanted, and named specific items cannot use magic presets.
-                  Custom items can use the weapon or armor category. These presets include only the listed fundamental runes.
-                </li>
-                <li>
-                  <strong>Precious material:</strong> Select a nonmagical weapon, armor, or shield, then check the box and choose a material and grade.
-                  Named specific items and enchanted items keep their listed prices and cannot be customized here.
-                  Cost, level, rarity, and automatic DC update. Uncheck to restore the original item.
-                  For a custom item, enter <code>weapon</code>, <code>armor</code>, or <code>shield</code> in Item Category.
-                  Bulk is the normal item Bulk; armor pricing includes its extra carried Bulk.
-                  Shield prices do not depend on Bulk. Known shields use their Foundry pricing group; custom shields use the ordinary shield table.
-                  The parenthetical amount is the minimum precious material included in the total, not an extra charge.
-                  Cost Mod and downtime change the total but not that minimum. There are no proficiency or build-legality checks.
-                </li>
+                <li>Enter or load your character, then choose an item.</li>
+                <li>Set the quantity, formula, dates, and roll or Assurance.</li>
+                <li>Generate Summary to preview and copy it. Choose Sheet row for spreadsheet output.</li>
               </ol>
+              <details className="instruction-section">
+                <summary>Characters and backups</summary>
+                <ul>
+                  <li>Save keeps name, level, proficiency, and sheet templates in this browser. A new name creates a save;
+                    a matching name overwrites after confirmation. Item and crafting fields are not saved.</li>
+                  <li>Load restores a character. Delete removes its save after confirmation.</li>
+                  <li>Export backs up all saved characters. Import restores them and asks before replacing matching names.
+                    Clearing browser data can erase saves, so keep an exported backup.</li>
+                </ul>
+              </details>
+              <details className="instruction-section">
+                <summary>Items, upgrades, and materials</summary>
+                <ul>
+                  <li><strong>Items:</strong> Search the database or enter a custom item. Consumables and ammunition allow batches.</li>
+                  <li><strong>Upgrade:</strong> Choose a recognized permanent target item, enable Upgrade, and select the version
+                    you own. Craft the price difference using the target's level and DC. Cost Mod applies afterward.</li>
+                  <li><strong>Magic weapon/armor:</strong> Choose an eligible base item and a fundamental-rune preset.
+                    Its price includes the base item; level and automatic DC update. These presets cannot be combined with precious material.</li>
+                  <li><strong>Precious material:</strong> Choose an eligible nonmagical weapon, armor, or shield, then material and grade.
+                    Price, level, rarity, and automatic DC update. Named magical items cannot be customized.</li>
+                  <li>For custom equipment, use Category <code>weapon</code>, <code>armor</code>, or <code>shield</code>.
+                    Enter normal Bulk; armor pricing accounts for carried Bulk. Shields use their pricing group, not Bulk.</li>
+                  <li>The material amount in parentheses is included in the price, not added to it. Cost Mod and downtime
+                    do not reduce that minimum. Uncheck customization to restore the base item. Build legality is left to your group.</li>
+                </ul>
+              </details>
+              <details className="instruction-section">
+                <summary>Costs, formulas, and downtime</summary>
+                <ul>
+                  <li><strong>Formula:</strong> Owning or buying one uses 1 setup day. Work extra day uses 2 setup days;
+                    buying also adds the formula price.</li>
+                  <li><strong>Cost Mod:</strong> Adjust each item's price before quantity and downtime.
+                    <code> 5</code> adds 5 gp; <code>-25+10</code> subtracts 15 gp;
+                    <code>(50-25+10)</code> adds 35 gp. Use +, -, *, /, decimals, and parentheses.
+                    Multiplication and division happen first.</li>
+                  <li>Alternatively, use one percentage: <code>-20%</code> discounts 20%; <code>50%</code> or
+                    <code>+50%</code> adds 50%. Percentages cannot be mixed with arithmetic.</li>
+                  <li><strong>Additional days:</strong> Successful work reduces the whole order's cost, up to the half-price cap.
+                    The live estimate shows current cost and total additional days needed for minimum cost.</li>
+                  <li><strong>+ Crafting fee:</strong> Leave Fee blank to charge the actual downtime savings, or enter your own
+                    amount, including zero. The fee applies once per order. Cost is your expense; Total charged adds the fee.
+                    Failed attempts have no automatic fee.</li>
+                  <li><strong>Failure:</strong> Only setup days are spent. Materials are recoverable; critical failure loses
+                    10% of the initial half-price supply. A purchased formula remains an expense.</li>
+                </ul>
+              </details>
+              <details className="instruction-section">
+                <summary>Rolls and clients</summary>
+                <ul>
+                  <li>Enter the total Crafting check or enable Assurance. Nat 20 or Nat 1 shifts the result one degree;
+                    leave Nat blank for other rolls. Assurance has no natural roll.</li>
+                  <li><strong>Client:</strong> Enter a name for the sheet and an optional Discord user ID for a mention in
+                    the summary. If both are blank, the sheet uses None.</li>
+                  <li><strong>Discord roll link:</strong> Paste a Discord message link to make Result clickable when the
+                    summary is pasted into Discord. Leave it blank to omit the link.</li>
+                </ul>
+              </details>
+              <details className="instruction-section">
+                <summary>Sheet output and templates</summary>
+                <ul>
+                  <li>Generate first, then choose Sheet row. Copy sheet row pastes values into an existing sheet;
+                    Copy with headers also includes column names. Paste into the first destination cell in Excel or Google Sheets.</li>
+                  <li><strong>Edit columns:</strong> Show/hide values, rename headers, and move columns with the arrows.
+                    Add blank column creates an empty cell; move it into place or remove it with ×.
+                    Reset restores the original column arrangement.</li>
+                  <li>Discord roll link, Cost (after reduction), Crafting fee, and Total charged start hidden.
+                    Money columns contain numbers without gp; fee and total charged are blank when the fee is off.
+                    Negative changes a selected numeric value's sign in the sheet only.</li>
+                  <li><strong>Templates:</strong> Each character can keep up to 10. New copies the current arrangement;
+                    enter a name and use Save to create and store it. Save also stores edits to the selected template.
+                    Save the character first. Switching warns before discarding unsaved edits; Default cannot be deleted.</li>
+                  <li>Character backups include all templates. Export layout downloads the current layout alone;
+                    Import layout previews one for you to review and Save. Older single-layout saves become Default.</li>
+                </ul>
+              </details>
             </div>
           )}
         </div>
