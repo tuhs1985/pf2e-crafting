@@ -29,8 +29,8 @@ h1 {
 /* --- Grouped Form Rows --- */
 .form-row {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 0.18rem;
+  gap: .5rem;
+  margin-bottom: 0;
   align-items: flex-end; /* Align inputs at the bottom of the row */
 }
 .form-row > label {
@@ -38,6 +38,7 @@ h1 {
   min-width: 0;
 }
 .client-row { gap: .5rem; }
+.field-heading { white-space: nowrap; }
 @media (max-width: 325px) {
   .form-row {
     flex-direction: column;
@@ -123,9 +124,11 @@ form.form-card {
 }
 
 .form-section {
+  display: grid;
+  gap: 4px;
   min-width: 0;
   margin: 0;
-  padding: .6rem;
+  padding: .3rem .6rem .6rem;
   border: 1px solid #555;
   border-radius: .85rem;
 }
@@ -135,7 +138,7 @@ form.form-card {
 
 .form-card label {
   display: block;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0;
 }
 
 .form-card input[type="text"],
@@ -153,6 +156,16 @@ form.form-card {
   box-sizing: border-box;
 }
 
+.form-card input[type="text"],
+.form-card input[type="number"],
+.form-card input[type="date"],
+.form-card select {
+  display: block;
+  height: 38px;
+  min-width: 0;
+  line-height: 1.25;
+}
+
 .form-card textarea {
   min-height: 60px;
   resize: vertical;
@@ -165,8 +178,8 @@ form.form-card {
 
 .form-card input[type="checkbox"] {
   margin-right: 0.5rem;
-  width: 1.25em;
-  height: 1.25em;
+  width: 1em;
+  height: 1em;
 }
 
 .form-card button[type="submit"] {
@@ -207,6 +220,21 @@ form.form-card {
   border: 1px solid #444;
   font-size: 1rem;
   overflow-x: auto;
+}
+
+.app-container label:has(> input[type="checkbox"]) {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.25;
+}
+.app-container label > input[type="checkbox"] {
+  font-size: inherit;
+  margin-left: 0;
+  margin-right: 4px;
+  transform: translateY(-1px);
+  margin-top: 0;
+  margin-bottom: 0;
+  flex-shrink: 0;
 }
 .output-controls { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
 .output-controls button { background: #333; color: #eee; border: 1px solid #666; border-radius: .4rem; padding: .4rem .6rem; cursor: pointer; }
@@ -373,7 +401,14 @@ footer a:hover {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0 1rem;
+  gap: 4px .5rem;
+}
+
+.item-options-row,
+.upgrade-heading,
+.form-card .formula-checkbox {
+  min-height: 28px;
+  align-items: center;
 }
 
 .character-saves { min-width: 0; position: relative; }
@@ -401,21 +436,30 @@ footer a:hover {
 body { box-sizing: border-box; }
 
 .minimum-cost-estimate { margin: 0 0 0.35rem; font-size: 0.8rem; color: #ccc; overflow-wrap: anywhere; }
-.upgrade-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 .5rem; }
+.upgrade-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 0 .5rem; }
 .form-card .upgrade-heading label { margin-bottom: 0; white-space: nowrap; }
 .upgrade-price { color: #ccc; font-size: .72rem; white-space: nowrap; }
-.crafting-options-row { display: flex; align-items: center; gap: .5rem 1rem; flex-wrap: wrap; }
-.form-card .crafting-options-row label { margin-bottom: 0; white-space: nowrap; }
-.form-card .crafting-options-row .natural-roll-control { display: inline-flex; align-items: center; gap: .3rem; margin-left: auto; }
-.form-card .natural-roll-control select { width: 4rem; padding: .25rem; }
+.crafting-columns,
+.crafting-options-row { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)); gap: .5rem; }
+.crafting-options-row { align-items: center; }
+.form-card .crafting-options-row label { display: inline-flex; align-items: center; margin-bottom: 0; white-space: nowrap; line-height: 1.25; }
+.form-card .crafting-options-row input[type="checkbox"] { margin: 0 4px 0 0; flex-shrink: 0; }
+.form-card .crafting-options-row .natural-roll-control { display: inline-flex; align-items: center; gap: .3rem; min-width: 0; }
+.form-card .natural-roll-control select { flex: 1; width: 0; height: 28px; padding: .25rem; }
 @media (max-width: 480px) {
-  .crafting-options-row { column-gap: .35rem; }
+  .form-card input[type="date"]::-webkit-calendar-picker-indicator { display: none; }
   .form-card .crafting-options-row .natural-roll-control { gap: .2rem; }
-  .form-card .natural-roll-control select { width: 3rem; padding: .15rem; }
+  .form-card .natural-roll-control select { padding: .15rem; }
 }
 @media (max-width: 380px) {
-  .crafting-options-row { gap: .25rem; font-size: .8rem; }
-  .form-card .crafting-options-row input[type="checkbox"] { width: 1em; height: 1em; margin-right: .2rem; }
-  .form-card .crafting-options-row .natural-roll-control { margin-left: auto; gap: .2rem; }
-  .form-card .natural-roll-control select { width: 3rem; padding: .15rem; }
+  .app-container label:has(> input[type="checkbox"]) { font-size: .8rem; }
+  .app-container input[type="checkbox"] { width: 1em; height: 1em; font-size: inherit; }
+  .crafting-options-row { row-gap: .25rem; font-size: .8rem; }
+  .form-card .crafting-options-row input[type="checkbox"] { width: 1em; height: 1em; }
+  .form-card .crafting-options-row .natural-roll-control { gap: .2rem; }
+  .form-card .natural-roll-control select { padding: .15rem; }
+}
+@media (max-width: 325px) {
+  .crafting-columns,
+  .crafting-options-row { grid-template-columns: 1fr; }
 }

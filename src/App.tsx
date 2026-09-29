@@ -870,7 +870,7 @@ export default function App() {
                   setSelectedGrade(initial.grade);
                 }
               }} />
-            Precious material{" "}
+            Precious Mats.{" "}
             <PopoverHelp>
               Choose a material and grade to update cost, level, rarity, and DC.
             </PopoverHelp>
@@ -983,10 +983,11 @@ export default function App() {
           {/* Item Cost (per item), Cost Modifier, Qty */}
           <div className="form-row">
             <label>
-              {ammunitionPackSize > 1 ? `Cost / ${ammunitionPackSize}` : "Cost"} {" "}
+              <span className="field-heading">{ammunitionPackSize > 1 ? `Cost / ${ammunitionPackSize}` : "Cost"} {" "}
 			  <PopoverHelp>
 				{ammunitionPackSize > 1 ? "Base cost in gold pieces, per pack." : "Base cost in gold pieces, per item."}
 			  </PopoverHelp>
+              </span>
               <input
                 type="number"
                 min={0}
@@ -998,10 +999,11 @@ export default function App() {
               />
             </label>
 			<label>
-			  Cost Mod{" "}
+			  <span className="field-heading">Cost Mod{" "}
 			  <PopoverHelp>
 				Adjust each {ammunitionPackSize > 1 ? "pack's" : "item's"} cost. Try -25+10 or -20%. Details are in Instructions.
 			  </PopoverHelp>
+              </span>
               <input
                 type="text"
                 value={costModifier}
@@ -1019,13 +1021,12 @@ export default function App() {
                 onChange={e =>
                   setQuantity(Math.max(1, Math.min(Number(e.target.value), maxBatch)))
                 }
-                style={{ width: "3.5em" }}
               />
             </label>
           </div>
 
           {/* Formula Checkbox and Options */}
-          <label>
+          <label className="formula-checkbox">
             <input
               type="checkbox"
               checked={hasFormula}
@@ -1075,7 +1076,7 @@ export default function App() {
             </label>
           </div>
           {/* Start Date, Setup Days, Add'l Downtime Days on same line */}
-          <div className="form-row">
+          <div className="form-row crafting-columns">
             <label>
               Start Date
               <input
@@ -1085,7 +1086,7 @@ export default function App() {
               />
             </label>
             <label>
-              Setup Days
+              Setup
               <input
                 type="number"
                 value={craftingInput.setupDays}
@@ -1105,7 +1106,7 @@ export default function App() {
           </div>
 
           {/* Crafting check values */}
-          <div className="form-row">
+          <div className="form-row crafting-columns">
             <label>
               Crafting DC
               <input
@@ -1150,7 +1151,7 @@ export default function App() {
             </label>
             <label><input type="checkbox" checked={addCraftingFee}
               onChange={e => { setAddCraftingFee(e.target.checked); if (!e.target.checked) setFeeOverride(""); }} />
-              Crafting fee
+              Craft fee
             </label>
             <label className="natural-roll-control">Nat
               <select aria-label="Natural d20 roll" value={naturalRoll} disabled={useAssurance}
