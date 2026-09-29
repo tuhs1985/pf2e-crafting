@@ -132,7 +132,7 @@ form.form-card {
   border: 1px solid #555;
   border-radius: .85rem;
 }
-.form-section legend { padding: 0 .35rem; color: #eee; }
+.form-section legend { padding: 0 .35rem; font-size: .9rem; color: #ccc; }
 
 .form-section + .form-section { margin-top: .45rem; }
 
