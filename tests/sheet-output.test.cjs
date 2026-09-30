@@ -44,6 +44,25 @@ test('ammunition output counts pieces while pricing counts packs', () => {
   assert.equal(crafting.formatItemQuantity({ ...input, upgradeFrom: undefined }), '1 x Striking (Major)');
 });
 
+test('rune transfers price the transfer and add a runestone when chosen', () => {
+  const rune = { ...input, itemName: 'Striking', itemCost: 65, upgradeFrom: undefined,
+    runeTransfer: 'item', runestoneCost: 3, additionalDays: 0 };
+  assert.equal(crafting.calculateOrderCosts(rune, 'Success').finalCost, 6.5);
+  assert.match(crafting.formatSummary(rune, 'Success', ''), /Transfer 1 x Striking onto an item/);
+  for (const target of ['weapon', 'armor', 'shield']) {
+    const targeted = { ...rune, runeTransferTarget: target };
+    assert.match(crafting.formatSummary(targeted, 'Success', ''),
+      new RegExp(`Transfer 1 x Striking onto ${target}`));
+    assert.equal(formatSheetRow(targeted, 'Success', '').split('\t')[3],
+      `1 x Striking onto ${target}`);
+  }
+  const stone = { ...rune, runeTransfer: 'runestone' };
+  assert.equal(crafting.calculateOrderCosts(stone, 'Success').finalCost, 9.5);
+  assert.match(crafting.formatSummary(stone, 'Success', ''), /includes 3 gp for runestone/);
+  assert.deepEqual(formatSheetRow(stone, 'Success', '').split('\t').slice(0, 4),
+    ['Transfer', '', 'Kosta', '1 x Striking to runestone']);
+});
+
 test('sheet row follows pictured columns without a header and uses completion date', () => {
   assert.equal(SHEET_COLUMNS.length, 15);
   assert.deepEqual(formatSheetRow(input, 'Critical Success', '2026-09-30').split('\t'), [

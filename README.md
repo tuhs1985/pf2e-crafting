@@ -30,6 +30,8 @@ Choose a recognized permanent target item, enable **Upgrade**, and select the ve
 
 The importer supplies the published Handwraps of Mighty Blows rune combinations that are not separate Foundry equipment entries.
 
+Imported runes offer mutually exclusive **Transfer to item** and **Transfer to runestone** choices. The transfer costs 10% of the rune price; a new runestone adds its imported 3 gp price. Cost Mod and downtime adjust the transfer cost, while the runestone purchase remains separate.
+
 ### Magic weapons and armor
 
 Eligible base weapons and armor offer fundamental-rune presets. The listed price includes the base item, and level and automatic DC update. These presets cannot be paired with precious-material customization. Named magical equipment keeps its listed price.

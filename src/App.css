@@ -403,6 +403,12 @@ footer a:hover {
   align-items: center;
   gap: 4px .5rem;
 }
+.rune-options-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: .5rem; min-height: 28px; }
+.rune-options-row label { white-space: nowrap; }
+.form-card .rune-transfer-select { display: flex; align-items: center; gap: .4rem; min-width: 0; }
+.form-card .rune-options-row select { height: 28px; padding: .15rem .4rem; }
+.form-card .rune-transfer-select select { flex: 1; min-width: 0; }
+.rune-options-row .upgrade-price { display: block; }
 
 .item-options-row,
 .upgrade-heading,
@@ -452,6 +458,10 @@ body { box-sizing: border-box; }
   .form-card .natural-roll-control select { padding: .15rem; }
 }
 @media (max-width: 380px) {
+  .rune-options-row { font-size: .8rem; }
+  .form-card .rune-transfer-select select { font-size: inherit; }
+  .form-card .natural-roll-control select,
+  .form-card .natural-roll-control option { font-size: inherit; }
   .app-container label:has(> input[type="checkbox"]) { font-size: .8rem; }
   .app-container input[type="checkbox"] { width: 1em; height: 1em; font-size: inherit; }
   .crafting-options-row { row-gap: .25rem; font-size: .8rem; }

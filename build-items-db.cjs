@@ -44,7 +44,16 @@ function materialMetadata(item) {
     throw new Error(`Invalid Bulk or price quantity: ${item.name}`);
   }
   return [item.type ?? '', carriedBulk, sys.material?.type ?? null,
-    sys.material?.grade ?? null, pricePer, sys.baseItem ?? null, canCustomizeMaterial(item) ? 1 : 0];
+    sys.material?.grade ?? null, pricePer, sys.baseItem ?? null, canCustomizeMaterial(item) ? 1 : 0,
+    runeTarget(sys.usage?.value)];
+}
+
+function runeTarget(usage) {
+  if (typeof usage !== 'string' || !usage.startsWith('etched-onto-')) return 0;
+  if (usage.includes('shield')) return 3;
+  if (usage.includes('armor')) return 2;
+  if (usage.includes('weapon') || usage.includes('dagger')) return 1;
+  return 4;
 }
 
 function getJsonFiles(dir) {
@@ -150,14 +159,14 @@ function buildDb(inputDir = EQUIP_DIR, outputFile = OUT_FILE) {
 
   // Ultra-compact output with single-letter keys
   const output = {
-    v: 4,
+    v: 5,
     r: rarities,      // rarity lookup
     c: categories,    // category lookup
     b: bulks,         // bulk lookup
     p: costs,         // price/cost lookup
     n: namePool,      // item names
     i: compressed,    // item data arrays
-    // Parallel metadata: [itemType, carriedBulk, material, grade, pricePer, baseItem, canCustomizeMaterial]
+    // Parallel metadata: [itemType, carriedBulk, material, grade, pricePer, baseItem, canCustomizeMaterial, runeTargetCode]
     m: items.map(item => item.metadata),
     // Parallel list of indexes of lower-level, lower-price versions.
     u: upgradeLinks(items),

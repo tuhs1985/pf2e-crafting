@@ -28,7 +28,7 @@ import { materialRows, materialKind, materialLabel, gradeLabels, findMaterial,
 // Compressed database format
 type CompressedDb = {
   v?: number;
-  m?: [string, number, string | null, string | null, number, string | null, number?][];
+  m?: [string, number, string | null, string | null, number, string | null, number?, number?][];
   u?: number[][];
   r: string[];      // rarities lookup
   c: string[];      // categories lookup
@@ -54,6 +54,8 @@ type ItemDbEntry = {
   pricePer: number;
   baseItem: string | null;
   canCustomizeMaterial: boolean;
+  isRune: boolean;
+  runeTarget: string | null;
   upgradeFrom: number[];
 };
 
@@ -74,6 +76,8 @@ const items: ItemDbEntry[] = db.i.map((item, idx) => ({
   pricePer: db.m?.[idx]?.[4] ?? 1,
   baseItem: db.m?.[idx]?.[5] ?? null,
   canCustomizeMaterial: db.m?.[idx]?.[6] === 1,
+  isRune: !!db.m?.[idx]?.[7],
+  runeTarget: [null, "weapon", "armor", "shield", "item"][db.m?.[idx]?.[7] ?? 0] ?? null,
   upgradeFrom: db.u?.[idx] ?? [],
 }));
 
@@ -176,6 +180,7 @@ export default function App() {
   const [useMagic, setUseMagic] = useState(false);
   const [magicIndex, setMagicIndex] = useState(0);
   const [useUpgrade, setUseUpgrade] = useState(false);
+  const [runeTransfer, setRuneTransfer] = useState<"" | "item" | "runestone">("");
   const [upgradeChoice, setUpgradeChoice] = useState(0);
   const [selectedMaterial, setSelectedMaterial] = useState("silver");
   const [selectedGrade, setSelectedGrade] = useState("low");
@@ -370,7 +375,7 @@ export default function App() {
     : !materialEnabled && matchedItem && !matchedItem.consumable
       ? matchedItem.upgradeFrom.map(index => items[index]) : [])
     .sort((a, b) => b.cost - a.cost);
-  const upgradeEnabled = useUpgrade && upgradeOptions.length > 0;
+  const upgradeEnabled = useUpgrade && runeTransfer === "" && upgradeOptions.length > 0;
   const selectedPrior = upgradeOptions[upgradeChoice] ?? upgradeOptions[0];
   const targetCost = Number(effectiveCost);
   const upgradeCost = upgradeEnabled && selectedPrior && Number.isFinite(targetCost)
@@ -400,6 +405,9 @@ export default function App() {
     itemCategory,
     itemBulk,
     itemCost: upgradeCost ?? Number(effectiveCost),
+    runeTransfer: matchedItem?.isRune ? runeTransfer || undefined : undefined,
+    runeTransferTarget: matchedItem?.runeTarget ?? undefined,
+    runestoneCost: items.find(item => item.name === "Runestone")?.cost ?? 3,
     upgradeFrom: upgradeEnabled ? selectedPrior.name : undefined,
     quantity,
     ammunitionPackSize,
@@ -651,6 +659,8 @@ export default function App() {
                   <li><strong>Items:</strong> Search the database or enter a custom item. Consumables and ammunition allow batches.</li>
                   <li><strong>Upgrade:</strong> Choose a recognized permanent target item, enable Upgrade, and select the version
                     you own. Craft the price difference using the target's level and DC. Cost Mod applies afterward.</li>
+                  <li><strong>Transfer rune:</strong> Choose a rune and transfer it to an item or runestone. The transfer costs
+                    10% of the rune price; a new runestone adds its listed 3 gp price.</li>
                   <li><strong>Magic weapon/armor:</strong> Choose an eligible base item and a fundamental-rune preset.
                     Its price includes the base item; level and automatic DC update. These presets cannot be combined with precious material.</li>
                   <li><strong>Precious material:</strong> Choose an eligible nonmagical weapon, armor, or shield, then material and grade.
@@ -844,6 +854,27 @@ export default function App() {
 			</label>
           </div>
 
+          {(upgradeOptions.length > 0 || matchedItem?.isRune) && <div className="rune-options-row">
+            <div>
+              {upgradeOptions.length > 0 && <label>
+                <input type="checkbox" checked={upgradeEnabled}
+                  onChange={e => { setUseUpgrade(e.target.checked); setRuneTransfer(""); setUpgradeChoice(0); }} />
+                Upgrade <PopoverHelp>Choose the version you own; craft the price difference.</PopoverHelp>
+              </label>}
+              {upgradeEnabled && upgradeCost !== null &&
+                <span className="upgrade-price">Upgrade crafting price: {upgradeCost.toLocaleString()} gp</span>}
+            </div>
+            {matchedItem?.isRune && <label className="rune-transfer-select">Transfer
+              <select aria-label="Rune transfer destination" value={upgradeEnabled ? "" : runeTransfer}
+                disabled={upgradeEnabled}
+                onChange={e => { setRuneTransfer(e.target.value as "" | "item" | "runestone"); setUseUpgrade(false); }}>
+                <option value="">No transfer</option>
+                <option value="item">To {matchedItem.runeTarget}</option>
+                <option value="runestone">To runestone</option>
+              </select>
+            </label>}
+          </div>}
+
           {(magicKind || showMaterialOption) && <div className="item-options-row">
           {magicKind && <label>
             <input type="checkbox" checked={magicEnabled}
@@ -875,18 +906,6 @@ export default function App() {
               Choose a material and grade to update cost, level, rarity, and DC.
             </PopoverHelp>
           </label>}
-          </div>}
-          {upgradeOptions.length > 0 && <div className="upgrade-heading">
-            <label>
-              <input type="checkbox" checked={upgradeEnabled}
-                onChange={e => { setUseUpgrade(e.target.checked); setUpgradeChoice(0); }} />
-              Upgrade{" "}
-              <PopoverHelp>
-                Choose your current version; craft the price difference.
-              </PopoverHelp>
-            </label>
-            {upgradeEnabled && upgradeCost !== null &&
-              <span className="upgrade-price">Upgrade crafting price: {upgradeCost.toLocaleString()} gp</span>}
           </div>}
           {upgradeEnabled && <div className="form-row">
             <select aria-label="Version to upgrade from" value={upgradeChoice}

@@ -18,19 +18,21 @@ export function sheetCells(input: CraftingInput, result: ResultType, endDate: st
     input.itemRarity.toLowerCase() === "common" ? "" : input.itemRarity,
     input.dcAdjustment ? `Custom ${input.dcAdjustment > 0 ? "+" : ""}${input.dcAdjustment}` : "",
   ].filter(Boolean);
-  const description = input.upgradeFrom
+  const description = input.runeTransfer
+    ? `${input.quantity} x ${input.itemName} ${input.runeTransfer === "runestone" ? "to runestone" : `onto ${input.runeTransferTarget ?? "item"}`}`
+    : input.upgradeFrom
     ? `${input.quantity} x ${input.itemName} (from ${input.upgradeFrom})`
     : formatItemQuantity(input);
   const costs = calculateOrderCosts(input, result);
   const money = (value: number) => Number(value.toFixed(8));
   const cost = failed
-    ? money((costs.formulaCost + (result === "Critical Failure" ? costs.baseCostCopper / 20 : 0)) / 100)
+    ? money((costs.formulaCost + costs.runestoneCostCopper + (result === "Critical Failure" ? costs.baseCostCopper / 20 : 0)) / 100)
     : costs.finalCost;
   const fee = input.craftingFee
     ? input.craftingFee.overrideGp ?? money(costs.totalReduction / 100) : null;
 
   return [
-    input.upgradeFrom ? "Upgrade" : "Crafting",
+    input.runeTransfer ? "Transfer" : input.upgradeFrom ? "Upgrade" : "Crafting",
     date,
     input.character,
     description,

@@ -14,6 +14,9 @@ export interface CraftingInput {
   itemCategory: string;
   itemBulk: string;
   itemCost: number;
+  runeTransfer?: "item" | "runestone";
+  runeTransferTarget?: string;
+  runestoneCost?: number;
   quantity: number;
   ammunitionPackSize?: number;
   hasFormula: boolean;
@@ -328,7 +331,7 @@ export function calculateOrderCosts(input: CraftingInput, resultType: string) {
   // Use itemCost with percent/flat costModifier, min 0 per item
   const costPer = Math.max(
     0,
-    applyCostModifier(input.itemCost ?? 0, input.costModifier)
+    applyCostModifier(input.runeTransfer ? normalizeMoney((input.itemCost ?? 0) * 0.1) : input.itemCost ?? 0, input.costModifier)
   );
   const baseCost = normalizeMoney(costPer * input.quantity);
   const baseCostCopper = normalizeMoney(baseCost * 100);
@@ -363,22 +366,24 @@ export function calculateOrderCosts(input: CraftingInput, resultType: string) {
   if (!input.hasFormula && input.formulaOption === "buy") {
     formulaCost = getFormulaCost(input.itemLevel) * 100; // formula cost in copper
   }
-  const totalFinalCopper = finalCostCopper + formulaCost;
+  const runestoneCostCopper = input.runeTransfer === "runestone"
+    ? normalizeMoney((input.runestoneCost ?? 3) * input.quantity * 100) : 0;
+  const totalFinalCopper = finalCostCopper + formulaCost + runestoneCostCopper;
   const finalCost = normalizeMoney(totalFinalCopper / 100);
 
-  return { baseCostCopper, minCostCopper, totalReduction, formulaCost, finalCost };
+  return { baseCostCopper, minCostCopper, totalReduction, formulaCost, runestoneCostCopper, finalCost };
 }
 
 // Total additional days from the end of setup, not days remaining after the input.
 export function minimumCostEstimate(input: CraftingInput, resultType: string) {
   if (resultType !== "Success" && resultType !== "Critical Success") return null;
-  const { baseCostCopper, minCostCopper, formulaCost } = calculateOrderCosts(input, resultType);
+  const { baseCostCopper, minCostCopper, formulaCost, runestoneCostCopper } = calculateOrderCosts(input, resultType);
   const daily = getEarnIncomeReduction(input.characterLevel, input.proficiency, resultType);
   if (![baseCostCopper, minCostCopper, formulaCost, daily].every(Number.isFinite) || daily < 0) return null;
   if (minCostCopper > 0 && daily === 0) return null;
   return {
     days: minCostCopper === 0 ? 0 : Math.ceil(minCostCopper / daily),
-    cost: normalizeMoney((baseCostCopper - minCostCopper + formulaCost) / 100),
+    cost: normalizeMoney((baseCostCopper - minCostCopper + formulaCost + runestoneCostCopper) / 100),
   };
 }
 
@@ -414,14 +419,16 @@ export function formatSummary(
 ): string {
   const failed = resultType === "Failure" || resultType === "Critical Failure";
   const material = input.preciousMaterial;
-  const activity = input.upgradeFrom
+  const activity = input.runeTransfer
+    ? `Transfer ${input.quantity} x ${input.itemName} ${input.runeTransfer === "runestone" ? "to a runestone" : `onto ${input.runeTransferTarget ?? "an item"}`}`
+    : input.upgradeFrom
     ? `Upgrade ${input.quantity} x (${input.upgradeFrom} → ${input.itemName})`
     : `Crafting ${formatItemQuantity(input)}` +
       (material ? ` (${material.name}, ${material.grade})` : "");
   const hasClient = !!(input.clientName?.trim() || input.clientDiscordId?.trim());
   const activityWithClient = hasClient
     ? `${activity} for ${formatClientForActivity(input.clientName, input.clientDiscordId)}` : activity;
-  const { baseCostCopper, totalReduction, formulaCost, finalCost } = calculateOrderCosts(input, resultType);
+  const { baseCostCopper, totalReduction, formulaCost, runestoneCostCopper, finalCost } = calculateOrderCosts(input, resultType);
   // Only show reduction if any
   const reductionStr =
     totalReduction > 0
@@ -448,6 +455,7 @@ export function formatSummary(
   if (formulaCost > 0) {
     costLine = `**Cost:** ${finalCost} gp (includes +${formulaCost/100} gp for formula)${reductionStr}`;
   }
+  if (runestoneCostCopper > 0) costLine += ` (includes ${normalizeMoney(runestoneCostCopper / 100)} gp for runestone)`;
 
   if (failed) {
     // Assume the standard upfront materials: half the adjusted batch price.
@@ -456,11 +464,12 @@ export function formatSummary(
     const lostCopper = resultType === "Critical Failure" ? suppliedCopper / 10 : 0;
     const recoverableCopper = suppliedCopper - lostCopper;
     const gold = (copper: number) => normalizeMoney(copper / 100);
-    costLine = `**Cost:** ${gold(lostCopper + formulaCost)} gp`;
+    costLine = `**Cost:** ${gold(lostCopper + formulaCost + runestoneCostCopper)} gp`;
     if (formulaCost > 0) {
       costLine += ` (includes +${gold(formulaCost)} gp for formula; formula retained)`;
     }
     costLine += `\n**Materials:** ${gold(lostCopper)} gp lost; ${gold(recoverableCopper)} gp recoverable`;
+    if (runestoneCostCopper > 0) costLine += `\n**Runestone:** ${gold(runestoneCostCopper)} gp purchased`;
   }
 
   if (material) {
@@ -475,7 +484,7 @@ export function formatSummary(
     const fee = input.craftingFee.overrideGp ?? normalizeMoney(totalReduction / 100);
     if (!Number.isFinite(fee) || fee < 0) throw new Error("Enter a nonnegative crafting fee in gp.");
     const spent = failed
-      ? normalizeMoney((formulaCost + (resultType === "Critical Failure" ? baseCostCopper / 20 : 0)) / 100)
+      ? normalizeMoney((formulaCost + runestoneCostCopper + (resultType === "Critical Failure" ? baseCostCopper / 20 : 0)) / 100)
       : finalCost;
     costLine += `\n**Crafting fee:** ${normalizeMoney(fee)} gp`;
     costLine += `\n**Total charged:** ${normalizeMoney(spent + fee)} gp`;
