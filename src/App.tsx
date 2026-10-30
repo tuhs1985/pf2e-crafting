@@ -22,6 +22,8 @@ import { defaultSheetLayout, formatLayoutRow, formatLayoutWithHeaders, parseShee
 import { storageKey, profileKey, parseProfiles, serializeProfiles, validateSheetTemplates,
   type SheetTemplate } from "./utils/characterProfiles";
 import "./App.css";
+import { BATCH_STORAGE_KEY, parseBatch, orderEndDate, orderConflicts, replaceOrder,
+  batchSummary, batchSheet, type BatchOrder, type OrderForm } from "./utils/batchOrders";
 import { materialRows, materialKind, materialLabel, gradeLabels, findMaterial,
   parseCarriedBulk, applyMaterial } from "./utils/materials";
 
@@ -164,6 +166,19 @@ function getTodayDateString(): string {
 }
 
 export default function App() {
+  const [initialBatch] = useState(() => {
+    try {
+      const saved = localStorage.getItem(BATCH_STORAGE_KEY);
+      return { session: saved ? parseBatch(saved) : null, error: "" };
+    } catch { return { session: null, error: "The saved batch could not be loaded. Start a new batch to replace it." }; }
+  });
+  const [batchActive, setBatchActive] = useState(!!initialBatch.session);
+  const [batchOrders, setBatchOrders] = useState<BatchOrder[]>(initialBatch.session?.orders ?? []);
+  const [editingBatchId, setEditingBatchId] = useState<string | null>(initialBatch.session?.editingId ?? null);
+  const [pendingBatchOrder, setPendingBatchOrder] = useState<BatchOrder | null>(null);
+  const [batchNotice, setBatchNotice] = useState(initialBatch.error);
+  const [batchHydrated, setBatchHydrated] = useState(false);
+  const batchDraftBeforeEdit = useRef<OrderForm | null>(null);
   const [addCraftingFee, setAddCraftingFee] = useState(false);
   const [feeOverride, setFeeOverride] = useState("");
   const [character, setCharacter] = useState("");
@@ -254,6 +269,53 @@ export default function App() {
 
   // PWA standalone detection
   const isStandalone = useIsStandalone();
+
+  function restoreOrderForm(form: OrderForm) {
+    setCharacter(form.character); setCharacterLevel(form.characterLevel); setProficiency(form.proficiency);
+    setClientName(form.clientName); setClientDiscordId(form.clientDiscordId);
+    setItemName(form.itemName); setItemLevel(form.itemLevel); setItemRarity(form.itemRarity);
+    setItemCategory(form.itemCategory); setItemBulk(form.itemBulk); setItemCost(form.itemCost);
+    setCostModifier(form.costModifier); setUseMaterial(form.useMaterial); setUseMagic(form.useMagic);
+    setMagicIndex(form.magicIndex); setUseUpgrade(form.useUpgrade); setUpgradeChoice(form.upgradeChoice);
+    setRuneTransfer(form.runeTransfer); setSelectedMaterial(form.selectedMaterial); setSelectedGrade(form.selectedGrade);
+    setQuantity(form.quantity); setHasFormula(form.hasFormula); setFormulaOption(form.formulaOption);
+    setStartDate(form.startDate); setAdditionalDays(form.additionalDays); setUseAssurance(form.useAssurance);
+    setNaturalRoll(form.naturalRoll); setCraftingDC(form.craftingDC); setDcAdjustment(form.dcAdjustment);
+    setCraftingRoll(form.craftingRoll); setDiscordRollLink(form.discordRollLink);
+    setAddCraftingFee(form.addCraftingFee); setFeeOverride(form.feeOverride);
+    setShowSuggestions(false); setShowRaritySuggestions(false); setPendingBatchOrder(null);
+  }
+
+  useEffect(() => {
+    if (initialBatch.session) {
+      restoreOrderForm(initialBatch.session.draft);
+      try {
+        const saved = localStorage.getItem(storageKey);
+        const profile = saved ? parseProfiles(saved).find(p => profileKey(p.name) === profileKey(initialBatch.session!.draft.character)) : undefined;
+        if (profile) {
+          const templates = profile.sheetTemplates ?? [{ name: "Default", layout: profile.sheetLayout ?? defaultSheetLayout() }];
+          const active = profile.activeSheetTemplate ?? "Default";
+          setSheetTemplates(templates); setActiveSheetTemplate(active);
+          setSheetLayout(templates.find(template => template.name === active)!.layout);
+        }
+      } catch { /* The batch remains usable with the default sheet layout. */ }
+    }
+    setBatchHydrated(true);
+    // Only hydrate once; later edits are owned by the form.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function resetOrderFields() {
+    setClientName(""); setClientDiscordId(""); setItemName(""); setItemLevel("");
+    setItemRarity(""); setItemCategory(""); setItemBulk(""); setItemCost("");
+    setCostModifier(""); setUseMaterial(false); setUseMagic(false); setMagicIndex(0);
+    setUseUpgrade(false); setUpgradeChoice(0); setRuneTransfer("");
+    setSelectedMaterial("silver"); setSelectedGrade("low"); setQuantity(1);
+    setHasFormula(true); setFormulaOption(""); setStartDate(""); setAdditionalDays("");
+    setUseAssurance(false); setNaturalRoll(""); setCraftingDC(""); setDcAdjustment("");
+    setCraftingRoll(""); setDiscordRollLink(""); setAddCraftingFee(false); setFeeOverride("");
+    setShowSuggestions(false); setShowRaritySuggestions(false); setPendingBatchOrder(null);
+  }
 
   // Handle input for autocomplete/search
   function handleItemNameChange(val: string) {
@@ -393,6 +455,22 @@ export default function App() {
   // Calculate setup days inline: 1 day default, +1 if no formula and working extra day
   const setupDays = calculateSetupDays({ hasFormula, formulaOption });
 
+  const orderForm: OrderForm = {
+    character, characterLevel, proficiency, clientName, clientDiscordId, itemName, itemLevel,
+    itemRarity, itemCategory, itemBulk, itemCost, costModifier, useMaterial, useMagic, magicIndex,
+    useUpgrade, upgradeChoice, runeTransfer, selectedMaterial, selectedGrade, quantity,
+    hasFormula, formulaOption, startDate, additionalDays, useAssurance, naturalRoll,
+    craftingDC, dcAdjustment, craftingRoll, discordRollLink, addCraftingFee, feeOverride,
+  };
+  const batchDraftJson = JSON.stringify(orderForm);
+  useEffect(() => {
+    if (!batchHydrated || !batchActive) return;
+    try {
+      localStorage.setItem(BATCH_STORAGE_KEY, JSON.stringify({ version: 1, orders: batchOrders,
+        draft: JSON.parse(batchDraftJson), editingId: editingBatchId }));
+    } catch { setBatchNotice("Browser storage is unavailable or full. Keep this tab open until you copy your batch."); }
+  }, [batchActive, batchOrders, editingBatchId, batchHydrated, batchDraftJson]);
+
   // Setup days (auto, not user-editable)
   const craftingInput: CraftingInput = {
     character,
@@ -453,6 +531,41 @@ export default function App() {
     ? "Enter a Discord message link." : "";
 
   // Calculate result and summary
+  function acceptBatchOrder(order: BatchOrder, allowOverlap = false) {
+    if (!allowOverlap && orderConflicts(order, batchOrders).length > 0) {
+      setPendingBatchOrder(order);
+      return;
+    }
+    setBatchOrders(current => replaceOrder(current, { ...order, overlapAllowed: allowOverlap }));
+    setEditingBatchId(null); batchDraftBeforeEdit.current = null;
+    resetOrderFields(); setBatchNotice("");
+  }
+  function editBatchOrder(order: BatchOrder) {
+    if (editingBatchId && editingBatchId !== order.id && !window.confirm("Discard the current unsaved order edits?")) return;
+    if (!editingBatchId) batchDraftBeforeEdit.current = orderForm;
+    restoreOrderForm(order.form); setEditingBatchId(order.id); setBatchNotice("");
+    document.getElementById("item-name")?.focus();
+  }
+  function cancelBatchEdit() {
+    if (batchDraftBeforeEdit.current) restoreOrderForm(batchDraftBeforeEdit.current);
+    else resetOrderFields();
+    setEditingBatchId(null); batchDraftBeforeEdit.current = null; setPendingBatchOrder(null);
+  }
+  function clearBatch() {
+    if (!window.confirm("Clear this batch and its saved draft?")) return;
+    try { localStorage.removeItem(BATCH_STORAGE_KEY); setBatchNotice(""); }
+    catch { setBatchNotice("The batch was cleared from this tab, but browser storage could not be cleared."); }
+    setBatchActive(false); setBatchOrders([]); setEditingBatchId(null);
+    setPendingBatchOrder(null); batchDraftBeforeEdit.current = null;
+    resetOrderFields(); setOutput(""); setSheetRow("");
+  }
+  async function copyBatch(kind: "summary" | "sheet", headers = false) {
+    try {
+      await navigator.clipboard.writeText(kind === "summary" ? batchSummary(batchOrders) : batchSheet(batchOrders, sheetLayout, headers));
+      setCopyNotice(kind === "summary" ? "Discord batch copied!" : "Sheet batch copied!");
+      setTimeout(() => setCopyNotice(""), 2000);
+    } catch { setBatchNotice("Could not copy. Select the batch preview and copy it manually."); }
+  }
   const handleGenerate = () => {
     if (modifierNoticeTimer.current !== null) clearTimeout(modifierNoticeTimer.current);
     const costModifierError = materialError || upgradeError || getCostModifierError(costModifier) || feeError || clientIdError || rollLinkError;
@@ -463,6 +576,15 @@ export default function App() {
       return;
     }
     setModifierNotice("");
+    if (batchActive) {
+      if (batchOrders.length >= 100 && !editingBatchId) {
+        setBatchNotice("This batch is full (100 orders). Copy it and start a new batch.");
+        return;
+      }
+      acceptBatchOrder({ id: editingBatchId ?? crypto.randomUUID(), input: structuredClone(craftingInput),
+        form: structuredClone(orderForm), overlapAllowed: false });
+      return;
+    }
     const resultType = getResultType(
       craftingInput.craftingDC,
       craftingInput.craftingRoll,
@@ -484,6 +606,7 @@ export default function App() {
   };
 
   const copySelectedOutput = () => {
+    if (batchActive) { void copyBatch(outputMode); return; }
     const selected = outputMode === "sheet" ? formatLayoutRow(sheetRow, sheetLayout) : output;
     if (!selected) return;
     navigator.clipboard.writeText(selected).then(() => {
@@ -493,6 +616,7 @@ export default function App() {
   };
 
   const copySheetWithHeaders = () => {
+    if (batchActive) { void copyBatch("sheet", true); return; }
     if (!sheetRow) return;
     navigator.clipboard.writeText(formatLayoutWithHeaders(sheetRow, sheetLayout)).then(() => {
       setCopyNotice("Sheet headers and row copied!");
@@ -609,6 +733,9 @@ export default function App() {
     finally { if (layoutInput.current) layoutInput.current.value = ""; }
   };
   const sheetPreviewCells = formatLayoutRow(sheetRow, sheetLayout).split("\t");
+  const displayedOutput = batchActive ? batchSummary(batchOrders) : output;
+  const batchSheetPreview = batchActive && batchOrders.length ? batchSheet(batchOrders, sheetLayout).split("\n") : [];
+  const pendingConflicts = pendingBatchOrder ? orderConflicts(pendingBatchOrder, batchOrders) : [];
 
   // Click-away for rarity suggestions
   function handleRarityBlur() {
@@ -643,6 +770,15 @@ export default function App() {
                 <li>For bundled ammunition, Packs counts bundles and Cost / 10 (or / 5) is the price for that many pieces. Output shows the total pieces.</li>
                 <li>Generate Summary to preview and copy it. Choose Sheet row for spreadsheet output.</li>
               </ol>
+              <details className="instruction-section">
+                <summary>Batch orders</summary>
+                <ul>
+                  <li>Start batch to collect orders for one character. Add to batch saves each order and clears the item, client, dates, and roll.</li>
+                  <li>Edit or remove orders in the list. Overlapping dates prompt you to change dates or Add anyway for that order.</li>
+                  <li>Copy Discord batch combines summaries. Sheet rows copies one row per order using the current column layout; headers are optional.</li>
+                  <li>The batch and current draft stay in this browser until Clear batch. Clearing browser data also removes them.</li>
+                </ul>
+              </details>
               <details className="instruction-section">
                 <summary>Characters and backups</summary>
                 <ul>
@@ -725,6 +861,7 @@ export default function App() {
         </div>
         <form
           className="form-card"
+          onChangeCapture={() => { if (pendingBatchOrder) setPendingBatchOrder(null); }}
           onSubmit={e => {
             e.preventDefault();
             handleGenerate();
@@ -739,12 +876,14 @@ export default function App() {
             <input
               type="text"
               value={character}
+              readOnly={batchActive && batchOrders.length > 0}
               onChange={e => setCharacter(e.target.value)}
               placeholder="Bob the Barbarian"
             />
           </label>
 
           <CharacterSaves name={character} level={characterLevel} proficiency={proficiency} sheetLayout={sheetLayout}
+            loadDisabled={batchActive && batchOrders.length > 0}
             sheetTemplates={sheetTemplates} activeSheetTemplate={activeSheetTemplate}
             onSave={profile => { setSheetTemplates(profile.sheetTemplates!); setLayoutNotice(""); }}
             onLoad={profile => {
@@ -767,6 +906,7 @@ export default function App() {
                 type="number"
                 min={1}
                 value={characterLevel}
+                readOnly={batchActive && batchOrders.length > 0}
                 onChange={e => setCharacterLevel(e.target.value)}
                 placeholder="1"
               />
@@ -775,6 +915,7 @@ export default function App() {
               Proficiency Rank
               <select
                 value={proficiency}
+                disabled={batchActive && batchOrders.length > 0}
                 onChange={e => setProficiency(e.target.value as Proficiency)}
               >
                 <option value="trained">Trained</option>
@@ -785,6 +926,15 @@ export default function App() {
             </label>
           </div>
 
+          <div className="batch-toolbar">
+            {batchActive ? <>
+              <button type="button" onClick={clearBatch}>Clear batch</button>
+              <span>Batch: {batchOrders.length} {batchOrders.length === 1 ? "order" : "orders"}</span>
+            </> : <button type="button" onClick={() => {
+              setBatchActive(true); setBatchNotice(""); setOutput(""); setSheetRow("");
+            }}>Start batch</button>}
+          </div>
+          {batchNotice && <p className="batch-notice" role="status">{batchNotice}</p>}
           </fieldset>
           <fieldset className="form-section">
             <legend>Item</legend>
@@ -792,7 +942,7 @@ export default function App() {
           <div className="form-row">
             <label style={{ position: "relative" }}>
               Name
-              <input
+              <input id="item-name"
                 type="text"
                 value={itemName}
                 onChange={e => handleItemNameChange(e.target.value)}
@@ -1100,6 +1250,7 @@ export default function App() {
               Start Date
               <input
                 type="date"
+                id="craft-start-date"
                 value={startDate}
                 onChange={e => setStartDate(e.target.value)}
               />
@@ -1197,8 +1348,42 @@ export default function App() {
                 onChange={e => setFeeOverride(e.target.value)} />
             </label></div>}
           </fieldset>
-          <button type="submit">Generate Summary</button>
+          <button type="submit">{batchActive ? editingBatchId ? "Save order changes" : "Add to batch" : "Generate Summary"}</button>
+          {editingBatchId && <button type="button" className="batch-cancel" onClick={cancelBatchEdit}>Cancel edit</button>}
         </form>
+
+        {batchActive && <section className="batch-card" aria-label="Batch orders">
+          <fieldset className="form-section batch-orders">
+          <legend>{editingBatchId ? "Batch orders — editing" : "Batch orders"}</legend>
+          {!batchOrders.length && <p>Add your first order above. This batch and draft stay in this browser until cleared.</p>}
+          {pendingBatchOrder && <div className="batch-conflict" role="alert">
+            <p>This order overlaps:</p>
+            <ul>{pendingConflicts.map(order => <li key={order.id}>{order.input.itemName}: {order.input.startDate} to {orderEndDate(order.input)}</li>)}</ul>
+            <div className="batch-actions">
+              <button type="button" onClick={() => { setPendingBatchOrder(null); document.getElementById("craft-start-date")?.focus(); }}>Edit dates</button>
+              <button type="button" onClick={() => acceptBatchOrder(pendingBatchOrder, true)}>Add anyway</button>
+            </div>
+          </div>}
+          <ol>{batchOrders.map((order, index) => {
+            const conflicts = orderConflicts(order, batchOrders);
+            return <li key={order.id} className={editingBatchId === order.id ? "batch-order editing" : "batch-order"}>
+              <strong>{index + 1}. {order.input.quantity} × {order.input.itemName}</strong>
+              <span>{order.input.clientName || (order.input.clientDiscordId ? `Discord ID ${order.input.clientDiscordId}` : "No client")}</span>
+              <span>{order.input.startDate} to {orderEndDate(order.input)}</span>
+              {conflicts.length > 0 && <span className="batch-overlap">{order.overlapAllowed ? "Overlap allowed" : "Overlaps an allowed order"}</span>}
+              <div className="batch-actions">
+                <button type="button" onClick={() => editBatchOrder(order)}>Edit</button>
+                <button type="button" onClick={() => {
+                  if (!window.confirm(`Remove ${order.input.itemName} from this batch?`)) return;
+                  setBatchOrders(current => current.filter(existing => existing.id !== order.id));
+                  if (editingBatchId === order.id) cancelBatchEdit();
+                  setPendingBatchOrder(null);
+                }}>Remove</button>
+              </div>
+            </li>;
+          })}</ol>
+          </fieldset>
+        </section>}
 
         {modifierNotice && (
           <div className="copied-toast" role="alert" style={{ width: "min(24rem, 80vw)", boxSizing: "border-box", overflowWrap: "anywhere" }}>
@@ -1211,18 +1396,18 @@ export default function App() {
           </div>
         )}
 
-        {output && (
+        {displayedOutput && (
           <div className="output-section">
             <div className="output-controls">
               <button type="button" aria-pressed={outputMode === "summary"}
                 onClick={() => setOutputMode("summary")}>Summary</button>
               <button type="button" aria-pressed={outputMode === "sheet"}
-                onClick={() => setOutputMode("sheet")}>Sheet row</button>
+                onClick={() => setOutputMode("sheet")}>{batchActive ? "Sheet rows" : "Sheet row"}</button>
               {outputMode === "summary" && <button type="button" onClick={copySelectedOutput}>
-                Copy summary
+                {batchActive ? "Copy Discord batch" : "Copy summary"}
               </button>}
             </div>
-            {outputMode === "summary" ? <pre className="output-pre">{output}</pre> : <>
+            {outputMode === "summary" ? <pre className="output-pre">{displayedOutput}</pre> : <>
               <div className="sheet-template-row">
                 <label>Sheet template
                   <select value={activeSheetTemplate} onChange={e => selectSheetTemplate(e.target.value)}>
@@ -1250,7 +1435,7 @@ export default function App() {
                   <button type="button" onClick={() => { setSheetLayout(defaultSheetLayout()); setLayoutNotice(""); }}>Reset</button>
                   <button type="button" onClick={addBlankColumn}>Add blank column</button>
                 </>}
-                <button type="button" onClick={copySelectedOutput}>Copy sheet row</button>
+                <button type="button" onClick={copySelectedOutput}>{batchActive ? "Copy sheet batch" : "Copy sheet row"}</button>
                 <button type="button" onClick={copySheetWithHeaders}>Copy with headers</button>
                 {editingSheetLayout && <>
                   <button type="button" onClick={exportSheetLayout}>Export layout</button>
@@ -1291,13 +1476,19 @@ export default function App() {
                   </div>
                 </div>)}
               </div>}
-              <div className="sheet-preview" aria-label="Sheet row preview">
+              {batchActive ? batchSheetPreview.map((row, orderIndex) => <div className="sheet-preview" key={batchOrders[orderIndex].id} aria-label={`Sheet order ${orderIndex + 1} preview`}>
+                <strong className="batch-preview-title">Order {orderIndex + 1}</strong>
+                {sheetLayout.filter(column => column.enabled).map((column, columnIndex) => <div className="sheet-preview-pair" key={column.id}>
+                  <span className="sheet-preview-label">{column.label || "Blank column"}</span>
+                  <span className="sheet-preview-value">{row.split("\t")[columnIndex]}</span>
+                </div>)}
+              </div>) : <div className="sheet-preview" aria-label="Sheet row preview">
                 {sheetLayout.filter(column => column.enabled).map((column, index) =>
                   <div className="sheet-preview-pair" key={column.id}>
                     <span className="sheet-preview-label">{column.label || "Blank column"}</span>
                     <span className="sheet-preview-value">{sheetPreviewCells[index]}</span>
                   </div>)}
-              </div>
+              </div>}
             </>}
           </div>
         )}

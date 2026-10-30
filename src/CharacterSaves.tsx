@@ -6,8 +6,8 @@ import type { SheetLayout } from './utils/sheetLayout';
 
 type Props = { name: string; level: string; proficiency: Proficiency; sheetLayout: SheetLayout;
   sheetTemplates: SheetTemplate[]; activeSheetTemplate: string; onLoad: (p: CharacterProfile) => void;
-  onSave: (p: CharacterProfile) => void };
-export default function CharacterSaves({ name, level, proficiency, sheetLayout, sheetTemplates, activeSheetTemplate, onLoad, onSave }: Props) {
+  onSave: (p: CharacterProfile) => void; loadDisabled?: boolean };
+export default function CharacterSaves({ name, level, proficiency, sheetLayout, sheetTemplates, activeSheetTemplate, onLoad, onSave, loadDisabled = false }: Props) {
   const [loaded, setLoaded] = useState<string>();
   const [picker, setPicker] = useState<'load' | 'delete' | null>(null);
   const [profiles, setProfiles] = useState<CharacterProfile[]>([]);
@@ -79,6 +79,7 @@ export default function CharacterSaves({ name, level, proficiency, sheetLayout, 
     const profile = current.find(p => profileKey(p.name) === selected);
     if (!profile) { setPicker(null); setNotice('That save is no longer available. Open the list again.'); return; }
     if (picker === 'load') {
+      if (loadDisabled) { setPicker(null); setNotice('Clear the batch before loading another character.'); return; }
       onLoad(profile); setLoaded(selected); setPicker(null); setNotice(`Loaded ${profile.name}.`);
     } else if (window.confirm(`Delete the saved character ${profile.name}?`)) {
       write(current.filter(p => profileKey(p.name) !== selected));
@@ -112,7 +113,7 @@ export default function CharacterSaves({ name, level, proficiency, sheetLayout, 
   return <div className="character-saves">
     <div className="character-save-buttons" role="group" aria-label="Saved characters">
       <button type="button" onClick={save}>Save</button>
-      <button type="button" onClick={() => openPicker('load')}>Load</button>
+      <button type="button" disabled={loadDisabled} onClick={() => openPicker('load')}>Load</button>
       <button type="button" onClick={() => openPicker('delete')}>Delete</button>
       <button type="button" onClick={exportAll}>Export</button>
       <button type="button" onClick={() => input.current?.click()}>Import</button>

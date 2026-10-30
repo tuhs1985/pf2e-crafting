@@ -17,6 +17,7 @@ This is a planning checklist, not a promise to implement every item. Status was 
 | 11 | [ ] Open | Precious-material ammunition | Medium effort, possibly more if the source data lacks a reliable purchase quantity or material-pricing basis. Batch costs need careful handling. |
 | 12 | [ ] Partial | Crafting profitability view | The fee and total charged already exist. A separate profit or gp/day display is small effort mathematically, but first define whether “profit” means the fee alone and which days count. |
 | 13 | [ ] Partial | Spreadsheet-ready output | The default row, labeled preview, column editing, per-character layouts, and standalone layout backups are implemented. Actual paste in Excel and Google Sheets remains to be checked. |
+| 14 | [x] Done | Batch orders | Released October 30, 2026: one-character batches with saved drafts, edit/remove, date-overlap warnings with per-order overrides, combined Discord summaries, and multi-row sheet copy. This collects completed calculations; automatic scheduling and project progress tracking remain outside the feature. |
 
 ### #13 Spreadsheet output scope
 

@@ -14,6 +14,16 @@ A mobile-friendly Pathfinder 2e crafting builder. Calculate costs, downtime, and
 
 The in-app Instructions contain expandable sections for each area below. The app can also be installed as a PWA for offline use.
 
+## Batch orders
+
+Choose **Start batch**, fill out an order, and use **Add to batch**. Each order keeps its own client, dates, roll, and costs. The next draft keeps the character, level, and proficiency and clears the other order fields. Once an order is added, clear the batch before changing characters.
+
+Edit or remove orders from the list. Dates include both the start and completion day; failed attempts spend only setup days. If dates overlap, choose **Edit dates** or **Add anyway** for that order.
+
+**Copy Discord batch** combines the summaries. **Sheet rows → Copy sheet batch** copies multiple spreadsheet rows using the current column layout, without headers. **Copy with headers** adds one header row. Orders keep the order in which they were added.
+
+The batch and current draft are saved in this browser until **Clear batch**, which asks for confirmation. They are separate from character backups and are erased if browser data is cleared.
+
 ## Characters and backups
 
 **Save**, **Load**, **Delete**, **Export**, and **Import** manage characters in this browser on this device. Saves contain name, level, proficiency, and sheet templates. They do not contain the item or crafting project.

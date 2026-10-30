@@ -113,7 +113,7 @@ body.theme-dark, [data-theme="dark"] {
 .instruction-section summary { cursor: pointer; font-weight: 600; }
 .instruction-section li { margin-bottom: .5rem; }
 
-form.form-card {
+form.form-card, .batch-card {
   background: #262626;
   padding: 1.25rem;
   border-radius: 1rem;
@@ -237,6 +237,20 @@ form.form-card {
   flex-shrink: 0;
 }
 .output-controls { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+.batch-toolbar, .batch-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.batch-toolbar { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; margin: 0; font-size: .8rem; }
+.batch-toolbar > span { grid-column: span 2; text-align: center; }
+.batch-notice { padding: .5rem; border: 1px solid #888; border-radius: .4rem; overflow-wrap: anywhere; }
+.batch-card { margin-top: .6rem; }
+.batch-orders p { margin: .3rem 0; }
+.batch-orders > ol { list-style: none; padding: 0; margin: 0; }
+.batch-order { display: grid; gap: 4px; padding: .5rem 0; border-top: 1px solid #555; overflow-wrap: anywhere; }
+.batch-order > span { font-size: .85rem; }
+.batch-order.editing { border-left: 3px solid #9dc6ef; padding-left: .4rem; }
+.batch-conflict { border: 1px solid #d6a969; border-radius: .4rem; padding: .5rem; margin-bottom: .5rem; }
+.batch-conflict ul { padding-left: 1.25rem; margin: .4rem 0; }
+.batch-overlap { color: #e6c18c; }
+.batch-preview-title { display: block; padding: .4rem .6rem; }
 .output-controls button { background: #333; color: #eee; border: 1px solid #666; border-radius: .4rem; padding: .4rem .6rem; cursor: pointer; }
 .output-controls button[aria-pressed="true"] { border-color: #9dc6ef; background: #384b5e; }
 .output-controls button:last-child:not([aria-pressed]) { margin-left: auto; }
@@ -420,14 +434,16 @@ footer a:hover {
 .character-saves { min-width: 0; position: relative; }
 .character-save-buttons { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
 .form-card .character-save-buttons button,
-.form-card .character-picker-actions button {
+.form-card .character-picker-actions button,
+.batch-toolbar button, .batch-actions button, .form-card .batch-cancel {
   min-height: 44px; padding: 4px 2px; margin: 0; font-size: 0.8rem;
   background: #333; color: #eee; border: 1px solid #777; border-radius: 5px;
   cursor: pointer;
 }
 .character-save-note { font-size: 0.85rem; overflow-wrap: anywhere; margin: 0 0 0.3rem; }
 .form-card .character-save-buttons button,
-.form-card .character-picker-actions button {
+.form-card .character-picker-actions button,
+.batch-toolbar button, .batch-actions button, .form-card .batch-cancel {
   min-height: 26px;
   padding: 2px;
   line-height: 1.2;
