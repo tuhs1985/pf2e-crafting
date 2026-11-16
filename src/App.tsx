@@ -747,6 +747,8 @@ export default function App() {
   return (
     <div className="app-container">
       <div className="inner-container">
+        <div className="crafting-workspace">
+        <section className="crafting-entry-pane" aria-label="Crafting form">
 		<div className="header-container" style={{ position: "relative" }}>
 		  {!isStandalone && (
 			<ReturnButton />
@@ -1353,11 +1355,16 @@ export default function App() {
           <button type="submit">{batchActive ? editingBatchId ? "Save order changes" : "Add to batch" : "Generate Summary"}</button>
           {editingBatchId && <button type="button" className="batch-cancel" onClick={cancelBatchEdit}>Cancel edit</button>}
         </form>
+        </section>
 
+        <section className="crafting-results-pane" aria-label="Crafting results">
+        {!batchActive && !displayedOutput && (
+          <p className="workspace-empty">Generate a summary to see your results here.</p>
+        )}
         {batchActive && <section className="batch-card" aria-label="Batch orders">
           <fieldset className="form-section batch-orders">
           <legend>{editingBatchId ? "Batch orders — editing" : "Batch orders"}</legend>
-          {!batchOrders.length && <p>Add your first order above. This batch and draft stay in this browser until cleared.</p>}
+          {!batchOrders.length && <p>Use Add to batch on the crafting form. This batch and draft stay in this browser until cleared.</p>}
           {pendingBatchOrder && <div className="batch-conflict" role="alert">
             <p>This order overlaps:</p>
             <ul>{pendingConflicts.map(order => <li key={order.id}>{order.input.itemName}: {order.input.startDate} to {orderEndDate(order.input)}</li>)}</ul>
@@ -1517,6 +1524,8 @@ export default function App() {
             </a>.
           </p>
           </footer>
+        </section>
+        </div>
       </div>
     </div>
   );

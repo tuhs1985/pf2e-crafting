@@ -97,6 +97,8 @@ Imported files are validated as data. Text containing tabs/newlines is flattened
 
 ## Development and equipment updates
 
+To preview the foldable layout, run `npm run dev` and open the local URL in Chrome. In DevTools, open the device toolbar and choose **Responsive**. Try **410 × 850** for the cover screen, **860 × 850** unfolded, and **829 → 830** to check the exact switch. Add a batch order or generate a summary, then resize without reloading to check that your draft and output stay put. The local preview has separate browser storage from the live site.
+
 ### Run locally
 
 ```bash

@@ -19,6 +19,42 @@ body {
   padding: 0;
 }
 
+.workspace-empty { display: none; }
+
+@media (min-width: 830px) {
+  .inner-container {
+    width: min(calc(100vw - 1rem), 1080px);
+    max-width: none;
+  }
+
+  .crafting-workspace {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .crafting-entry-pane,
+  .crafting-results-pane {
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-gutter: stable;
+    padding-bottom: .5rem;
+  }
+
+  .workspace-empty {
+    display: block;
+    margin: .6rem 0 0;
+    padding: 1.25rem;
+    background: #262626;
+    border-radius: 1rem;
+    color: #ccc;
+  }
+}
+
 h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -184,7 +220,7 @@ form.form-card, .batch-card {
 
 .form-card button[type="submit"] {
   width: 100%;
-  padding: 1rem;
+  padding: .7rem 1rem;
   background: #111;
   color: #fff;
   border-radius: 0.5rem;
@@ -254,6 +290,10 @@ form.form-card, .batch-card {
 .output-controls button { background: #333; color: #eee; border: 1px solid #666; border-radius: .4rem; padding: .4rem .6rem; cursor: pointer; }
 .output-controls button[aria-pressed="true"] { border-color: #9dc6ef; background: #384b5e; }
 .output-controls button:last-child:not([aria-pressed]) { margin-left: auto; }
+@media (min-width: 830px) and (max-width: 960px) {
+  .crafting-results-pane .output-controls { column-gap: .3rem; }
+  .crafting-results-pane .output-controls button { padding-inline: .35rem; font-size: .875rem; }
+}
 .output-section .output-pre { margin-top: .4rem; overflow-wrap: anywhere; }
 .sheet-preview { margin-top: .4rem; border: 1px solid #444; border-radius: .4rem; overflow: hidden; }
 .sheet-preview-pair { display: grid; grid-template-columns: minmax(7rem, 40%) minmax(0, 1fr); border-top: 1px solid #444; }
