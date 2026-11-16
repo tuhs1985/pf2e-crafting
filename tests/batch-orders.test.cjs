@@ -52,6 +52,24 @@ test('failures occupy setup days only, including natural-roll result changes', (
   assert.equal(batch.orderEndDate(order('a', { startDate: '2026-12-31' }).input), '2027-01-02');
 });
 
+test('the next draft starts after the latest actual completion, even for out-of-order entries', () => {
+  const failed = order('failed', { startDate: '2026-12-30', setupDays: 2, additionalDays: 20, craftingRoll: 5 });
+  const backdated = order('older', { startDate: '2026-11-01' });
+  const undated = order('undated', { startDate: '' });
+  assert.equal(batch.nextOrderDefaults([failed, backdated, undated], backdated.form).startDate, '2027-01-01');
+  assert.equal(batch.nextOrderDefaults([undated], undated.form).startDate, '');
+});
+
+test('the next draft carries forward the accepted client name and Discord ID, including cleared values', () => {
+  const recent = { ...form, clientName: 'Bob', clientDiscordId: '123456789' };
+  const defaults = batch.nextOrderDefaults([order('older')], recent);
+  assert.equal(defaults.clientName, 'Bob');
+  assert.equal(defaults.clientDiscordId, '123456789');
+  const cleared = batch.nextOrderDefaults([order('older')], { clientName: '', clientDiscordId: '' });
+  assert.equal(cleared.clientName, '');
+  assert.equal(cleared.clientDiscordId, '');
+});
+
 test('edits retain order position and immediately reveal new date conflicts', () => {
   const first = order('a');
   const second = order('b', { startDate: '2026-11-01', clientName: 'Bob' });

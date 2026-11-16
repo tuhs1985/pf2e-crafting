@@ -16,7 +16,7 @@ The in-app Instructions contain expandable sections for each area below. The app
 
 ## Batch orders
 
-Choose **Start batch**, fill out an order, and use **Add to batch**. Each order keeps its own client, dates, roll, and costs. The next draft keeps the character, level, and proficiency and clears the other order fields. Once an order is added, clear the batch before changing characters.
+Choose **Start batch**, fill out an order, and use **Add to batch**. Each order keeps its own client, dates, roll, and costs. The next draft keeps the character and client (name and Discord ID) and suggests a start date one day after the latest actual completion in the batch. You can edit or clear the suggested values, and undated orders do not affect the suggestion. Item and roll fields reset. Once an order is added, clear the batch before changing characters.
 
 Edit or remove orders from the list. Dates include both the start and completion day; failed attempts spend only setup days. If dates overlap, choose **Edit dates** or **Add anyway** for that order.
 

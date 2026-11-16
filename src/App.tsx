@@ -22,7 +22,7 @@ import { defaultSheetLayout, formatLayoutRow, formatLayoutWithHeaders, parseShee
 import { storageKey, profileKey, parseProfiles, serializeProfiles, validateSheetTemplates,
   type SheetTemplate } from "./utils/characterProfiles";
 import "./App.css";
-import { BATCH_STORAGE_KEY, parseBatch, orderEndDate, orderConflicts, replaceOrder,
+import { BATCH_STORAGE_KEY, parseBatch, orderEndDate, orderConflicts, replaceOrder, nextOrderDefaults,
   batchSummary, batchSheet, type BatchOrder, type OrderForm } from "./utils/batchOrders";
 import { materialRows, materialKind, materialLabel, gradeLabels, findMaterial,
   parseCarriedBulk, applyMaterial } from "./utils/materials";
@@ -305,13 +305,14 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function resetOrderFields() {
-    setClientName(""); setClientDiscordId(""); setItemName(""); setItemLevel("");
+  function resetOrderFields(defaults?: Pick<OrderForm, "clientName" | "clientDiscordId" | "startDate">) {
+    setClientName(defaults?.clientName ?? ""); setClientDiscordId(defaults?.clientDiscordId ?? "");
+    setItemName(""); setItemLevel("");
     setItemRarity(""); setItemCategory(""); setItemBulk(""); setItemCost("");
     setCostModifier(""); setUseMaterial(false); setUseMagic(false); setMagicIndex(0);
     setUseUpgrade(false); setUpgradeChoice(0); setRuneTransfer("");
     setSelectedMaterial("silver"); setSelectedGrade("low"); setQuantity(1);
-    setHasFormula(true); setFormulaOption(""); setStartDate(""); setAdditionalDays("");
+    setHasFormula(true); setFormulaOption(""); setStartDate(defaults?.startDate ?? ""); setAdditionalDays("");
     setUseAssurance(false); setNaturalRoll(""); setCraftingDC(""); setDcAdjustment("");
     setCraftingRoll(""); setDiscordRollLink(""); setAddCraftingFee(false); setFeeOverride("");
     setShowSuggestions(false); setShowRaritySuggestions(false); setPendingBatchOrder(null);
@@ -536,9 +537,10 @@ export default function App() {
       setPendingBatchOrder(order);
       return;
     }
-    setBatchOrders(current => replaceOrder(current, { ...order, overlapAllowed: allowOverlap }));
+    const nextOrders = replaceOrder(batchOrders, { ...order, overlapAllowed: allowOverlap });
+    setBatchOrders(nextOrders);
     setEditingBatchId(null); batchDraftBeforeEdit.current = null;
-    resetOrderFields(); setBatchNotice("");
+    resetOrderFields(nextOrderDefaults(nextOrders, order.form)); setBatchNotice("");
   }
   function editBatchOrder(order: BatchOrder) {
     if (editingBatchId && editingBatchId !== order.id && !window.confirm("Discard the current unsaved order edits?")) return;
@@ -773,7 +775,7 @@ export default function App() {
               <details className="instruction-section">
                 <summary>Batch orders</summary>
                 <ul>
-                  <li>Start batch to collect orders for one character. Add to batch saves each order and clears the item, client, dates, and roll.</li>
+                  <li>Start batch to collect orders for one character. After adding an order, the next draft keeps the client and suggests the day after the latest completion in the batch. You can change both.</li>
                   <li>Edit or remove orders in the list. Overlapping dates prompt you to change dates or Add anyway for that order.</li>
                   <li>Copy Discord batch combines summaries. Sheet rows copies one row per order using the current column layout; headers are optional.</li>
                   <li>The batch and current draft stay in this browser until Clear batch. Clearing browser data also removes them.</li>

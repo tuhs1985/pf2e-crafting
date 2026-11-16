@@ -44,6 +44,21 @@ export function orderEndDate(input: CraftingInput): string {
   return calculateEndDate(input.startDate, input.setupDays, failed ? 0 : input.additionalDays);
 }
 
+export function nextOrderDefaults(orders: readonly BatchOrder[], client: Pick<OrderForm, "clientName" | "clientDiscordId">) {
+  let latest = "";
+  for (const { input } of orders) {
+    if (!validDate(input.startDate)) continue;
+    const end = orderEndDate(input);
+    if (validDate(end) && end > latest) latest = end;
+  }
+  const nextDate = calculateEndDate(latest, 1, 1);
+  return {
+    clientName: client.clientName,
+    clientDiscordId: client.clientDiscordId,
+    startDate: validDate(nextDate) ? nextDate : "",
+  };
+}
+
 export function orderConflicts(candidate: BatchOrder, orders: BatchOrder[]): BatchOrder[] {
   const end = orderEndDate(candidate.input);
   if (!validDate(candidate.input.startDate) || !validDate(end)) return [];
