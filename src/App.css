@@ -29,7 +29,7 @@ body {
 
   .crafting-workspace {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
     gap: 12px;
     height: 100vh;
     height: 100dvh;
