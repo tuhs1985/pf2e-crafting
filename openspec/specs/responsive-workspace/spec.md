@@ -6,7 +6,7 @@ Keep crafting inputs and results usable on narrow phones and wide displays, incl
 ## Requirements
 
 ### Requirement: Adaptive crafting workspace
-The app SHALL use a stacked layout on viewports narrower than 830 CSS pixels and two independently scrolling panes at 830 CSS pixels or wider. Excluding the gap, the form pane SHALL take 55% of the width and the results pane SHALL take 45%.
+The app SHALL use a stacked layout on viewports narrower than 830 CSS pixels and two independently scrolling panes at 830 CSS pixels or wider. Excluding the gap, the form pane SHALL take 53% of the width and the results pane SHALL take 47%.
 
 #### Scenario: Wide viewport
 - **WHEN** the viewport is at least 830 CSS pixels wide
